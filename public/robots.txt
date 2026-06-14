@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shivam-ai-web-developer-ten-tawny.vercel.app/sitemap.xml
