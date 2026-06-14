@@ -1,0 +1,8 @@
+[
+  { "name": "React", "icon": "/icons/react.png" },
+  { "name": "Node.js", "icon": "/icons/node.png" },
+  { "name": "Python", "icon": "/icons/python.png" },
+  { "name": "MongoDB", "icon": "/icons/mongo.png" },
+  { "name": "Firebase", "icon": "/icons/firebase.png" },
+  { "name": "Three.js", "icon": "/icons/three.png" }
+]

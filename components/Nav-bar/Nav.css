@@ -1,0 +1,713 @@
+/* ==========================================
+   CSS CUSTOM PROPERTIES
+   Centralized values for easy maintenance
+   ========================================== */
+:root {
+    --nav-height: 80px;
+    --nav-height-mobile: 70px;
+    --nav-height-small: 65px;
+    --cyan: #00e5ff;
+    --purple: #7f00ff;
+    --pink: #ff0055;
+    --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================
+   NAVBAR - Black Magic Background
+   Rotating gradient border with dark core
+   ========================================== */
+.navbar {
+    /* Layout */
+    width: 100%;
+    height: var(--nav-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    box-sizing: border-box;
+
+    /* Position - Fixed at top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    /* Background */
+    background: radial-gradient(circle at 20% 20%, #080808, #000000);
+
+    /* Overflow hidden for rotating border effect */
+    overflow: hidden;
+
+    /* Subtle outer glow */
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(0, 229, 255, 0.1);
+
+    /* Border placeholder */
+    border: 2px solid transparent;
+
+    /* Smooth transitions */
+    transition: background 0.8s var(--transition-smooth), 
+                box-shadow 0.6s var(--transition-smooth);
+}
+
+/* ==========================================
+   NAVBAR HOVER STATE
+   ========================================== */
+.navbar:hover {
+    background: radial-gradient(circle at 60% 60%, #0a0a0a, #000000);
+    box-shadow: 
+        0 0 40px rgba(0, 0, 0, 0.9),
+        0 0 80px rgba(0, 229, 255, 0.15);
+}
+
+/* ==========================================
+   ROTATING GRADIENT BORDER
+   ========================================== */
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: -150%;
+    left: -25%;
+    width: 150%;
+    height: 400%;
+
+    background: conic-gradient(
+        transparent,
+        rgba(0, 229, 255, 0.4),
+        rgba(127, 0, 255, 0.3),
+        rgba(255, 0, 85, 0.2),
+        rgba(0, 229, 255, 0.4),
+        transparent 30%
+    );
+
+    animation: magicRotate 8s linear infinite;
+    z-index: -2;
+    will-change: transform;
+}
+
+/* ==========================================
+   BLACK CORE LAYER
+   ========================================== */
+.navbar::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 2px;
+    z-index: -1;
+}
+
+@keyframes magicRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   LOGO CONTAINER
+   ========================================== */
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    z-index: 10;
+
+    /* Gradient text */
+    color: transparent;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    animation: shimmerText 10s linear infinite;
+}
+
+@keyframes shimmerText {
+    from { background-position: 0%; }
+    to { background-position: 300%; }
+}
+
+/* ==========================================
+   LOGO LETTERS - Individual styling for GSAP
+   ========================================== */
+.logo-letter {
+    display: inline-block;
+    font-size: 35px;
+    font-weight: bold;
+
+    /* Gradient text */
+    background: linear-gradient(135deg, var(--cyan), #ffffff, var(--purple));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    /* Initial hidden state for GSAP */
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(20px);
+
+    /* Neon glow */
+    text-shadow:
+        0 0 20px rgba(0, 229, 255, 0.6),
+        0 0 40px rgba(127, 0, 255, 0.4),
+        0 0 60px rgba(0, 229, 255, 0.2);
+
+    transition: all 0.5s var(--transition-bounce);
+    animation: letterGradient 6s ease infinite;
+    will-change: opacity, filter, transform;
+}
+
+@keyframes letterGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.logo-letter:hover {
+    text-shadow:
+        0 0 30px var(--cyan),
+        0 0 60px var(--purple),
+        0 0 90px var(--cyan),
+        0 0 120px rgba(127, 0, 255, 0.5);
+
+    transform: scale(1.12) translateY(-4px);
+    filter: brightness(1.25);
+}
+
+/* ==========================================
+   HAMBURGER MENU BUTTON - FIXED
+   Clean CSS-based hamburger with smooth X animation
+   ========================================== */
+.hamburger {
+    /* Reset button styles */
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Positioning */
+    position: relative;
+    z-index: 10000;
+    margin-left: auto;
+
+    /* Size */
+    width: 50px;
+    height: 50px;
+
+    /* Glass effect container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+
+    /* Neon shadow */
+    box-shadow:
+        0 0 15px rgba(0, 229, 255, 0.2),
+        inset 0 0 10px rgba(255, 255, 255, 0.05);
+
+    transition: all 0.3s var(--transition-smooth);
+}
+
+.hamburger:hover {
+    transform: scale(1.05);
+    background: rgba(0, 229, 255, 0.1);
+    box-shadow:
+        0 0 25px var(--cyan),
+        0 0 50px rgba(127, 0, 255, 0.25),
+        inset 0 0 15px rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.3);
+}
+
+.hamburger:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   HAMBURGER BOX - Contains the lines
+   ========================================== */
+.hamburger-box {
+    position: relative;
+    width: 24px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ==========================================
+   HAMBURGER LINES - CSS-based animation
+   Much smoother than SVG transforms
+   ========================================== */
+.hamburger-line {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 3px;
+    transition: all 0.4s var(--transition-bounce);
+    transform-origin: center;
+}
+
+/* ==========================================
+   HAMBURGER ACTIVE STATE - X TRANSFORMATION
+   ========================================== */
+.hamburger.active .hamburger-line--top {
+    transform: translateY(7.5px) rotate(45deg);
+    background: var(--cyan);
+}
+
+.hamburger.active .hamburger-line--middle {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line--bottom {
+    transform: translateY(-7.5px) rotate(-45deg);
+    background: var(--cyan);
+}
+
+/* ==========================================
+   MENU OVERLAY BACKDROP
+   ========================================== */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0);
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--transition-smooth),
+                background 0.4s var(--transition-smooth);
+}
+
+.menu-overlay.active {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* ==========================================
+   MOBILE MENU CONTAINER
+   ========================================== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+
+    /* Glass morphism background */
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+
+    /* Subtle gradient overlay */
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(0, 229, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(127, 0, 255, 0.05) 0%, transparent 50%);
+
+    /* Flexbox centering */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* Border accent */
+    border-left: 1px solid rgba(0, 229, 255, 0.15);
+
+    /* Above other content, below hamburger */
+    z-index: 9999;
+
+    /* FIXED: Transform-based animation instead of right */
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.5s var(--transition-smooth),
+                visibility 0.5s var(--transition-smooth);
+
+    /* GPU acceleration */
+    will-change: transform;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+/* ==========================================
+   MOBILE MENU LIST
+   ========================================== */
+.mobile-menu-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* ==========================================
+   MOBILE MENU LINKS - Staggered animation
+   ========================================== */
+.mobile-menu-list li {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.4s var(--transition-bounce),
+                transform 0.4s var(--transition-bounce);
+}
+
+/* Staggered entrance */
+.mobile-menu.active .mobile-menu-list li:nth-child(1) { 
+    transition-delay: 0.1s; 
+    opacity: 1; 
+    transform: translateX(0); 
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(2) { 
+    transition-delay: 0.15s; 
+    opacity: 1; 
+    transform: translateX(0); 
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(3) { 
+    transition-delay: 0.2s; 
+    opacity: 1; 
+    transform: translateX(0); 
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(4) { 
+    transition-delay: 0.25s; 
+    opacity: 1; 
+    transform: translateX(0); 
+}
+
+.mobile-menu-list a {
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    position: relative;
+    padding: 10px 20px;
+    display: block;
+    transition: all 0.3s var(--transition-bounce);
+}
+
+/* ==========================================
+   MOBILE LINK UNDERLINE
+   ========================================== */
+.mobile-menu-list a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    transform: translateX(-50%);
+    border-radius: 2px;
+    transition: width 0.4s var(--transition-bounce);
+}
+
+.mobile-menu-list a:hover {
+    color: var(--cyan);
+    transform: scale(1.05);
+    text-shadow:
+        0 0 10px var(--cyan),
+        0 0 25px var(--cyan),
+        0 0 50px var(--purple);
+}
+
+.mobile-menu-list a:hover::after {
+    width: 80%;
+}
+
+.mobile-menu-list a:active {
+    transform: scale(0.96);
+    transition: transform 0.1s ease;
+}
+
+/* ==========================================
+   QR SECTION
+   ========================================== */
+.menu-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s var(--transition-bounce);
+}
+
+.mobile-menu.active .menu-qr {
+    transition-delay: 0.35s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-qr p {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 18px;
+
+    background: linear-gradient(90deg, var(--cyan), var(--purple), #00ffcc);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    letter-spacing: 1px;
+    animation: textGlow 4s ease-in-out infinite;
+}
+
+@keyframes textGlow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* ==========================================
+   QR WRAPPER
+   ========================================== */
+.qr-wrapper {
+    position: relative;
+    display: inline-block;
+    transform-style: preserve-3d;
+    perspective: 1200px;
+    transition: all 0.5s var(--transition-bounce);
+}
+
+.qr-wrapper img {
+    width: 160px;
+    border-radius: 22px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    
+    box-shadow:
+        0 0 25px rgba(0, 229, 255, 0.3),
+        0 0 50px rgba(127, 0, 255, 0.2),
+        0 20px 40px rgba(0, 0, 0, 0.6);
+
+    transition: all 0.5s var(--transition-bounce);
+}
+
+.qr-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border-radius: 25px;
+    background: linear-gradient(45deg, var(--cyan), var(--purple), #00ffcc, var(--cyan));
+    filter: blur(25px);
+    opacity: 0.6;
+    z-index: -1;
+    animation: glowRotate 8s linear infinite;
+}
+
+@keyframes glowRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.qr-wrapper:hover {
+    transform: rotateX(10deg) rotateY(12deg) scale(1.05);
+}
+
+.qr-wrapper:hover img {
+    transform: translateZ(20px);
+    filter: brightness(1.2) contrast(1.1);
+    box-shadow:
+        0 0 40px var(--cyan),
+        0 0 80px rgba(127, 0, 255, 0.6),
+        0 30px 70px rgba(0, 0, 0, 0.7);
+}
+
+/* ==========================================
+   SCAN LINE
+   ========================================== */
+.scan-line {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--cyan),
+        var(--purple),
+        #00ffcc,
+        transparent
+    );
+    box-shadow:
+        0 0 20px var(--cyan),
+        0 0 40px var(--purple);
+    border-radius: 3px;
+    animation: scanMove 2.5s linear infinite;
+}
+
+@keyframes scanMove {
+    0% { top: 14px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: calc(100% - 18px); opacity: 0; }
+}
+
+/* ==========================================
+   RESPONSIVE: TABLET (768px - 1023px)
+   ========================================== */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .navbar {
+        padding: 0 30px;
+    }
+
+    .logo-letter {
+        font-size: 28px;
+    }
+
+    .mobile-menu {
+        width: 350px;
+        max-width: 350px;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE: DESKTOP (1024px+)
+   ========================================== */
+@media screen and (min-width: 1024px) {
+    .mobile-menu {
+        width: 320px;
+        max-width: 320px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(30px);
+        border-left: 1px solid rgba(0, 229, 255, 0.2);
+    }
+
+    .menu-qr img {
+        width: 130px;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE: MOBILE (768px and below)
+   ========================================== */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+        height: var(--nav-height-mobile);
+    }
+
+    .logo-letter {
+        font-size: 24px;
+    }
+
+    .hamburger {
+        width: 46px;
+        height: 46px;
+    }
+
+    .mobile-menu {
+        width: 100%;
+        max-width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border: none;
+    }
+
+    .mobile-menu-list a {
+        font-size: 22px;
+    }
+}
+
+/* ==========================================
+   RESPONSIVE: SMALL MOBILE (480px and below)
+   ========================================== */
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 0 15px;
+        height: var(--nav-height-small);
+    }
+
+    .logo-letter {
+        font-size: 20px;
+    }
+
+    .hamburger {
+        width: 44px;
+        height: 44px;
+    }
+
+    .hamburger-box {
+        width: 22px;
+        height: 16px;
+    }
+
+    .hamburger-line {
+        height: 2.5px;
+    }
+
+    .hamburger.active .hamburger-line--top {
+        transform: translateY(6.75px) rotate(45deg);
+    }
+
+    .hamburger.active .hamburger-line--bottom {
+        transform: translateY(-6.75px) rotate(-45deg);
+    }
+
+    .mobile-menu-list {
+        gap: 25px;
+    }
+
+    .mobile-menu-list a {
+        font-size: 20px;
+    }
+
+    .menu-qr img {
+        width: 120px;
+    }
+
+    .menu-qr p {
+        font-size: 12px;
+    }
+}
+
+/* ==========================================
+   REDUCED MOTION PREFERENCE
+   Accessibility
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.2s !important;
+    }
+
+    .mobile-menu {
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        transform: none !important;
+        opacity: 0;
+    }
+
+    .mobile-menu.active {
+        opacity: 1;
+    }
+}
