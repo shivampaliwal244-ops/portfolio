@@ -1,9 +1,8 @@
 /* Globe.css */
 /* ============================================
    PROFESSIONAL 3D TECH UNIVERSE GLOBE
-   Complete styling with responsive design
-   Enhanced with professional side panels
-   MOBILE OPTIMIZED VERSION
+   Sleek Matte Finish & Holographic Wireframe
+   Smooth Hover Glows & Mobile Optimized
    ============================================ */
 
 /* ============================================
@@ -166,33 +165,6 @@
   margin-top: 4px;
 }
 
-.tech-lines {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-}
-
-.tech-line {
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--globe-primary) 50%,
-    transparent 100%
-  );
-  opacity: 0.4;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: techLineExpand 2s ease-out forwards;
-}
-
-@keyframes techLineExpand {
-  to {
-    transform: scaleX(1);
-  }
-}
-
 .panel-metrics {
   display: flex;
   flex-direction: column;
@@ -225,22 +197,6 @@
   text-transform: uppercase;
 }
 
-.data-stream {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 80px;
-}
-
-.stream-label {
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: var(--globe-text-muted);
-  text-transform: uppercase;
-}
-
 .stream-bars {
   flex: 1;
   display: flex;
@@ -261,17 +217,6 @@
   border-radius: 2px 2px 0 0;
   animation: streamPulse 1.5s ease-in-out infinite;
   opacity: 0.7;
-}
-
-@keyframes streamPulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scaleY(0.6);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
 }
 
 .connection-status {
@@ -297,17 +242,6 @@
   background: var(--globe-success);
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
   animation: connectionPulse 2s ease-in-out infinite;
-}
-
-@keyframes connectionPulse {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
-    transform: scale(0.9);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
-    transform: scale(1.1);
-  }
 }
 
 /* ============================================
@@ -361,15 +295,6 @@
   background: var(--globe-success);
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
   animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
-  }
 }
 
 .skill-categories {
@@ -490,23 +415,9 @@
   animation-delay: 0.5s;
 }
 
-.prof-fill.expert {
-  background: linear-gradient(90deg, var(--globe-primary), var(--globe-secondary));
-}
-
-.prof-fill.advanced {
-  background: linear-gradient(90deg, var(--globe-accent), var(--globe-primary));
-}
-
-.prof-fill.intermediate {
-  background: linear-gradient(90deg, #555, var(--globe-accent));
-}
-
-@keyframes profFillExpand {
-  to {
-    transform: scaleX(1);
-  }
-}
+.prof-fill.expert { background: linear-gradient(90deg, var(--globe-primary), var(--globe-secondary)); }
+.prof-fill.advanced { background: linear-gradient(90deg, var(--globe-accent), var(--globe-primary)); }
+.prof-fill.intermediate { background: linear-gradient(90deg, #555, var(--globe-accent)); }
 
 .version-info {
   display: flex;
@@ -530,13 +441,12 @@
 }
 
 /* ============================================
-   MAIN GLOBE CONTAINER
+   MAIN GLOBE CONTAINER (Medium Size Adjustment)
    ============================================ */
 .globe-container {
   flex: 1;
   max-width: var(--globe-max-width);
   height: var(--globe-height);
-  /* FIXED: Added minimum height for mobile */
   min-height: 280px;
   position: relative;
   display: flex;
@@ -555,8 +465,8 @@
   border: 1px solid var(--globe-border);
   
   box-shadow: 
-    0 0 80px rgba(74, 158, 255, 0.08),
-    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(74, 158, 255, 0.05),
+    0 30px 60px rgba(0, 0, 0, 0.4),
     inset 0 0 100px rgba(74, 158, 255, 0.03);
 }
 
@@ -567,26 +477,10 @@
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(
-      ellipse 80% 50% at 50% 0%,
-      rgba(74, 158, 255, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 60% 40% at 50% 100%,
-      rgba(118, 74, 188, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 30% 50%,
-      rgba(0, 255, 255, 0.03) 0%,
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 70% 50%,
-      rgba(118, 74, 188, 0.03) 0%,
-      transparent 30%
-    );
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(74, 158, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(118, 74, 188, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 30% 50%, rgba(0, 255, 255, 0.02) 0%, transparent 30%),
+    radial-gradient(circle at 70% 50%, rgba(118, 74, 188, 0.02) 0%, transparent 30%);
   pointer-events: none;
   z-index: 1;
 }
@@ -595,33 +489,16 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(
-      rgba(74, 158, 255, 0.03) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(74, 158, 255, 0.03) 1px,
-      transparent 1px
-    );
+    linear-gradient(rgba(74, 158, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 158, 255, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 1;
   opacity: 0.5;
 }
 
-.globe-noise-overlay {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='[w3.org](http://www.w3.org/2000/svg)'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.4;
-}
-
 /* ============================================
    THREE.JS CANVAS
-   FIXED: Ensure canvas fills container properly
    ============================================ */
 .globe-canvas {
   width: 100% !important;
@@ -629,23 +506,23 @@
   min-height: 280px;
   cursor: grab;
   z-index: 10;
-  /* FIXED: Ensure touch events work on mobile */
-  touch-action: none;
+  touch-action: none; /* Crucial for smooth mobile drag */
+  position: relative;
 }
 
 .globe-canvas:active {
   cursor: grabbing;
 }
 
-/* FIXED: Ensure canvas element inside fills properly */
 .globe-canvas canvas {
   width: 100% !important;
   height: 100% !important;
   display: block;
+  touch-action: none;
 }
 
 /* ============================================
-   SKILL TOOLTIP
+   SMOOTH & SHINY SKILL TOOLTIP (HOVER GLOW)
    ============================================ */
 .skill-tooltip {
   position: absolute;
@@ -654,11 +531,11 @@
   gap: 12px;
   padding: 12px 18px;
   
-  background: rgba(10, 10, 20, 0.95);
+  background: rgba(10, 10, 20, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   
-  border: 1px solid var(--globe-primary);
+  border: 1px solid transparent; /* Set dynamically in JS based on skill color */
   border-radius: 14px;
   
   color: var(--globe-text-primary);
@@ -666,21 +543,21 @@
   font-weight: 600;
   
   pointer-events: none;
-  z-index: 100;
+  z-index: 9999;
   
   opacity: 0;
   visibility: hidden;
-  transform: translateY(10px) scale(0.9);
+  transform: translateY(15px) scale(0.9);
   
+  /* Smooth, unified transitions for hover effects */
   transition: 
     opacity 0.25s ease,
     visibility 0.25s ease,
-    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  
-  box-shadow: 
-    0 15px 40px rgba(0, 0, 0, 0.6),
-    0 0 30px var(--globe-glow-primary);
-  
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+    
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
 }
 
@@ -694,17 +571,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
   border: 1px solid;
   padding: 6px;
+  transition: all 0.3s ease;
 }
 
-.tooltip-icon img {
+.tooltip-icon img,
+.tooltip-icon svg {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .tooltip-name {
@@ -712,7 +592,7 @@
 }
 
 /* ============================================
-   DRAG INSTRUCTION OVERLAY
+   UI OVERLAY ELEMENTS (Drag Hint & Badges)
    ============================================ */
 .globe-overlay {
   position: absolute;
@@ -778,104 +658,16 @@
   z-index: 5;
 }
 
-.corner-decoration.top-left {
-  top: 15px;
-  left: 15px;
-  border-top: 2px solid rgba(74, 158, 255, 0.3);
-  border-left: 2px solid rgba(74, 158, 255, 0.3);
-  border-radius: 8px 0 0 0;
-}
-
-.corner-decoration.top-right {
-  top: 15px;
-  right: 15px;
-  border-top: 2px solid rgba(74, 158, 255, 0.3);
-  border-right: 2px solid rgba(74, 158, 255, 0.3);
-  border-radius: 0 8px 0 0;
-}
-
-.corner-decoration.bottom-left {
-  bottom: 15px;
-  left: 15px;
-  border-bottom: 2px solid rgba(118, 74, 188, 0.3);
-  border-left: 2px solid rgba(118, 74, 188, 0.3);
-  border-radius: 0 0 0 8px;
-}
-
-.corner-decoration.bottom-right {
-  bottom: 15px;
-  right: 15px;
-  border-bottom: 2px solid rgba(118, 74, 188, 0.3);
-  border-right: 2px solid rgba(118, 74, 188, 0.3);
-  border-radius: 0 0 8px 0;
-}
-
-/* ============================================
-   GLOW ORBS
-   ============================================ */
-.glow-orbs {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-
-.glow-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  animation: orbFloat 20s ease-in-out infinite;
-}
-
-.orb-1 {
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(
-    circle,
-    rgba(74, 158, 255, 0.4) 0%,
-    transparent 70%
-  );
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.3;
-}
-
-.orb-2 {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 255, 0.3) 0%,
-    transparent 70%
-  );
-  bottom: -80px;
-  left: -80px;
-  opacity: 0.25;
-  animation-delay: -7s;
-}
-
-.orb-3 {
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(
-    circle,
-    rgba(118, 74, 188, 0.35) 0%,
-    transparent 70%
-  );
-  bottom: -60px;
-  right: -60px;
-  opacity: 0.25;
-  animation-delay: -14s;
-}
+.corner-decoration.top-left { top: 15px; left: 15px; border-top: 2px solid rgba(74, 158, 255, 0.3); border-left: 2px solid rgba(74, 158, 255, 0.3); border-radius: 8px 0 0 0; }
+.corner-decoration.top-right { top: 15px; right: 15px; border-top: 2px solid rgba(74, 158, 255, 0.3); border-right: 2px solid rgba(74, 158, 255, 0.3); border-radius: 0 8px 0 0; }
+.corner-decoration.bottom-left { bottom: 15px; left: 15px; border-bottom: 2px solid rgba(118, 74, 188, 0.3); border-left: 2px solid rgba(118, 74, 188, 0.3); border-radius: 0 0 0 8px; }
+.corner-decoration.bottom-right { bottom: 15px; right: 15px; border-bottom: 2px solid rgba(118, 74, 188, 0.3); border-right: 2px solid rgba(118, 74, 188, 0.3); border-radius: 0 0 8px 0; }
 
 /* ============================================
    MOBILE SKILL BADGE
-   Shows skill count on mobile when panels are hidden
    ============================================ */
 .mobile-skill-badge {
-  display: none; /* Hidden by default, shown on mobile */
+  display: none;
   position: absolute;
   top: 15px;
   right: 15px;
@@ -911,510 +703,162 @@
 /* ============================================
    ANIMATIONS
    ============================================ */
+@keyframes streamPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes connectionPulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.3); transform: scale(0.9); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); transform: scale(1.1); }
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 136, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(0, 255, 136, 0.8); }
+}
+
+@keyframes profFillExpand {
+  to { transform: scaleX(1); }
+}
+
 @keyframes floatUpDown {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateX(-50%) translateY(-8px);
-    opacity: 1;
-  }
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+  50% { transform: translateX(-50%) translateY(-8px); opacity: 1; }
 }
 
 @keyframes slowRotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes orbFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.2;
-  }
-  33% {
-    transform: translate(20px, -20px) scale(1.1);
-    opacity: 0.35;
-  }
-  66% {
-    transform: translate(-10px, 10px) scale(0.95);
-    opacity: 0.25;
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* ============================================
    RESPONSIVE - Large Desktop (1200px+)
    ============================================ */
 @media (min-width: 1200px) {
-  .globe-wrapper {
-    gap: 32px;
-  }
-  
-  .side-panel {
-    flex: 0 0 180px;
-    height: 450px;
-  }
-  
-  .globe-container {
-    max-width: 650px;
-    height: 540px;
-  }
-  
-  .clock-time {
-    font-size: 32px;
-  }
-  
-  .count-number {
-    font-size: 42px;
-  }
+  .globe-wrapper { gap: 32px; }
+  .side-panel { flex: 0 0 180px; height: 450px; }
+  .globe-container { max-width: 650px; height: 540px; }
+  .clock-time { font-size: 32px; }
+  .count-number { font-size: 42px; }
 }
 
 /* ============================================
    RESPONSIVE - Desktop (1024px and below)
    ============================================ */
 @media (max-width: 1024px) {
-  .globe-wrapper {
-    gap: 20px;
-    padding: 16px;
-  }
-  
-  .side-panel {
-    flex: 0 0 140px;
-    height: 380px;
-    padding: 16px 12px;
-  }
-  
-  .globe-container {
-    height: 420px;
-  }
-  
-  .count-number {
-    font-size: 32px;
-  }
-  
-  .clock-time {
-    font-size: 24px;
-  }
+  .globe-wrapper { gap: 20px; padding: 16px; }
+  .side-panel { flex: 0 0 140px; height: 380px; padding: 16px 12px; }
+  .globe-container { height: 420px; }
+  .count-number { font-size: 32px; }
+  .clock-time { font-size: 24px; }
 }
 
 /* ============================================
    RESPONSIVE - Tablet (900px and below)
    ============================================ */
 @media (max-width: 900px) {
-  .globe-wrapper {
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .side-panel {
-    flex: none;
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    padding: 16px;
-  }
-  
-  .panel-content {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 16px;
-  }
-  
-  .tech-lines,
-  .data-stream {
-    display: none;
-  }
-  
-  .globe-container {
-    width: 100%;
-    max-width: 500px;
-    height: 400px;
-    border-radius: 20px;
-  }
-  
-  .drag-instruction {
-    padding: 10px 20px;
-  }
-  
-  .drag-text {
-    font-size: 10px;
-  }
-  
-  .drag-icon {
-    width: 20px;
-    height: 20px;
-  }
+  .globe-wrapper { flex-direction: column; gap: 16px; }
+  .side-panel { flex: none; width: 100%; max-width: 500px; height: auto; padding: 16px; }
+  .panel-content { flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 16px; }
+  .tech-lines, .data-stream { display: none; }
+  .globe-container { width: 100%; max-width: 500px; height: 400px; border-radius: 20px; }
+  .drag-instruction { padding: 10px 20px; }
+  .drag-text { font-size: 10px; }
+  .drag-icon { width: 20px; height: 20px; }
 }
 
 /* ============================================
    RESPONSIVE - Mobile (768px and below)
-   FIXED: Globe is now visible on mobile
    ============================================ */
 @media (max-width: 768px) {
-  .globe-wrapper {
-    padding: 12px;
-    /* FIXED: Ensure wrapper takes full width */
-    width: 100%;
-    min-height: 350px;
+  .globe-wrapper { padding: 12px; width: 100%; min-height: 350px; }
+  .side-panel { display: none; }
+  .mobile-skill-badge { display: flex; }
+  
+  .globe-container { 
+    width: 100%; 
+    max-width: 100%; 
+    height: 350px; 
+    min-height: 320px; 
+    border-radius: 16px; 
+    flex: 1; 
   }
   
-  /* Hide side panels on mobile */
-  .side-panel {
-    display: none;
+  .globe-canvas { 
+    width: 100% !important; 
+    height: 100% !important; 
+    min-height: 320px; 
   }
   
-  /* FIXED: Show mobile skill badge */
-  .mobile-skill-badge {
-    display: flex;
+  .skill-tooltip { 
+    padding: 10px 14px; 
+    font-size: 12px; 
+    gap: 10px; 
+    max-width: 220px; 
   }
   
-  /* FIXED: Proper sizing for mobile globe */
-  .globe-container {
-    width: 100%;
-    max-width: 100%;
-    height: 350px;
-    min-height: 320px;
-    border-radius: 16px;
-    /* FIXED: Ensure container is visible */
-    flex: 1;
-  }
-  
-  /* FIXED: Ensure canvas fills container */
-  .globe-canvas {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 320px;
-  }
-  
-  .skill-tooltip {
-    padding: 10px 14px;
-    font-size: 12px;
-    gap: 10px;
-    /* FIXED: Better positioning for mobile */
-    max-width: 200px;
-  }
-  
-  .tooltip-icon {
-    width: 26px;
-    height: 26px;
-  }
-  
-  .globe-overlay {
-    bottom: 20px;
-  }
-  
-  .drag-instruction {
-    padding: 8px 16px;
-    gap: 10px;
-  }
-  
-  .drag-text {
-    font-size: 9px;
-    letter-spacing: 1px;
-  }
-  
-  .drag-icon {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .corner-decoration {
-    width: 30px;
-    height: 30px;
-  }
-  
-  /* FIXED: Keep glow orbs but reduce intensity for performance */
-  .glow-orb {
-    filter: blur(60px);
-    opacity: 0.15;
-  }
-  
-  .orb-1 {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .orb-2, .orb-3 {
-    width: 120px;
-    height: 120px;
-  }
+  .tooltip-icon { width: 28px; height: 28px; }
+  .globe-overlay { bottom: 20px; }
+  .drag-instruction { padding: 8px 16px; gap: 10px; }
+  .drag-text { font-size: 9px; letter-spacing: 1px; }
+  .drag-icon { width: 18px; height: 18px; }
+  .corner-decoration { width: 30px; height: 30px; }
 }
 
 /* ============================================
    RESPONSIVE - Small Mobile (480px and below)
-   FIXED: Ensure globe displays on very small screens
    ============================================ */
 @media (max-width: 480px) {
-  .globe-wrapper {
-    padding: 8px;
-    min-height: 300px;
-  }
+  .globe-wrapper { padding: 8px; min-height: 300px; }
+  .globe-container { height: 320px; min-height: 280px; border-radius: 12px; }
+  .globe-canvas { min-height: 280px; }
   
-  /* FIXED: Proper sizing for very small screens */
-  .globe-container {
-    height: 300px;
-    min-height: 280px;
-    border-radius: 12px;
-  }
+  .skill-tooltip { padding: 8px 12px; font-size: 11px; border-radius: 10px; }
+  .tooltip-icon { width: 24px; height: 24px; padding: 4px; }
   
-  .globe-canvas {
-    min-height: 280px;
-  }
+  .globe-overlay { bottom: 12px; }
+  .drag-instruction { padding: 6px 12px; gap: 6px; }
+  .drag-text { font-size: 8px; }
+  .drag-icon { width: 14px; height: 14px; }
   
-  .skill-tooltip {
-    padding: 8px 12px;
-    font-size: 11px;
-    border-radius: 10px;
-  }
+  .corner-decoration { width: 20px; height: 20px; top: 10px; left: 10px; }
+  .corner-decoration.top-right { right: 10px; left: auto; }
+  .corner-decoration.bottom-left { bottom: 10px; top: auto; }
+  .corner-decoration.bottom-right { bottom: 10px; right: 10px; top: auto; left: auto; }
   
-  .tooltip-icon {
-    width: 22px;
-    height: 22px;
-    padding: 4px;
-  }
-  
-  .globe-overlay {
-    bottom: 12px;
-  }
-  
-  .drag-instruction {
-    padding: 6px 12px;
-    gap: 6px;
-  }
-  
-  .drag-text {
-    font-size: 8px;
-  }
-  
-  .drag-icon {
-    width: 14px;
-    height: 14px;
-  }
-  
-  /* Smaller corner decorations */
-  .corner-decoration {
-    width: 20px;
-    height: 20px;
-    top: 10px;
-    left: 10px;
-  }
-  
-  .corner-decoration.top-right {
-    right: 10px;
-    left: auto;
-  }
-  
-  .corner-decoration.bottom-left {
-    bottom: 10px;
-    top: auto;
-  }
-  
-  .corner-decoration.bottom-right {
-    bottom: 10px;
-    right: 10px;
-    top: auto;
-    left: auto;
-  }
-  
-  /* FIXED: Smaller mobile badge */
-  .mobile-skill-badge {
-    top: 10px;
-    right: 10px;
-    padding: 8px 10px;
-    border-radius: 10px;
-  }
-  
-  .badge-count {
-    font-size: 20px;
-  }
-  
-  .badge-label {
-    font-size: 7px;
-  }
-  
-  /* Simplified effects for performance */
-  .glow-orbs {
-    opacity: 0.5;
-  }
-  
-  .globe-grid-pattern {
-    opacity: 0.3;
-  }
+  .mobile-skill-badge { top: 10px; right: 10px; padding: 8px 10px; border-radius: 10px; }
+  .badge-count { font-size: 20px; }
+  .badge-label { font-size: 7px; }
 }
 
 /* ============================================
    RESPONSIVE - Very Small Mobile (360px and below)
    ============================================ */
 @media (max-width: 360px) {
-  .globe-wrapper {
-    padding: 4px;
-  }
+  .globe-wrapper { padding: 4px; }
+  .globe-container { height: 280px; min-height: 250px; border-radius: 10px; }
+  .globe-canvas { min-height: 250px; }
   
-  .globe-container {
-    height: 260px;
-    min-height: 250px;
-    border-radius: 10px;
-  }
+  /* Simplify for very small screens */
+  .corner-decoration { display: none; }
+  .globe-grid-pattern { display: none; }
   
-  .globe-canvas {
-    min-height: 250px;
-  }
-  
-  /* Hide some decorative elements for very small screens */
-  .corner-decoration {
-    display: none;
-  }
-  
-  .glow-orbs {
-    display: none;
-  }
-  
-  .globe-grid-pattern {
-    display: none;
-  }
-  
-  .drag-instruction {
-    padding: 5px 10px;
-  }
-  
-  .drag-text {
-    font-size: 7px;
-    letter-spacing: 0.5px;
-  }
-  
-  .drag-icon {
-    width: 12px;
-    height: 12px;
-  }
+  .drag-instruction { padding: 5px 10px; }
+  .drag-text { font-size: 7px; letter-spacing: 0.5px; }
+  .drag-icon { width: 12px; height: 12px; }
 }
 
 /* ============================================
-   ACCESSIBILITY - Reduced Motion
+   ACCESSIBILITY & UTILITIES
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .globe-wrapper,
-  .skill-tooltip,
-  .drag-instruction,
-  .drag-icon,
-  .glow-orb,
-  .dot,
-  .tech-line,
-  .tech-bar,
-  .status-dot,
-  .connection-dot,
-  .stream-bar,
-  .prof-fill {
-    animation: none !important;
-    transition: opacity 0.2s ease !important;
-  }
-  
-  .globe-wrapper.visible {
-    opacity: 1;
-    transform: none;
-  }
-  
-  .skill-tooltip.visible {
-    transform: none;
-  }
-  
-  .tech-line,
-  .prof-fill {
-    transform: scaleX(1) !important;
+  * { 
+    animation: none !important; 
+    transition: opacity 0.2s ease !important; 
   }
 }
 
-/* ============================================
-   ACCESSIBILITY - High Contrast
-   ============================================ */
-@media (prefers-contrast: high) {
-  .globe-container {
-    border-color: rgba(74, 158, 255, 0.5);
-    border-width: 2px;
-  }
-  
-  .side-panel {
-    border-color: rgba(74, 158, 255, 0.4);
-  }
-  
-  .skill-tooltip {
-    background: rgba(0, 0, 0, 0.95);
-    border-width: 2px;
-  }
-  
-  .drag-text {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  
-  .metric-label,
-  .clock-date,
-  .count-label,
-  .category-label,
-  .proficiency-label {
-    color: rgba(255, 255, 255, 0.6);
-  }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-@media print {
-  .globe-wrapper {
-    display: none;
-  }
-}
-
-/* ============================================
-   FOCUS STYLES
-   ============================================ */
-.category-btn:focus {
-  outline: 2px solid var(--globe-primary);
-  outline-offset: 2px;
-}
-
-.category-btn:focus:not(:focus-visible) {
-  outline: none;
-}
-
-.category-btn:focus-visible {
-  outline: 2px solid var(--globe-primary);
-  outline-offset: 2px;
-}
-
-/* ============================================
-   LANDSCAPE ORIENTATION FIX FOR MOBILE
-   ============================================ */
-@media (max-height: 500px) and (orientation: landscape) {
-  .globe-wrapper {
-    padding: 8px;
-  }
-  
-  .globe-container {
-    height: 280px;
-    min-height: 250px;
-  }
-  
-  .globe-canvas {
-    min-height: 250px;
-  }
-  
-  .globe-overlay {
-    bottom: 10px;
-  }
-  
-  .drag-instruction {
-    padding: 4px 10px;
-  }
-  
-  .mobile-skill-badge {
-    padding: 6px 8px;
-  }
-  
-  .badge-count {
-    font-size: 18px;
-  }
-}
+.category-btn:focus { outline: 2px solid var(--globe-primary); outline-offset: 2px; }
+.category-btn:focus:not(:focus-visible) { outline: none; }
+.category-btn:focus-visible { outline: 2px solid var(--globe-primary); outline-offset: 2px; }
