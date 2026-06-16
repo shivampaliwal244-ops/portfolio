@@ -2,23 +2,40 @@
    CYBER HACKER THEME VARIABLES
    ========================================== */
 :root {
-    --bg-dark: #010101;
+    --bg-dark: #030507;
+    --bg-deep: #020b08;
     --matrix-green: #00ff41;
+    --matrix-green-soft: #00d84a;
     --cyber-cyan: #00e5ff;
+    --cyber-cyan-soft: rgba(0, 229, 255, 0.35);
     --cyber-purple: #7f00ff;
     --alert-red: #ff003c;
-    /* Glassmorphism settings for blurred containers */
-    --glass-bg: rgba(5, 10, 15, 0.4); /* Translucent dark frost */
-    --glass-border: rgba(0, 229, 255, 0.2); /* Subtle cyber outline */
+    --text-main: #e8fdf3;
+    --text-dim: rgba(232, 253, 243, 0.72);
+
+    --glass-bg: rgba(7, 15, 16, 0.38);
+    --glass-bg-strong: rgba(8, 18, 20, 0.58);
+    --glass-border: rgba(0, 229, 255, 0.2);
+    --glass-green-border: rgba(0, 255, 65, 0.18);
+
     --font-mono: 'Courier New', Courier, monospace;
+    --shadow-cyan: 0 0 20px rgba(0, 229, 255, 0.15);
+    --shadow-green: 0 0 20px rgba(0, 255, 65, 0.14);
 }
 
 /* ==========================================
-   GLOBAL ROOT & GLASSMORPHISM LAYOUT
+   GLOBAL ROOT & LAYOUT
    ========================================== */
 * {
-    scroll-behavior: smooth;
     box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
 }
 
 #home {
@@ -27,281 +44,666 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 40px;
     padding: 0 8%;
-    background-color: var(--bg-dark);
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.08), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(127, 0, 255, 0.08), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(0, 255, 65, 0.08), transparent 30%),
+        linear-gradient(135deg, var(--bg-dark), var(--bg-deep));
     position: relative;
     overflow: hidden;
     font-family: var(--font-mono);
 }
 
-/* Three.js Background with Hacker Matrix Feel */
-.three-bg {
-    position: absolute; inset: 0;
-    z-index: -999;
-    pointer-events: none;
-    opacity: 0.6;
+.lefthome,
+.righthome {
+    position: relative;
+    z-index: 10;
 }
 
-/* CRT Scanline Effect (Hacker Feel) */
-.scanlines {
-    position: absolute; inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0),
-        rgba(255,255,255,0) 50%,
-        rgba(0,0,0,0.2) 50%,
-        rgba(0,0,0,0.2)
-    );
-    background-size: 100% 4px;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0.4;
+.lefthome {
+    width: 45%;
 }
 
-/* Body glitch triggered by JS */
-.screen-glitch { animation: rgbShift 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-@keyframes rgbShift {
-    0% { filter: drop-shadow(4px 0 0 red) drop-shadow(-4px 0 0 cyan); transform: translateX(2px); }
-    50% { filter: drop-shadow(-4px 0 0 red) drop-shadow(4px 0 0 cyan); transform: translateX(-2px); }
-    100% { filter: none; transform: translateX(0); }
+.righthome {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
 }
-
-.lefthome { width: 45%; z-index: 10; }
-.righthome { width: 50%; display: flex; justify-content: flex-end; z-index: 10; }
 
 /* ==========================================
-   LEFT: HERO TYPOGRAPHY
+   BACKGROUND EFFECTS
+   ========================================== */
+.three-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.scanlines {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.12;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    background-size: 100% 4px;
+}
+
+.cyber-noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.08;
+    background-image:
+        radial-gradient(rgba(0, 255, 65, 0.35) 0.6px, transparent 0.6px);
+    background-size: 5px 5px;
+    mix-blend-mode: screen;
+}
+
+.screen-glitch {
+    animation: rgbShift 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes rgbShift {
+    0% {
+        filter: drop-shadow(3px 0 0 rgba(255, 0, 0, 0.6))
+            drop-shadow(-3px 0 0 rgba(0, 229, 255, 0.6));
+        transform: translateX(2px);
+    }
+    50% {
+        filter: drop-shadow(-3px 0 0 rgba(255, 0, 0, 0.6))
+            drop-shadow(3px 0 0 rgba(0, 229, 255, 0.6));
+        transform: translateX(-2px);
+    }
+    100% {
+        filter: none;
+        transform: translateX(0);
+    }
+}
+
+/* ==========================================
+   LEFT SIDE CONTENT
    ========================================== */
 .system-status {
     color: var(--matrix-green);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     letter-spacing: 2px;
     margin-bottom: 20px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    text-shadow: 0 0 5px var(--matrix-green);
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 255, 65, 0.18);
+    border-radius: 999px;
+    background: rgba(0, 255, 65, 0.04);
+    box-shadow: var(--shadow-green);
 }
 
 .blink-dot {
-    width: 8px; height: 8px;
+    width: 8px;
+    height: 8px;
     background: var(--matrix-green);
     border-radius: 50%;
     margin-right: 10px;
-    box-shadow: 0 0 10px var(--matrix-green);
+    box-shadow: 0 0 12px var(--matrix-green);
     animation: blinker 1s linear infinite;
 }
 
-@keyframes blinker { 50% { opacity: 0; } }
-
-.cyber-terminal-name {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #fff;
-    margin: 0;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 0px var(--cyber-cyan), -2px -2px 0px var(--cyber-purple);
+@keyframes blinker {
+    50% {
+        opacity: 0.3;
+    }
 }
 
-.hacker-role { margin-top: 10px; font-size: 1.2rem; color: #fff; }
-.prompt { color: var(--cyber-purple); margin-right: 10px; font-weight: bold; }
-.highlight-cyan { color: var(--cyber-cyan); text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+.hero-title {
+    margin-bottom: 12px;
+}
 
-/* Cyber Hacker Button */
+.cyber-terminal-name {
+    margin: 0;
+    font-size: clamp(2.6rem, 6vw, 4.7rem);
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.02;
+    text-shadow:
+        2px 2px 0 var(--cyber-cyan),
+        -2px -2px 0 var(--cyber-purple),
+        0 0 28px rgba(0, 229, 255, 0.08);
+}
+
+.name-sub-glow {
+    margin-top: 14px;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hacker-role {
+    margin-top: 18px;
+    font-size: 1.1rem;
+    color: #fff;
+    min-height: 36px;
+}
+
+.prompt {
+    color: var(--cyber-purple);
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.highlight-cyan {
+    color: var(--cyber-cyan);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+}
+
+.hero-desc {
+    margin-top: 18px;
+    max-width: 620px;
+    color: var(--text-dim);
+    line-height: 1.75;
+    font-size: 1rem;
+}
+
+/* ==========================================
+   BUTTON
+   ========================================== */
 .cyber-btn {
-    margin-top: 35px;
-    background: rgba(0, 229, 255, 0.05);
+    margin-top: 32px;
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(0, 255, 65, 0.06));
     color: var(--cyber-cyan);
     border: 1px solid var(--cyber-cyan);
     padding: 15px 40px;
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: 1.02rem;
     font-weight: bold;
     letter-spacing: 2px;
     cursor: pointer;
     position: relative;
     text-transform: uppercase;
-    /* Chamfered sci-fi corners */
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.08);
 }
 
 .cyber-btn:hover {
     color: #fff;
-    background: rgba(0, 229, 255, 0.15);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4), inset 0 0 10px rgba(0, 229, 255, 0.2);
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(0, 255, 65, 0.1));
+    box-shadow:
+        0 0 24px rgba(0, 229, 255, 0.28),
+        inset 0 0 10px rgba(0, 229, 255, 0.12);
+    transform: translateY(-2px);
 }
 
-.btn-decor-top, .btn-decor-bottom { position: absolute; width: 20px; height: 2px; background: var(--cyber-purple); }
-.btn-decor-top { top: 0; right: 20px; }
-.btn-decor-bottom { bottom: 0; left: 20px; }
+.cyber-btn:active {
+    transform: translateY(0);
+}
+
+.btn-decor-top,
+.btn-decor-bottom {
+    position: absolute;
+    width: 22px;
+    height: 2px;
+    background: var(--cyber-purple);
+}
+
+.btn-decor-top {
+    top: 0;
+    right: 20px;
+}
+
+.btn-decor-bottom {
+    bottom: 0;
+    left: 20px;
+}
 
 /* ==========================================
-   RIGHT: HUD DATA PANELS (Glassmorphism & Hacker Style)
-   (Replaces Avatar)
+   RIGHT SIDE HUD
    ========================================== */
 .cyber-hud-display {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 24px;
     width: 100%;
-    max-width: 550px;
-    perspective: 1000px; /* For isometric depth */
+    max-width: 580px;
+    perspective: 1200px;
 }
 
-/* Deep Glassmorphism Panel base */
 .hud-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    /* Isometric data stack view */
-    transform: rotateY(-10deg) rotateX(5deg);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transform: rotateY(-8deg) rotateX(4deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .hud-panel:hover {
-    transform: rotateY(0deg) rotateX(0deg);
-    box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.1);
+    transform: rotateY(0deg) rotateX(0deg) translateY(-4px);
+    box-shadow:
+        0 14px 36px rgba(0, 229, 255, 0.08),
+        0 8px 28px rgba(0, 255, 65, 0.05);
 }
 
-/* 1. macOS Terminal style HUD */
+.json-panel {
+    border-color: rgba(127, 0, 255, 0.24);
+}
+
+.json-panel .panel-header {
+    color: #b98cff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    background: rgba(24, 20, 35, 0.62);
+    border-bottom: 1px solid rgba(127, 0, 255, 0.14);
+    display: flex;
+    justify-content: space-between;
+}
+
+.json-panel .lang {
+    color: #a7a7a7;
+    font-size: 0.75rem;
+}
+
+.panel-body {
+    padding: 20px;
+    color: var(--text-main);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    min-height: 220px;
+}
+
+.panel-body.pre-wrap {
+    white-space: pre-wrap;
+}
+
 .terminal-panel {
-    border-color: rgba(0, 229, 255, 0.25);
+    border-color: rgba(0, 229, 255, 0.24);
 }
 
 .mac-header {
-    background: rgba(20, 30, 40, 0.6);
-    padding: 10px;
+    background: rgba(20, 30, 40, 0.66);
+    padding: 10px 14px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.mac-buttons { display: flex; gap: 8px; margin-right: 15px; }
-.mac-btn { width: 12px; height: 12px; border-radius: 50%; }
-.mac-btn.close { background: #ff5f56; }
-.mac-btn.min { background: #ffbd2e; }
-.mac-btn.max { background: #27c93f; }
+.mac-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
 
-.mac-title { color: rgba(255,255,255,0.6); font-size: 0.85rem; font-family: sans-serif; }
+.mac-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.mac-btn.close {
+    background: #ff5f56;
+}
+
+.mac-btn.min {
+    background: #ffbd2e;
+}
+
+.mac-btn.max {
+    background: #27c93f;
+}
+
+.mac-title {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.84rem;
+    font-family: sans-serif;
+}
 
 .terminal-content {
     padding: 20px;
-    height: 180px;
+    height: 220px;
     overflow-y: auto;
 }
 
-.term-cmd { color: var(--cyber-cyan); margin: 5px 0; font-size: 0.95rem; }
-.term-out { color: var(--matrix-green); margin: 5px 0 15px 0; font-size: 0.9rem; opacity: 0.9; }
-
-/* 2. JSON Code Card Style HUD */
-.json-panel {
-    border-color: rgba(127, 0, 255, 0.2);
+.terminal-content::-webkit-scrollbar {
+    width: 6px;
 }
-.json-panel .panel-header {
-    color: var(--cyber-purple);
-    font-weight: bold;
+
+.terminal-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 229, 255, 0.25);
+    border-radius: 20px;
+}
+
+.term-cmd {
+    color: var(--cyber-cyan);
+    margin: 5px 0;
+    font-size: 0.94rem;
+}
+
+.term-out {
+    color: var(--matrix-green);
+    margin: 5px 0 14px 0;
     font-size: 0.9rem;
-    padding: 10px 15px;
-    background: rgba(20, 20, 30, 0.6);
-    border-bottom: 1px solid rgba(127, 0, 255, 0.1);
-    display: flex; justify-content: space-between;
+    opacity: 0.9;
 }
-.json-panel .lang { color: #aaa; font-size: 0.75rem; }
-
-.panel-body { padding: 20px; color: #fff; font-size: 0.95rem; line-height: 1.5; }
-.panel-body.pre-wrap { white-space: pre-wrap; }
 
 /* ==========================================
-   HACKER MODALS / POPUPS (Glassmorphism Deep)
+   MODALS
    ========================================== */
 .cyber-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
     backdrop-filter: blur(12px);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 10000;
+    padding: 16px;
+}
+
+.top-layer {
+    z-index: 10001;
 }
 
 .cyber-glass-modal {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--cyber-cyan);
-    width: 420px;
+    width: 100%;
+    max-width: 430px;
     position: relative;
-    box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
-    border-radius: 12px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--cyber-cyan);
+    border-radius: 16px;
     overflow: hidden;
+    box-shadow:
+        0 0 30px rgba(0, 229, 255, 0.18),
+        0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 .modal-header {
     background: rgba(0, 229, 255, 0.1);
     color: var(--cyber-cyan);
-    padding: 12px 15px;
+    padding: 14px 16px;
     font-weight: bold;
     font-size: 0.95rem;
     border-bottom: 1px solid rgba(0, 229, 255, 0.3);
 }
-.modal-header.alert { background: rgba(255, 0, 60, 0.1); color: var(--alert-red); border-color: var(--alert-red); }
+
+.modal-header.alert {
+    background: rgba(255, 0, 60, 0.08);
+    color: var(--alert-red);
+    border-bottom: 1px solid rgba(255, 0, 60, 0.32);
+}
 
 .cyber-close {
-    position: absolute; top: 10px; right: 15px;
-    background: transparent; border: none; color: #fff;
-    font-family: var(--font-mono); font-size: 1rem; cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-.modal-grid { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+.modal-grid {
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 .cyber-card {
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     background: rgba(255, 255, 255, 0.03);
-    padding: 15px; border-radius: 8px;
-    display: flex; align-items: center; gap: 15px;
-    cursor: pointer; color: #fff; transition: all 0.2s;
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: all 0.25s ease;
+    outline: none;
 }
 
-.cyber-card:hover { border-color: var(--cyber-cyan); background: rgba(0, 229, 255, 0.1); box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
-.cyber-icon { font-size: 24px; }
-.red-glow { color: #ff4a4a; filter: drop-shadow(0 0 5px #ff4a4a); }
-.green-glow { color: #25D366; filter: drop-shadow(0 0 5px #25D366); }
+.cyber-card:hover,
+.cyber-card:focus {
+    border-color: var(--cyber-cyan);
+    background: rgba(0, 229, 255, 0.08);
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.14);
+    transform: translateY(-2px);
+}
 
-/* Form */
-.auth-body { padding: 30px; }
-.auth-text { color: #fff; margin-bottom: 15px; font-size: 0.9rem; }
+.card-text-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-text-wrap span {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.card-text-wrap small {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.78rem;
+}
+
+.cyber-icon {
+    font-size: 24px;
+}
+
+.red-glow {
+    color: #ff4a4a;
+    filter: drop-shadow(0 0 5px #ff4a4a);
+}
+
+.green-glow {
+    color: #25d366;
+    filter: drop-shadow(0 0 5px #25d366);
+}
+
+.auth-body {
+    padding: 26px;
+}
+
+.auth-text {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 0.92rem;
+}
+
 .cyber-input {
-    width: 100%; background: rgba(0,0,0,0.5);
-    border: 1px solid var(--alert-red); color: var(--alert-red);
-    padding: 12px; font-family: var(--font-mono); border-radius: 5px; outline: none; margin-bottom: 15px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.48);
+    border: 1px solid var(--alert-red);
+    color: var(--alert-red);
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 15px;
 }
-.cyber-input:focus { box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
-.cyber-error { color: var(--alert-red); font-size: 0.8rem; margin-bottom: 15px; }
-.sm-btn { padding: 10px 25px; font-size: 1rem; border-color: var(--alert-red); color: var(--alert-red); }
-.sm-btn:hover { background: rgba(255, 0, 60, 0.1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.4); }
+
+.cyber-input::placeholder {
+    color: rgba(255, 0, 60, 0.55);
+}
+
+.cyber-input:focus {
+    box-shadow: 0 0 10px rgba(255, 0, 60, 0.28);
+}
+
+.cyber-error {
+    color: var(--alert-red);
+    font-size: 0.82rem;
+    margin-bottom: 15px;
+}
+
+.sm-btn {
+    padding: 11px 24px;
+    font-size: 0.95rem;
+    border-color: var(--alert-red);
+    color: var(--alert-red);
+}
+
+.sm-btn:hover {
+    background: rgba(255, 0, 60, 0.08);
+    box-shadow: 0 0 14px rgba(255, 0, 60, 0.22);
+}
 
 /* ==========================================
-   RESPONSIVE DESIGN (Butter Smooth scaling)
+   RESPONSIVE
    ========================================== */
 @media (max-width: 1024px) {
-    /* Stack vertical on tablets */
-    #home { flex-direction: column; padding: 100px 5% 50px; text-align: left; justify-content: center; gap: 50px; }
-    .lefthome, .righthome { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .cyber-hud-display { max-width: 100%; align-items: center; transform: none; }
-    .hud-panel { transform: none; width: 100%; max-width: 600px; }
-    .hud-panel:hover { transform: translateY(-5px); }
-    .cyber-btn { align-self: center; }
+    #home {
+        flex-direction: column;
+        justify-content: center;
+        padding: 110px 5% 60px;
+        gap: 42px;
+    }
+
+    .lefthome,
+    .righthome {
+        width: 100%;
+    }
+
+    .lefthome {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .righthome {
+        justify-content: center;
+    }
+
+    .hero-desc {
+        text-align: center;
+    }
+
+    .cyber-hud-display {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .hud-panel {
+        width: 100%;
+        max-width: 680px;
+        transform: none;
+    }
+
+    .hud-panel:hover {
+        transform: translateY(-4px);
+    }
 }
 
 @media (max-width: 768px) {
-    .cyber-terminal-name { font-size: 3rem; text-shadow: 2px 2px 0px rgba(0, 229, 255, 0.4), -2px -2px 0px rgba(127, 0, 255, 0.4); }
-    .hacker-role { font-size: 1rem; }
-    .terminal-content { height: 160px; }
-    .pre-wrap { font-size: 0.85rem; }
+    #home {
+        padding: 90px 18px 40px;
+        gap: 28px;
+    }
+
+    .system-status {
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+    .name-sub-glow {
+        font-size: 0.78rem;
+        letter-spacing: 1.2px;
+    }
+
+    .hacker-role {
+        font-size: 0.96rem;
+        min-height: 32px;
+    }
+
+    .hero-desc {
+        font-size: 0.94rem;
+        line-height: 1.65;
+    }
+
+    .panel-body {
+        min-height: 190px;
+        font-size: 0.86rem;
+    }
+
+    .terminal-content {
+        height: 190px;
+        padding: 16px;
+    }
+
+    .term-cmd,
+    .term-out {
+        font-size: 0.85rem;
+    }
+
+    .cyber-btn {
+        padding: 13px 28px;
+        font-size: 0.94rem;
+    }
 }
 
 @media (max-width: 480px) {
-    .cyber-terminal-name { font-size: 2.2rem; }
-    .system-status { font-size: 0.75rem; justify-content: center; }
-    .cyber-btn { padding: 12px 30px; font-size: 1rem; }
-    .cyber-glass-modal { width: 92%; }
+    .cyber-terminal-name {
+        font-size: 2.15rem;
+    }
+
+    .system-status {
+        justify-content: center;
+        width: 100%;
+        padding: 9px 12px;
+    }
+
+    .prompt {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 6px;
+    }
+
+    .hacker-role {
+        line-height: 1.6;
+    }
+
+    .modal-grid,
+    .auth-body {
+        padding: 18px;
+    }
+
+    .cyber-glass-modal {
+        max-width: 95%;
+    }
+
+    .cyber-card {
+        padding: 14px;
+    }
+
+    .card-text-wrap span {
+        font-size: 0.9rem;
+    }
+
+    .card-text-wrap small {
+        font-size: 0.74rem;
+    }
 }

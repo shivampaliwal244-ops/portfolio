@@ -1,121 +1,157 @@
 'use client';
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
+
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 export default function Particlethree() {
-  const mountRef = useRef<HTMLDivElement>(null);
+    const mountRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!mountRef.current) return;
-
-    // --- VARIABLES DEFINED OUTSIDE TRY BLOCK (Crucial for fix) ---
-    let renderer: THREE.WebGLRenderer;
-    let animationFrameId: number;
-    let particlesGeometry: THREE.BufferGeometry;
-    let particlesMaterial: THREE.PointsMaterial;
-
-    try {
-      // 1. SCENE SETUP
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;
-
-      // WebGL Renderer - Antialiasing enabled for crisp, non-blurry hacker dots
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setPixelRatio(window.devicePixelRatio);
-      mountRef.current.appendChild(renderer.domElement);
-
-      const updateSize = () => {
+    useEffect(() => {
         if (!mountRef.current) return;
-        const width = mountRef.current.clientWidth;
-        const height = mountRef.current.clientHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      };
 
-      // 🔥 HACKER DIGITAL RAIN SETUP (No Glow, Real Type)
-      // Complexity here lies in numbers and deterministic behavior (falling traffic)
-      const count = 3000;
-      particlesGeometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(count * 3);
-      const speeds = new Float32Array(count); // Individual vertical speeds
+        let renderer: THREE.WebGLRenderer | null = null;
+        let scene: THREE.Scene | null = null;
+        let camera: THREE.PerspectiveCamera | null = null;
+        let particlesGeometry: THREE.BufferGeometry | null = null;
+        let particlesMaterial: THREE.PointsMaterial | null = null;
+        let particles: THREE.Points | null = null;
+        let animationFrameId = 0;
 
-      for (let i = 0; i < count; i++) {
-        // Spread particles across a wide X/Z plane (data streams)
-        positions[i * 3] = (Math.random() - 0.5) * 20;     // X: Spread wide
-        positions[i * 3 + 1] = Math.random() * 20 - 10;    // Y: Distributed height
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 15; // Z: Depth
+        const currentMount = mountRef.current;
 
-        // Each data packet falls at a slightly different, deterministic speed
-        speeds[i] = Math.random() * 0.05 + 0.02;
-      }
+        try {
+            scene = new THREE.Scene();
 
-      particlesGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      
-      // Strict points material: No Blending (prevents glow)
-      particlesMaterial = new THREE.PointsMaterial({
-        color: 0x00ff41, // Raw Matrix Green
-        size: 0.04,     // Sharp, small dots
-        transparent: true,
-        opacity: 0.8,
-        // No Aditive blending = No overexposure or glow.
-      });
+            camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
 
-      const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-      scene.add(particles);
+            renderer = new THREE.WebGLRenderer({
+                alpha: true,
+                antialias: true,
+                powerPreference: 'high-performance'
+            });
 
-      // 🎬 ANIMATION LOOP (Deterministic Data Flow)
-      const animate = () => {
-        animationFrameId = requestAnimationFrame(animate);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
+            currentMount.appendChild(renderer.domElement);
 
-        // Access raw positions array
-        const pos = particlesGeometry.attributes.position.array as Float32Array;
+            const count = window.innerWidth < 768 ? 1600 : 2800;
 
-        for (let i = 0; i < count; i++) {
-          const i3 = i * 3;
-          // Apply individual falling speed (Matrix Digital Rain simulation)
-          pos[i3 + 1] -= speeds[i];
+            particlesGeometry = new THREE.BufferGeometry();
 
-          // Reset traffic packet to the top once it falls below the screen
-          if (pos[i3 + 1] < -10) {
-            pos[i3 + 1] = 10;
-          }
+            const positions = new Float32Array(count * 3);
+            const speeds = new Float32Array(count);
+            const drift = new Float32Array(count);
+
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+
+                positions[i3] = (Math.random() - 0.5) * 24;
+                positions[i3 + 1] = Math.random() * 22 - 11;
+                positions[i3 + 2] = (Math.random() - 0.5) * 16;
+
+                speeds[i] = Math.random() * 0.035 + 0.012;
+                drift[i] = (Math.random() - 0.5) * 0.006;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            particlesMaterial = new THREE.PointsMaterial({
+                color: 0x00ff41,
+                size: window.innerWidth < 768 ? 0.03 : 0.04,
+                transparent: true,
+                opacity: 0.78,
+                depthWrite: false
+            });
+
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            const updateSize = () => {
+                if (!renderer || !camera || !mountRef.current) return;
+
+                const width = mountRef.current.clientWidth;
+                const height = mountRef.current.clientHeight || window.innerHeight;
+
+                renderer.setSize(width, height);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            };
+
+            const animate = () => {
+                animationFrameId = requestAnimationFrame(animate);
+
+                if (!particlesGeometry || !particles || !renderer || !scene || !camera) return;
+
+                const pos = particlesGeometry.attributes.position.array as Float32Array;
+
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+
+                    pos[i3 + 1] -= speeds[i];
+                    pos[i3] += drift[i];
+
+                    if (pos[i3 + 1] < -11) {
+                        pos[i3 + 1] = 11;
+                        pos[i3] = (Math.random() - 0.5) * 24;
+                    }
+
+                    if (pos[i3] > 12 || pos[i3] < -12) {
+                        pos[i3] *= -1;
+                    }
+                }
+
+                particlesGeometry.attributes.position.needsUpdate = true;
+
+                particles.rotation.y += 0.0008;
+                particles.rotation.x = Math.sin(Date.now() * 0.00015) * 0.03;
+
+                renderer.render(scene, camera);
+            };
+
+            updateSize();
+            animate();
+
+            window.addEventListener('resize', updateSize);
+
+            return () => {
+                cancelAnimationFrame(animationFrameId);
+                window.removeEventListener('resize', updateSize);
+
+                if (particlesGeometry) particlesGeometry.dispose();
+                if (particlesMaterial) particlesMaterial.dispose();
+
+                if (scene && particles) {
+                    scene.remove(particles);
+                }
+
+                if (renderer) {
+                    renderer.dispose();
+
+                    if (renderer.domElement && currentMount.contains(renderer.domElement)) {
+                        currentMount.removeChild(renderer.domElement);
+                    }
+                }
+            };
+        } catch (error) {
+            console.error('Cyber particle background initialization failed:', error);
         }
 
-        // Inform THREE that positions need GPU update
-        particlesGeometry.attributes.position.needsUpdate = true;
-        
-        // Slow structure rotation adds isometric depth
-        particles.rotation.y += 0.001;
+        return () => {
+            cancelAnimationFrame(animationFrameId);
 
-        renderer.render(scene, camera);
-      };
+            if (particlesGeometry) particlesGeometry.dispose();
+            if (particlesMaterial) particlesMaterial.dispose();
 
-      updateSize();
-      animate();
-      window.addEventListener("resize", updateSize);
+            if (renderer) {
+                renderer.dispose();
 
-    } catch (error) {
-      console.error("WebGL Hacker Background initialization failed:", error);
-    }
+                if (renderer.domElement && currentMount.contains(renderer.domElement)) {
+                    currentMount.removeChild(renderer.domElement);
+                }
+            }
+        };
+    }, []);
 
-    // --- FULL MEMORY CLEANUP FUNCTION ---
-    // Memory is disposed here only if it was successfully initialized.
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", () => {});
-      
-      if (renderer) renderer.dispose();
-      // Error Fixed: Check existence before disposal
-      if (particlesGeometry!) particlesGeometry.dispose();
-      if (particlesMaterial!) particlesMaterial.dispose();
-      
-      if (renderer && mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
-      }
-    };
-  }, []);
-
-  return <div className="three-bg hacker-matrix-bg" ref={mountRef}></div>;
+    return <div className="three-bg hacker-matrix-bg" ref={mountRef}></div>;
 }
