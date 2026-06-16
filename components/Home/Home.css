@@ -1,1980 +1,307 @@
-
-home.css
-
 /* ==========================================
-   HOME.CSS - Main Home Section Styles
-   
-   This file contains all styles for the home
-   hero section including:
-   - Layout and positioning
-   - Profile image with effects
-   - Hire Me button (CSS-only animations)
-   - Hand burst particle effect
-   - Contact popup with glass effects
-   - Password popup with glass effects
-   - Responsive breakpoints
-   - Smooth UX transitions throughout
-   
-   Color Scheme: Cyan (#00e5ff), Purple (#7f00ff), White
-   No pink colors used
-   
-   Note: All Hire Me button and popup animations
-   are CSS-only for optimal performance
+   CYBER HACKER THEME VARIABLES
    ========================================== */
-
-/* ==========================================
-   GLOBAL SMOOTH SCROLLING & TRANSITIONS
-   Applied to entire home section for better UX
-   ========================================== */
-* {
-    /* Smooth scrolling behavior */
-    scroll-behavior: smooth;
+:root {
+    --bg-dark: #010101;
+    --matrix-green: #00ff41;
+    --cyber-cyan: #00e5ff;
+    --cyber-purple: #7f00ff;
+    --alert-red: #ff003c;
+    /* Glassmorphism settings for blurred containers */
+    --glass-bg: rgba(5, 10, 15, 0.4); /* Translucent dark frost */
+    --glass-border: rgba(0, 229, 255, 0.2); /* Subtle cyber outline */
+    --font-mono: 'Courier New', Courier, monospace;
 }
 
 /* ==========================================
-   HOME SECTION CONTAINER
-   
-   Full viewport hero section with flex layout
-   Split into left (text) and right (image) sections
+   GLOBAL ROOT & GLASSMORPHISM LAYOUT
    ========================================== */
+* {
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
 #home {
     width: 100%;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10%;
-    /* Dark gradient background with subtle depth */
-    background: radial-gradient(
-        ellipse at 30% 30%,
-        #0a0a0a 0%,
-        #050505 50%,
-        #000000 100%
-    );
-    overflow: hidden;
+    padding: 0 8%;
+    background-color: var(--bg-dark);
     position: relative;
-    z-index: 1;
-    /* Smooth transition for any layout changes */
-    transition: padding 0.3s ease;
+    overflow: hidden;
+    font-family: var(--font-mono);
 }
 
-/* ==========================================
-   PARTICLE BACKGROUND
-   
-   Three.js canvas wrapper for animated particles
-   Positioned behind all content
-   ========================================== */
+/* Three.js Background with Hacker Matrix Feel */
 .three-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute; inset: 0;
     z-index: -999;
     pointer-events: none;
-    opacity: 0.7;
-    /* Smooth opacity transitions */
-    transition: opacity 0.5s ease;
+    opacity: 0.6;
 }
 
-/* Canvas element fills container */
-.three-bg canvas {
-    display: block;
-    width: 100% !important;
-    height: 100% !important;
-    /* Subtle glow effect on particles */
-    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.3));
+/* CRT Scanline Effect (Hacker Feel) */
+.scanlines {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.4;
 }
+
+/* Body glitch triggered by JS */
+.screen-glitch { animation: rgbShift 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
+@keyframes rgbShift {
+    0% { filter: drop-shadow(4px 0 0 red) drop-shadow(-4px 0 0 cyan); transform: translateX(2px); }
+    50% { filter: drop-shadow(-4px 0 0 red) drop-shadow(4px 0 0 cyan); transform: translateX(-2px); }
+    100% { filter: none; transform: translateX(0); }
+}
+
+.lefthome { width: 45%; z-index: 10; }
+.righthome { width: 50%; display: flex; justify-content: flex-end; z-index: 10; }
 
 /* ==========================================
-   LEFT SECTION - Text Content
-   
-   Contains hero title, typewriter, and CTA button
-   Takes 50% width on desktop
+   LEFT: HERO TYPOGRAPHY
    ========================================== */
-.lefthome {
-    width: 50%;
-    color: white;
+.system-status {
+    color: var(--matrix-green);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    text-shadow: 0 0 5px var(--matrix-green);
+}
+
+.blink-dot {
+    width: 8px; height: 8px;
+    background: var(--matrix-green);
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 10px var(--matrix-green);
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker { 50% { opacity: 0; } }
+
+.cyber-terminal-name {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px var(--cyber-cyan), -2px -2px 0px var(--cyber-purple);
+}
+
+.hacker-role { margin-top: 10px; font-size: 1.2rem; color: #fff; }
+.prompt { color: var(--cyber-purple); margin-right: 10px; font-weight: bold; }
+.highlight-cyan { color: var(--cyber-cyan); text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+
+/* Cyber Hacker Button */
+.cyber-btn {
+    margin-top: 35px;
+    background: rgba(0, 229, 255, 0.05);
+    color: var(--cyber-cyan);
+    border: 1px solid var(--cyber-cyan);
+    padding: 15px 40px;
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
     position: relative;
-    z-index: 999;
-    opacity: 1;
-    /* Smooth transitions for responsive changes */
-    transition: width 0.4s ease, padding 0.4s ease;
+    text-transform: uppercase;
+    /* Chamfered sci-fi corners */
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+    transition: all 0.3s ease;
 }
 
+.cyber-btn:hover {
+    color: #fff;
+    background: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4), inset 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.btn-decor-top, .btn-decor-bottom { position: absolute; width: 20px; height: 2px; background: var(--cyber-purple); }
+.btn-decor-top { top: 0; right: 20px; }
+.btn-decor-bottom { bottom: 0; left: 20px; }
+
 /* ==========================================
-   HERO TITLE CONTAINER
-   
-   Main heading container with animated lines
-   Uses flex column for proper stacking
+   RIGHT: HUD DATA PANELS (Glassmorphism & Hacker Style)
+   (Replaces Avatar)
    ========================================== */
-.hero-title {
-    /* Flex column to stack line1 above line2 */
+.cyber-hud-display {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    position: relative;
-    z-index: 999;
-}
-
-/* ==========================================
-   LINE 1 - "Hey, I'm" Greeting
-   
-   Positioned ABOVE the name (line2)
-   CSS styling with hover effects
-   Features:
-   - Gradient text color (cyan to white)
-   - Text glow/shadow effect
-   - Hover animation with enhanced glow
-   - Smooth transition on hover
-   - Block display for proper stacking
-   
-   GSAP animated on mount (fade from top)
-   ========================================== */
-.line1 {
-    /* Block display ensures it's above line2 */
-    display: block;
+    gap: 25px;
     width: 100%;
-    
-    /* Font sizing - smaller than name */
-    font-size: 2.2rem;
-    font-weight: 500;
-    line-height: 1.2;
-    
-    /* Gradient text effect using background-clip */
-    background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #00e5ff 40%,
-        #00b4d8 70%,
-        #ffffff 100%
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    
-    /* Multi-layer glow using filter */
-    filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5))
-            drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
-    
-    /* Fallback text shadow for browsers without filter support */
-    text-shadow: 
-        0 0 10px rgba(0, 229, 255, 0.4),
-        0 0 20px rgba(0, 229, 255, 0.2),
-        0 0 30px rgba(127, 0, 255, 0.1);
-    
-    /* Positioning */
-    position: relative;
-    z-index: 200;
-    
-    /* Initial state for GSAP animation */
-    opacity: 0;
-    
-    /* Smooth transition for all hover effects */
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    
-    /* Default cursor since it's not interactive */
-    cursor: default;
+    max-width: 550px;
+    perspective: 1000px; /* For isometric depth */
 }
 
-/* 
- * Line 1 Hover Effect
- * Enhanced glow and slight scale/translate
- */
-.line1:hover {
-    /* Shift gradient colors on hover */
-    background: linear-gradient(
-        135deg,
-        #00e5ff 0%,
-        #ffffff 30%,
-        #7f00ff 60%,
-        #00e5ff 100%
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    
-    /* Intensified glow on hover */
-    filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.8))
-            drop-shadow(0 0 30px rgba(127, 0, 255, 0.5))
-            drop-shadow(0 0 45px rgba(0, 229, 255, 0.3));
-    
-    /* Slight scale up and shift right */
-    transform: scale(1.05) translateX(5px);
-    
-    /* Animate gradient position */
-    animation: line1GradientShift 2s ease infinite;
-}
-
-/* Keyframes for gradient position animation */
-@keyframes line1GradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 
- * Optional pulse effect using pseudo-element
- * Creates radial glow behind text on hover
- */
-.line1::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    /* Radial glow gradient */
-    background: radial-gradient(
-        ellipse at center,
-        rgba(0, 229, 255, 0.1) 0%,
-        transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Show pulse effect on hover */
-.line1:hover::after {
-    opacity: 1;
-    animation: line1Pulse 1.5s ease-in-out infinite;
-}
-
-/* Pulse animation keyframes */
-@keyframes line1Pulse {
-    0%, 100% { 
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.5;
-    }
-    50% { 
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0.8;
-    }
-}
-
-/* ==========================================
-   LINE 2 - Name with Gradient Glow
-   
-   Large name display with animated gradient
-   GSAP controls initial state (opacity, scale)
-   Displayed below line1 (Hey, I'm)
-   ========================================== */
-.line2 {
-    /* Block display for proper stacking */
-    display: block;
-    width: 100%;
-    
-    /* Large font for emphasis */
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 1.1;
-    
-    /* Multi-stop gradient for rich color effect */
-    background: linear-gradient(
-        135deg,
-        #00e5ff 0%,
-        #00b4d8 25%,
-        #7f00ff 50%,
-        #00e5ff 75%,
-        #00b4d8 100%
-    );
-    background-size: 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    
-    /* Cyan glow effect */
-    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.6));
-    
-    /* Continuous gradient animation */
-    animation: nameGradient 4s linear infinite;
-    
-    /* Initial state for GSAP - starts hidden */
-    opacity: 0;
-    
-    /* Smooth hover transition */
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-/* Line 2 hover effect - subtle glow increase */
-.line2:hover {
-    filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.8));
-    transform: scale(1.02);
-}
-
-/* Gradient shift animation for name */
-@keyframes nameGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* ==========================================
-   LINE 3 - Typewriter Role Text
-   
-   Animated typing effect for job roles
-   GSAP controls initial state
-   ========================================== */
-.line3 {
-    margin-top: 15px;
-    font-size: 1.2rem;
-    color: #aaa;
-    letter-spacing: 1px;
-    /* Initial state for GSAP */
-    opacity: 0;
-    /* Subtle floating animation */
-    animation: floatText 3s ease-in-out infinite;
-    /* Smooth transitions */
-    transition: color 0.3s ease;
-}
-
-/* 
- * Highlighted typing text
- * Gradient with glow effect
- */
-.highlight {
-    background: linear-gradient(90deg, #00e5ff, #7f00ff);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Multi-layer text glow */
-    text-shadow:
-        0 0 8px rgba(0, 229, 255, 0.8),
-        0 0 20px rgba(127, 0, 255, 0.6);
-}
-
-/* Typewriter cursor styling */
-.Typewriter__cursor {
-    color: #00e5ff;
-    font-weight: bold;
-    animation: blink 1s infinite;
-}
-
-/* Cursor blink animation */
-@keyframes blink {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0.2; }
-}
-
-/* Subtle float animation for line 3 */
-@keyframes floatText {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-}
-
-/* ==========================================
-   WAVE EMOJI - Hand Wave Animation
-   
-   Used if adding wave emoji to greeting
-   ========================================== */
-.wave {
-    display: inline-block;
-    transform-origin: 70% 70%;
-    animation: wave 1.8s ease-in-out infinite;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    will-change: transform;
-}
-
-/* Wave hand animation keyframes */
-@keyframes wave {
-    0%, 100% { transform: rotate(0deg); }
-    10% { transform: rotate(14deg); }
-    20% { transform: rotate(-8deg); }
-    30% { transform: rotate(14deg); }
-    40% { transform: rotate(-4deg); }
-    50% { transform: rotate(10deg); }
-    60% { transform: rotate(0deg); }
-}
-
-/* ==========================================
-   HAND PARTICLE - Burst Effect Styles
-   
-   Particles created dynamically on button click
-   These styles are applied via JavaScript
-   ========================================== */
-.hand-particle {
-    /* Particles are positioned via JS */
-    pointer-events: none;
-    user-select: none;
-    /* Smooth animation performance */
-    will-change: transform, opacity;
-    /* Text rendering for emojis */
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-    /* Glow effect on particles */
-    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6))
-            drop-shadow(0 0 15px rgba(127, 0, 255, 0.4));
-}
-
-/* ==========================================
-   HIRE ME BUTTON
-   
-   Premium glass morphism button with neon effects
-   
-   ALL ANIMATIONS ARE CSS-ONLY:
-   - Entrance animation via keyframes
-   - Hover effects via transitions
-   - Active state via transitions
-   - Glow sweep via transitions
-   - Ripple effect on click
-   
-   NO GSAP USED - Better performance
-   ========================================== */
-.hire-btn {
-    margin-top: 30px;
-    padding: 18px 45px;
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #ffffff;
-    /* Glass effect background - cyan/purple theme */
-    background: linear-gradient(
-        135deg,
-        rgba(0, 229, 255, 0.15) 0%,
-        rgba(127, 0, 255, 0.15) 50%,
-        rgba(0, 114, 255, 0.15) 100%
-    );
+/* Deep Glassmorphism Panel base */
+.hud-panel {
+    background: var(--glass-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    border: 2px solid rgba(0, 229, 255, 0.4);
-    border-radius: 60px;
-    cursor: pointer;
-    position: relative;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
     overflow: hidden;
-    /* Button visible by default - no GSAP needed */
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    /* Multi-layer glow effect - cyan/purple */
-    box-shadow:
-        0 0 30px rgba(0, 229, 255, 0.4),
-        0 0 60px rgba(127, 0, 255, 0.25),
-        0 0 90px rgba(0, 229, 255, 0.15),
-        inset 0 0 30px rgba(0, 229, 255, 0.1);
-    /* Smooth transitions for hover effects - improved timing */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 10;
-    /* CSS entrance animation - replaces GSAP */
-    animation: hireBtnEntrance 0.8s ease-out 0.8s both;
-    /* GPU acceleration for smooth animations */
-    will-change: transform, box-shadow;
+    /* Isometric data stack view */
+    transform: rotateY(-10deg) rotateX(5deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* 
- * CSS entrance animation for Hire Me button
- * Smooth fade in with slide up effect
- */
-@keyframes hireBtnEntrance {
-    0% {
-        opacity: 0;
-        transform: translateY(40px) scale(0.8);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+.hud-panel:hover {
+    transform: rotateY(0deg) rotateX(0deg);
+    box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.1);
 }
 
-/* Button text styling with glow */
-.btn-text {
-    position: relative;
-    z-index: 3;
-    text-shadow: 
-        0 0 10px rgba(0, 229, 255, 0.5),
-        0 0 20px rgba(127, 0, 255, 0.3);
-    /* Smooth text transitions */
-    transition: text-shadow 0.3s ease;
+/* 1. macOS Terminal style HUD */
+.terminal-panel {
+    border-color: rgba(0, 229, 255, 0.25);
 }
 
-/* Rocket icon styling */
-.btn-icon {
-    position: relative;
-    z-index: 3;
-    margin-left: 10px;
-    display: inline-block;
-    font-size: 1.3rem;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.5));
-}
-
-/* Glow sweep effect element */
-.btn-glow {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(0, 229, 255, 0.5),
-        rgba(127, 0, 255, 0.3),
-        transparent
-    );
-    transition: left 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 1;
-}
-
-/* Ripple effect element for click feedback */
-.btn-ripple {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(
-        circle,
-        rgba(0, 229, 255, 0.4) 0%,
-        rgba(127, 0, 255, 0.2) 50%,
-        transparent 70%
-    );
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* ==========================================
-   HIRE BUTTON - Hover State
-   
-   Enhanced glow, lift effect, and icon animation
-   All CSS transitions - no GSAP
-   ========================================== */
-.hire-btn:hover {
-    /* Lift and scale on hover */
-    transform: translateY(-8px) scale(1.08);
-    /* Enhanced background */
-    background: linear-gradient(
-        135deg,
-        rgba(0, 229, 255, 0.25) 0%,
-        rgba(127, 0, 255, 0.25) 50%,
-        rgba(0, 114, 255, 0.25) 100%
-    );
-    /* Brighter border */
-    border-color: rgba(0, 229, 255, 0.7);
-    /* Intensified glow - cyan/purple */
-    box-shadow:
-        0 0 50px rgba(0, 229, 255, 0.6),
-        0 0 100px rgba(127, 0, 255, 0.5),
-        0 0 150px rgba(0, 229, 255, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        inset 0 0 40px rgba(0, 229, 255, 0.2);
-}
-
-/* Enhanced text glow on hover */
-.hire-btn:hover .btn-text {
-    text-shadow: 
-        0 0 15px rgba(0, 229, 255, 0.8),
-        0 0 30px rgba(127, 0, 255, 0.5);
-}
-
-/* Glow sweep moves across on hover */
-.hire-btn:hover .btn-glow {
-    left: 100%;
-}
-
-/* Rocket icon animates on hover */
-.hire-btn:hover .btn-icon {
-    transform: translateX(8px) rotate(25deg) scale(1.2);
-    animation: rocketShake 0.4s ease infinite;
-    filter: drop-shadow(0 0 15px rgba(255, 200, 0, 0.8));
-}
-
-/* Rocket shake animation */
-@keyframes rocketShake {
-    0%, 100% { transform: translateX(8px) rotate(25deg) scale(1.2); }
-    25% { transform: translateX(10px) rotate(30deg) scale(1.25); }
-    75% { transform: translateX(6px) rotate(20deg) scale(1.15); }
-}
-
-/* ==========================================
-   HIRE BUTTON - Active/Click State
-   
-   Press feedback effect with ripple
-   ========================================== */
-.hire-btn:active {
-    transform: scale(0.95) translateY(-2px);
-    box-shadow:
-        0 0 25px rgba(0, 229, 255, 0.5),
-        0 0 50px rgba(127, 0, 255, 0.3),
-        inset 0 0 30px rgba(0, 229, 255, 0.3);
-    /* Faster transition for snappy feedback */
-    transition-duration: 0.1s;
-}
-
-/* Ripple animation on click */
-.hire-btn:active .btn-ripple {
-    animation: rippleEffect 0.6s ease-out;
-}
-
-@keyframes rippleEffect {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 0.6;
-    }
-    100% {
-        width: 300px;
-        height: 300px;
-        opacity: 0;
-    }
-}
-
-/* ==========================================
-   POPUP OVERLAY
-   
-   Premium blur background for contact popup
-   Click anywhere to close
-   ========================================== */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Semi-transparent gradient overlay */
-    background: linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.85) 0%,
-        rgba(10, 10, 30, 0.9) 50%,
-        rgba(0, 0, 0, 0.85) 100%
-    );
-    /* Strong blur effect for glass look */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+.mac-header {
+    background: rgba(20, 30, 40, 0.6);
+    padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    /* CSS entrance animation */
-    animation: overlayFadeIn 0.3s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* Overlay fade in animation */
-@keyframes overlayFadeIn {
-    from { 
-        opacity: 0;
-        backdrop-filter: blur(0px);
-    }
-    to { 
-        opacity: 1;
-        backdrop-filter: blur(20px);
-    }
+.mac-buttons { display: flex; gap: 8px; margin-right: 15px; }
+.mac-btn { width: 12px; height: 12px; border-radius: 50%; }
+.mac-btn.close { background: #ff5f56; }
+.mac-btn.min { background: #ffbd2e; }
+.mac-btn.max { background: #27c93f; }
+
+.mac-title { color: rgba(255,255,255,0.6); font-size: 0.85rem; font-family: sans-serif; }
+
+.terminal-content {
+    padding: 20px;
+    height: 180px;
+    overflow-y: auto;
 }
 
-/* ==========================================
-   HIRE POPUP CONTAINER
-   
-   Premium glass card for contact options
-   Features:
-   - Glass morphism with blur
-   - Gradient border glow
-   - Proper close button positioning
-   
-   CSS-only animations - NO GSAP
-   ========================================== */
-.hire-popup {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Glass morphism background */
-    background: linear-gradient(
-        135deg,
-        rgba(15, 15, 25, 0.95) 0%,
-        rgba(10, 10, 20, 0.98) 50%,
-        rgba(15, 15, 25, 0.95) 100%
-    );
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    padding: 50px 60px;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    /* Multi-layer glow shadow - cyan/purple */
-    box-shadow:
-        0 0 50px rgba(0, 229, 255, 0.4),
-        0 0 100px rgba(127, 0, 255, 0.25),
-        0 0 150px rgba(0, 229, 255, 0.1),
-        0 30px 80px rgba(0, 0, 0, 0.7),
-        inset 0 0 30px rgba(255, 255, 255, 0.03),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    /* CSS entrance animation */
-    animation: popupEntrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    /* Ensure close button stays inside */
-    overflow: visible;
-}
+.term-cmd { color: var(--cyber-cyan); margin: 5px 0; font-size: 0.95rem; }
+.term-out { color: var(--matrix-green); margin: 5px 0 15px 0; font-size: 0.9rem; opacity: 0.9; }
 
-/* Popup entrance animation */
-@keyframes popupEntrance {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+/* 2. JSON Code Card Style HUD */
+.json-panel {
+    border-color: rgba(127, 0, 255, 0.2);
 }
-
-/* 
- * Glass reflection overlay
- * Creates realistic glass highlight at top
- */
-.hire-popup::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    border-radius: 30px 30px 0 0;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.02) 50%,
-        transparent 100%
-    );
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* ==========================================
-   POPUP TITLE
-   
-   Gradient text title for popup
-   ========================================== */
-.popup-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 30px 0;
-    /* Gradient text - cyan to purple */
-    background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #00e5ff 50%,
-        #7f00ff 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-}
-
-/* ==========================================
-   CLOSE BUTTON - Contact Popup
-   
-   Properly positioned inside popup
-   Smooth rotation on hover
-   ========================================== */
-.close-btn {
-    position: absolute;
-    /* Positioned inside popup, not cut off */
-    top: 15px;
-    right: 15px;
-    /* Gradient background - cyan/purple */
-    background: linear-gradient(
-        135deg,
-        rgba(127, 0, 255, 0.8) 0%,
-        rgba(0, 229, 255, 0.8) 100%
-    );
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 16px;
+.json-panel .panel-header {
+    color: var(--cyber-purple);
     font-weight: bold;
-    /* Glow effect */
-    box-shadow:
-        0 0 15px rgba(127, 0, 255, 0.5),
-        0 0 30px rgba(0, 229, 255, 0.3);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 100;
-}
-
-/* Close button hover - rotate and glow */
-.close-btn:hover {
-    transform: rotate(90deg) scale(1.1);
-    box-shadow:
-        0 0 25px rgba(127, 0, 255, 0.7),
-        0 0 50px rgba(0, 229, 255, 0.5);
-    background: linear-gradient(
-        135deg,
-        rgba(0, 229, 255, 0.9) 0%,
-        rgba(127, 0, 255, 0.9) 100%
-    );
-}
-
-/* ==========================================
-   OPTIONS CONTAINER
-   
-   Flex container for option cards
-   ========================================== */
-.options-container {
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
-    position: relative;
-    z-index: 2;
-}
-
-/* ==========================================
-   OPTION CARDS
-   
-   Premium glass contact method buttons
-   Features:
-   - Glass morphism design
-   - Animated border highlight on hover
-   - Shine sweep animation
-   - Smooth lift effect on hover
-   
-   CSS-only transitions - NO GSAP
-   ========================================== */
-.option {
-    width: 150px;
-    height: 150px;
-    border-radius: 24px;
-    /* Glass background */
-    background: linear-gradient(
-        135deg,
-        rgba(20, 20, 35, 0.9) 0%,
-        rgba(15, 15, 25, 0.95) 50%,
-        rgba(20, 20, 35, 0.9) 100%
-    );
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    /* Base border */
-    border: 2px solid transparent;
-    /* Multi-layer shadow for depth */
-    box-shadow:
-        0 0 20px rgba(0, 229, 255, 0.2),
-        0 0 40px rgba(127, 0, 255, 0.1),
-        0 10px 30px rgba(0, 0, 0, 0.4),
-        inset 0 0 15px rgba(255, 255, 255, 0.02);
-    /* Smooth spring-like transition */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* CSS entrance animation with stagger */
-    animation: optionEntrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
-    /* GPU acceleration */
-    will-change: transform, box-shadow;
-}
-
-/* Stagger animation delay for options */
-.option:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.option:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-/* Option card entrance animation */
-@keyframes optionEntrance {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* 
- * Option animated border highlight
- * Appears on hover with gradient animation
- */
-.option-border {
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 26px;
-    /* Animated gradient border - cyan/purple */
-    background: linear-gradient(
-        45deg,
-        #00e5ff,
-        #7f00ff,
-        #00b4d8,
-        #00e5ff
-    );
-    background-size: 400% 400%;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    animation: borderGlow 3s linear infinite;
-}
-
-/* Gradient animation for border */
-@keyframes borderGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Show border highlight on hover */
-.option:hover .option-border {
-    opacity: 1;
-}
-
-/* 
- * Shine sweep effect
- * Moving highlight across card
- */
-.option-shine {
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 250%;
-    height: 250%;
-    background: linear-gradient(
-        120deg,
-        transparent 20%,
-        rgba(255, 255, 255, 0.08) 40%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.08) 60%,
-        transparent 80%
-    );
-    transform: rotate(25deg);
-    transition: all 0.6s ease;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Shine sweeps across on hover */
-.option:hover .option-shine {
-    top: 100%;
-    left: 100%;
-}
-
-/* ==========================================
-   OPTION CARD - Hover State
-   
-   Lift effect with enhanced glow
-   ========================================== */
-.option:hover {
-    /* Lift up and scale */
-    transform: translateY(-10px) scale(1.05);
-    /* Enhanced glow - cyan/purple */
-    box-shadow:
-        0 0 35px rgba(0, 229, 255, 0.5),
-        0 0 70px rgba(127, 0, 255, 0.35),
-        0 0 100px rgba(0, 229, 255, 0.2),
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        inset 0 0 20px rgba(0, 229, 255, 0.08);
-}
-
-/* ==========================================
-   ICON WRAPPER AND ICONS
-   
-   Container for option icons with glow
-   ========================================== */
-.icon-wrapper {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 2;
-}
-
-.option-icon {
-    font-size: 42px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 0 8px currentColor);
-}
-
-/* Icon scales and glows on hover */
-.option:hover .option-icon {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 20px currentColor);
-}
-
-/* Gmail icon - Google red color */
-.gmail-icon {
-    color: #EA4335;
-}
-
-.option:hover .gmail-icon {
-    color: #ff5a4a;
-    filter: drop-shadow(0 0 25px #EA4335);
-}
-
-/* WhatsApp icon - WhatsApp green color */
-.whatsapp-icon {
-    color: #25D366;
-}
-
-.option:hover .whatsapp-icon {
-    color: #2efa78;
-    filter: drop-shadow(0 0 25px #25D366);
-}
-
-/* Option label text styling */
-.option-label {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0;
-    opacity: 0.9;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 2;
-}
-
-/* Text brightens on hover */
-.option:hover .option-label {
-    opacity: 1;
-    transform: translateY(-2px);
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-}
-
-/* ==========================================
-   PASSWORD POPUP OVERLAY
-   
-   Premium blur background for password entry
-   Click anywhere outside to close
-   ========================================== */
-.password-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Darker gradient for security feel */
-    background: linear-gradient(
-        135deg,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(15, 10, 30, 0.95) 50%,
-        rgba(0, 0, 0, 0.9) 100%
-    );
-    /* Strong blur effect */
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    /* CSS fade in animation */
-    animation: overlayFadeIn 0.3s ease;
-}
-
-/* ==========================================
-   PASSWORD POPUP CONTAINER
-   
-   Premium glass morphism popup
-   Features:
-   - Glass effect with blur
-   - Animated highlight border
-   - Smooth animations
-   
-   CSS-only transitions - NO GSAP
-   ========================================== */
-.password-popup {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    /* Premium glass background */
-    background: linear-gradient(
-        145deg,
-        rgba(20, 15, 35, 0.95) 0%,
-        rgba(15, 10, 25, 0.98) 50%,
-        rgba(20, 15, 35, 0.95) 100%
-    );
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    padding: 45px 40px;
-    border-radius: 28px;
-    /* Visible border */
-    border: 1px solid rgba(127, 0, 255, 0.3);
-    /* Multi-layer glow - purple/cyan */
-    box-shadow:
-        0 0 50px rgba(127, 0, 255, 0.4),
-        0 0 100px rgba(0, 229, 255, 0.25),
-        0 0 150px rgba(127, 0, 255, 0.1),
-        0 30px 80px rgba(0, 0, 0, 0.7),
-        inset 0 0 30px rgba(255, 255, 255, 0.02),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    min-width: 340px;
-    /* CSS entrance animation */
-    animation: passwordPopupEntrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow: visible;
-}
-
-/* Password popup entrance animation */
-@keyframes passwordPopupEntrance {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* 
- * Glass highlight effect
- * Animated gradient border around popup
- */
-.password-highlight {
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 30px;
-    /* Animated gradient border - purple/cyan */
-    background: linear-gradient(
-        45deg,
-        rgba(127, 0, 255, 0.6),
-        rgba(0, 229, 255, 0.6),
-        rgba(127, 0, 255, 0.6),
-        rgba(0, 229, 255, 0.6)
-    );
-    background-size: 400% 400%;
-    z-index: -1;
-    opacity: 0.6;
-    animation: passwordHighlightGlow 4s linear infinite;
-    pointer-events: none;
-}
-
-/* Highlight glow animation */
-@keyframes passwordHighlightGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 
- * Glass reflection overlay at top
- */
-.password-popup::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 45%;
-    border-radius: 28px 28px 0 0;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.02) 50%,
-        transparent 100%
-    );
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* ==========================================
-   PASSWORD POPUP - Close Button
-   ========================================== */
-.password-close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    /* Gradient - purple/cyan */
-    background: linear-gradient(
-        135deg,
-        rgba(127, 0, 255, 0.8) 0%,
-        rgba(0, 229, 255, 0.8) 100%
-    );
-    color: white;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    /* Glow effect */
-    box-shadow:
-        0 0 15px rgba(127, 0, 255, 0.5),
-        0 0 30px rgba(0, 229, 255, 0.3);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 100;
-}
-
-/* Rotate and glow on hover */
-.password-close-btn:hover {
-    transform: rotate(90deg) scale(1.1);
-    box-shadow:
-        0 0 25px rgba(127, 0, 255, 0.7),
-        0 0 50px rgba(0, 229, 255, 0.5);
-    background: linear-gradient(
-        135deg,
-        rgba(0, 229, 255, 0.9) 0%,
-        rgba(127, 0, 255, 0.9) 100%
-    );
-}
-
-/* ==========================================
-   PASSWORD POPUP - Lock Icon
-   ========================================== */
-.password-icon {
-    font-size: 48px;
-    position: relative;
-    z-index: 2;
-    /* Glow effect */
-    filter: drop-shadow(0 0 15px rgba(127, 0, 255, 0.5));
-    /* Subtle floating animation */
-    animation: lockFloat 3s ease-in-out infinite;
-}
-
-/* Lock icon floating animation */
-@keyframes lockFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-}
-
-/* ==========================================
-   PASSWORD POPUP - Title
-   ========================================== */
-.password-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0;
-    text-align: center;
-    /* Gradient text - white to purple to cyan */
-    background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #7f00ff 50%,
-        #00e5ff 100%
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: titleGradient 3s ease infinite;
-    position: relative;
-    z-index: 2;
-}
-
-/* Title gradient animation */
-@keyframes titleGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* ==========================================
-   PASSWORD POPUP - Subtitle
-   ========================================== */
-.password-subtitle {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0;
-    text-align: center;
+    padding: 10px 15px;
+    background: rgba(20, 20, 30, 0.6);
+    border-bottom: 1px solid rgba(127, 0, 255, 0.1);
+    display: flex; justify-content: space-between;
+}
+.json-panel .lang { color: #aaa; font-size: 0.75rem; }
+
+.panel-body { padding: 20px; color: #fff; font-size: 0.95rem; line-height: 1.5; }
+.panel-body.pre-wrap { white-space: pre-wrap; }
+
+/* ==========================================
+   HACKER MODALS / POPUPS (Glassmorphism Deep)
+   ========================================== */
+.cyber-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10000;
+}
+
+.cyber-glass-modal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--cyber-cyan);
+    width: 420px;
     position: relative;
-    z-index: 2;
-}
-
-/* ==========================================
-   PASSWORD POPUP - Form Styles
-   ========================================== */
-.password-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-    position: relative;
-    z-index: 2;
-}
-
-/* ==========================================
-   PASSWORD INPUT WRAPPER
-   
-   Container for input with highlight effect
-   ========================================== */
-.input-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-/* ==========================================
-   PASSWORD INPUT FIELD
-   
-   Premium glass input with glow effects
-   ========================================== */
-.password-input {
-    width: 100%;
-    padding: 15px 18px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #ffffff;
-    /* Glass background */
-    background: linear-gradient(
-        135deg,
-        rgba(30, 25, 50, 0.9) 0%,
-        rgba(20, 15, 35, 0.95) 100%
-    );
-    border: 2px solid rgba(127, 0, 255, 0.3);
-    border-radius: 14px;
-    outline: none;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    /* Subtle glow shadow */
-    box-shadow:
-        0 0 15px rgba(127, 0, 255, 0.15),
-        inset 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Placeholder styling */
-.password-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-/* Focus state - enhanced glow */
-.password-input:focus {
-    border-color: rgba(127, 0, 255, 0.6);
-    box-shadow:
-        0 0 25px rgba(127, 0, 255, 0.35),
-        0 0 50px rgba(0, 229, 255, 0.15),
-        inset 0 0 15px rgba(127, 0, 255, 0.08);
-}
-
-/* Input focus highlight line */
-.input-highlight {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #7f00ff, #00e5ff);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
-
-.password-input:focus + .input-highlight {
-    width: 80%;
-}
-
-/* ==========================================
-   PASSWORD ERROR MESSAGE
-   ========================================== */
-.password-error {
-    color: #ff6b6b;
-    font-size: 0.85rem;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(255, 100, 100, 0.4);
-    /* Fade in animation */
-    animation: errorFadeIn 0.3s ease;
-}
-
-/* Error message entrance animation */
-@keyframes errorFadeIn {
-    from { 
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to { 
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==========================================
-   PASSWORD SUBMIT BUTTON
-   
-   Premium unlock button with glow effects
-   ========================================== */
-.password-submit-btn {
-    padding: 14px 35px;
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #ffffff;
-    /* Glass background - purple/cyan */
-    background: linear-gradient(
-        135deg,
-        rgba(127, 0, 255, 0.3) 0%,
-        rgba(0, 229, 255, 0.3) 50%,
-        rgba(127, 0, 255, 0.3) 100%
-    );
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 2px solid rgba(127, 0, 255, 0.5);
-    border-radius: 50px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    /* Glow shadow */
-    box-shadow:
-        0 0 20px rgba(127, 0, 255, 0.35),
-        0 0 40px rgba(0, 229, 255, 0.15),
-        inset 0 0 15px rgba(127, 0, 255, 0.08);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Submit text styling */
-.submit-text {
-    position: relative;
-    z-index: 2;
-}
-
-/* Submit icon styling */
-.submit-icon {
-    margin-left: 8px;
-    display: inline-block;
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 2;
-}
-
-/* Hover state - lift and glow */
-.password-submit-btn:hover {
-    transform: translateY(-4px) scale(1.03);
-    background: linear-gradient(
-        135deg,
-        rgba(127, 0, 255, 0.4) 0%,
-        rgba(0, 229, 255, 0.4) 50%,
-        rgba(127, 0, 255, 0.4) 100%
-    );
-    border-color: rgba(0, 229, 255, 0.6);
-    box-shadow:
-        0 0 35px rgba(127, 0, 255, 0.5),
-        0 0 70px rgba(0, 229, 255, 0.3),
-        0 0 100px rgba(127, 0, 255, 0.15),
-        0 12px 35px rgba(0, 0, 0, 0.35);
-}
-
-/* Arrow icon animates on hover */
-.password-submit-btn:hover .submit-icon {
-    transform: translateX(4px);
-}
-
-/* Active state feedback */
-.password-submit-btn:active {
-    transform: scale(0.97);
-    box-shadow:
-        0 0 20px rgba(127, 0, 255, 0.4),
-        0 0 40px rgba(0, 229, 255, 0.2);
-}
-
-/* ==========================================
-   RIGHT SECTION - Profile Image
-   
-   Contains animated profile with effects
-   Takes 50% width on desktop
-   ========================================== */
-.righthome {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    /* Smooth responsive transitions */
-    transition: width 0.4s ease;
-}
-
-/* ==========================================
-   IMAGE CONTAINER
-   
-   Wrapper for profile image with effects
-   ========================================== */
-.image-container {
-    cursor: pointer;
-    position: relative;
-    width: 340px;
-    height: 340px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    /* Multi-layer glow - cyan/purple */
-    box-shadow:
-        0 0 60px rgba(0, 229, 255, 0.4),
-        0 0 100px rgba(127, 0, 255, 0.3),
-        0 0 150px rgba(0, 229, 255, 0.15);
-    /* Smooth spring-like transition */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* GPU acceleration */
-    will-change: transform, box-shadow;
-}
-
-/* Enhanced glow on hover */
-.image-container:hover {
-    box-shadow:
-        0 0 80px rgba(0, 229, 255, 0.5),
-        0 0 120px rgba(127, 0, 255, 0.4),
-        0 0 180px rgba(0, 229, 255, 0.2);
-    transform: scale(1.02);
-}
-
-/* Image rotates and scales on hover */
-.image-container:hover .profile-img {
-    transform: rotate(5deg) scale(1.08);
-    filter: brightness(1.2) saturate(1.1);
-}
-
-/* ==========================================
-   PROFILE IMAGE
-   ========================================== */
-.profile-img {
-    width: 92%;
-    height: 92%;
-    border-radius: 50%;
-    object-fit: cover;
-    z-index: 2;
-    border: 2px solid rgba(0, 229, 255, 0.4);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* GPU optimization for animations */
-    will-change: transform, opacity, filter;
-}
-
-/* ==========================================
-   ROTATING ELECTRIC BORDER
-   
-   Spinning border with lightning effect
-   ========================================== */
-.rotating-border {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 4px solid transparent;
-    /* Multi-color border segments - cyan/purple theme */
-    border-top-color: rgba(0, 229, 255, 0.8);
-    border-right-color: rgba(127, 0, 255, 0.6);
-    border-bottom-color: rgba(0, 183, 255, 0.8);
-    border-left-color: transparent;
-    /* Combined spin and lightning animations */
-    animation: 
-        spin 3s linear infinite,
-        lightning 0.3s infinite alternate;
-    filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.6));
-    z-index: 1;
-}
-
-/* Continuous spin animation */
-@keyframes spin {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Lightning flicker effect - cyan/purple colors */
-@keyframes lightning {
-    0% {
-        filter: 
-            drop-shadow(0 0 5px rgba(127, 0, 255, 0.5))
-            drop-shadow(0 0 15px rgba(0, 229, 255, 0.4));
-    }
-    50% {
-        filter: 
-            drop-shadow(0 0 20px rgba(0, 229, 255, 0.7))
-            drop-shadow(0 0 40px rgba(127, 0, 255, 0.5));
-    }
-    100% {
-        filter: 
-            drop-shadow(0 0 8px rgba(0, 229, 255, 0.6))
-            drop-shadow(0 0 20px rgba(127, 0, 255, 0.5));
-    }
-}
-
-/* ==========================================
-   GLOW RING
-   
-   Pulsing outer ring effect
-   ========================================== */
-.glow-ring {
-    position: absolute;
-    width: 110%;
-    height: 110%;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 229, 255, 0.2);
-    animation: glowPulse 3s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Pulse animation */
-@keyframes glowPulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0.5;
-        box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
-    }
-    50% {
-        transform: scale(1.05);
-        opacity: 0.8;
-        box-shadow: 0 0 50px rgba(0, 229, 255, 0.4);
-    }
-}
-
-/* ==========================================
-   SMOKE/ASH WRAPPER
-   
-   Container for smoke particle effect
-   ========================================== */
-.ash-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    pointer-events: none;
-    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+    border-radius: 12px;
     overflow: hidden;
 }
 
-/* ==========================================
-   SMOKE PARTICLES
-   
-   Individual smoke particle elements
-   Animated via GSAP in component
-   ========================================== */
-.ash-p {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    /* Radial gradient for smoke effect - cyan/purple */
-    background: radial-gradient(
-        circle,
-        rgba(0, 229, 255, 0.7) 0%,
-        rgba(127, 0, 255, 0.5) 30%,
-        rgba(0, 100, 255, 0.3) 60%,
-        transparent 80%
-    );
-    border-radius: 50%;
-    opacity: 0;
-    filter: blur(20px);
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
+.modal-header {
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--cyber-cyan);
+    padding: 12px 15px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+}
+.modal-header.alert { background: rgba(255, 0, 60, 0.1); color: var(--alert-red); border-color: var(--alert-red); }
+
+.cyber-close {
+    position: absolute; top: 10px; right: 15px;
+    background: transparent; border: none; color: #fff;
+    font-family: var(--font-mono); font-size: 1rem; cursor: pointer;
 }
 
-/* ==========================================
-   RESPONSIVE: TABLET (850px and below)
-   
-   Stack layout, centered content
-   ========================================== */
-@media (max-width: 850px) {
-    #home {
-        /* Stack vertically, image on top */
-        flex-direction: column-reverse;
-        justify-content: center;
-        text-align: center;
-        padding: 100px 5% 50px;
-        min-height: 100vh;
-    }
-
-    .lefthome,
-    .righthome {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    /* Center hero title on tablet */
-    .hero-title {
-        align-items: center;
-    }
-
-    /* Smaller image container */
-    .image-container {
-        width: 280px;
-        height: 280px;
-        margin-bottom: 40px;
-    }
-
-    /* Reduced typography sizes */
-    .line1 {
-        font-size: 1.8rem;
-    }
-
-    .line2 {
-        font-size: 3rem;
-    }
-
-    .line3 {
-        font-size: 1rem;
-    }
-
-    /* Smaller smoke particles */
-    .ash-p {
-        width: 80px;
-        height: 80px;
-    }
-
-    /* Smaller button */
-    .hire-btn {
-        padding: 14px 35px;
-        font-size: 1rem;
-    }
-
-    /* Popup adjustments */
-    .hire-popup {
-        padding: 40px 35px;
-    }
-
-    .popup-title {
-        font-size: 1.3rem;
-        margin-bottom: 25px;
-    }
-
-    .options-container {
-        gap: 20px;
-    }
-
-    .option {
-        width: 130px;
-        height: 130px;
-    }
-
-    .option-icon {
-        font-size: 36px;
-    }
-
-    /* Password popup adjustments */
-    .password-popup {
-        padding: 40px 30px;
-        min-width: 300px;
-    }
-
-    .password-icon {
-        font-size: 42px;
-    }
-
-    .password-title {
-        font-size: 1.35rem;
-    }
+.modal-grid { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+.cyber-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px; border-radius: 8px;
+    display: flex; align-items: center; gap: 15px;
+    cursor: pointer; color: #fff; transition: all 0.2s;
 }
 
+.cyber-card:hover { border-color: var(--cyber-cyan); background: rgba(0, 229, 255, 0.1); box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
+.cyber-icon { font-size: 24px; }
+.red-glow { color: #ff4a4a; filter: drop-shadow(0 0 5px #ff4a4a); }
+.green-glow { color: #25D366; filter: drop-shadow(0 0 5px #25D366); }
+
+/* Form */
+.auth-body { padding: 30px; }
+.auth-text { color: #fff; margin-bottom: 15px; font-size: 0.9rem; }
+.cyber-input {
+    width: 100%; background: rgba(0,0,0,0.5);
+    border: 1px solid var(--alert-red); color: var(--alert-red);
+    padding: 12px; font-family: var(--font-mono); border-radius: 5px; outline: none; margin-bottom: 15px;
+}
+.cyber-input:focus { box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
+.cyber-error { color: var(--alert-red); font-size: 0.8rem; margin-bottom: 15px; }
+.sm-btn { padding: 10px 25px; font-size: 1rem; border-color: var(--alert-red); color: var(--alert-red); }
+.sm-btn:hover { background: rgba(255, 0, 60, 0.1); box-shadow: 0 0 15px rgba(255, 0, 60, 0.4); }
+
 /* ==========================================
-   RESPONSIVE: MOBILE (600px and below)
-   
-   Further reduced sizes, stacked options
+   RESPONSIVE DESIGN (Butter Smooth scaling)
    ========================================== */
-@media (max-width: 600px) {
-    #home {
-        padding-top: 90px;
-    }
-
-    /* Smaller image */
-    .image-container {
-        width: 240px;
-        height: 240px;
-    }
-
-    /* Smaller typography */
-    .line1 {
-        font-size: 1.5rem;
-    }
-
-    .line2 {
-        font-size: 2.5rem;
-    }
-
-    .line3 {
-        font-size: 0.95rem;
-    }
-
-    /* Popup adjustments */
-    .hire-popup {
-        padding: 45px 25px 35px;
-        width: 90%;
-        max-width: 320px;
-    }
-
-    .popup-title {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-    }
-
-    /* Stack options vertically */
-    .options-container {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-    }
-
-    /* Option cards become horizontal */
-    .option {
-        width: 100%;
-        height: 75px;
-        flex-direction: row;
-        gap: 15px;
-        border-radius: 16px;
-        padding: 0 20px;
-    }
-
-    /* Icon adjustments for horizontal layout */
-    .icon-wrapper {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 0;
-    }
-
-    .option-icon {
-        font-size: 32px;
-    }
-
-    .option-label {
-        font-size: 14px;
-    }
-
-    /* Close button adjustments */
-    .close-btn {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
-        top: 12px;
-        right: 12px;
-    }
-
-    /* Password popup adjustments */
-    .password-popup {
-        padding: 40px 25px 35px;
-        min-width: unset;
-        width: 90%;
-        max-width: 320px;
-    }
-
-    .password-icon {
-        font-size: 38px;
-    }
-
-    .password-title {
-        font-size: 1.25rem;
-    }
-
-    .password-subtitle {
-        font-size: 0.85rem;
-    }
-
-    .password-input {
-        padding: 13px 16px;
-        font-size: 0.95rem;
-    }
-
-    .password-submit-btn {
-        padding: 12px 28px;
-        font-size: 0.95rem;
-    }
-
-    .password-close-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 12px;
-        top: 12px;
-        right: 12px;
-    }
+@media (max-width: 1024px) {
+    /* Stack vertical on tablets */
+    #home { flex-direction: column; padding: 100px 5% 50px; text-align: left; justify-content: center; gap: 50px; }
+    .lefthome, .righthome { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .cyber-hud-display { max-width: 100%; align-items: center; transform: none; }
+    .hud-panel { transform: none; width: 100%; max-width: 600px; }
+    .hud-panel:hover { transform: translateY(-5px); }
+    .cyber-btn { align-self: center; }
 }
 
-/* ==========================================
-   RESPONSIVE: SMALL MOBILE (480px and below)
-   
-   Minimum sizes for small screens
-   ========================================== */
+@media (max-width: 768px) {
+    .cyber-terminal-name { font-size: 3rem; text-shadow: 2px 2px 0px rgba(0, 229, 255, 0.4), -2px -2px 0px rgba(127, 0, 255, 0.4); }
+    .hacker-role { font-size: 1rem; }
+    .terminal-content { height: 160px; }
+    .pre-wrap { font-size: 0.85rem; }
+}
+
 @media (max-width: 480px) {
-    /* Smallest image size */
-    .image-container {
-        width: 200px;
-        height: 200px;
-    }
-
-    /* Smallest typography */
-    .line1 {
-        font-size: 1.3rem;
-    }
-
-    .line2 {
-        font-size: 2rem;
-    }
-
-    /* Smaller button */
-    .hire-btn {
-        padding: 12px 28px;
-        font-size: 0.95rem;
-    }
-
-    /* Popup final adjustments */
-    .hire-popup {
-        padding: 40px 20px 30px;
-        width: 92%;
-    }
-
-    .popup-title {
-        font-size: 1.1rem;
-    }
-
-    .option {
-        height: 70px;
-        padding: 0 15px;
-        gap: 12px;
-    }
-
-    .icon-wrapper {
-        width: 45px;
-        height: 45px;
-    }
-
-    .option-icon {
-        font-size: 28px;
-    }
-
-    .option-label {
-        font-size: 13px;
-    }
-
-    /* Password popup final adjustments */
-    .password-popup {
-        padding: 35px 18px 30px;
-        width: 92%;
-        gap: 15px;
-    }
-
-    .password-icon {
-        font-size: 34px;
-    }
-
-    .password-title {
-        font-size: 1.15rem;
-    }
-
-    .password-subtitle {
-        font-size: 0.8rem;
-    }
-
-    .password-input {
-        padding: 12px 14px;
-        font-size: 0.9rem;
-    }
-
-    .password-submit-btn {
-        padding: 11px 25px;
-        font-size: 0.9rem;
-    }
+    .cyber-terminal-name { font-size: 2.2rem; }
+    .system-status { font-size: 0.75rem; justify-content: center; }
+    .cyber-btn { padding: 12px 30px; font-size: 1rem; }
+    .cyber-glass-modal { width: 92%; }
 }

@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import gsap from "gsap";
 
 export default function Particlethree() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -9,16 +8,19 @@ export default function Particlethree() {
   useEffect(() => {
     if (!mountRef.current) return;
 
+    // --- VARIABLES DEFINED OUTSIDE TRY BLOCK (Crucial for fix) ---
     let renderer: THREE.WebGLRenderer;
     let animationFrameId: number;
+    let particlesGeometry: THREE.BufferGeometry;
+    let particlesMaterial: THREE.PointsMaterial;
 
     try {
-      // scene setup
+      // 1. SCENE SETUP
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 4;
+      camera.position.z = 5;
 
-      // WebGL Renderer with Error Handling
+      // WebGL Renderer - Antialiasing enabled for crisp, non-blurry hacker dots
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
       mountRef.current.appendChild(renderer.domElement);
@@ -32,84 +34,61 @@ export default function Particlethree() {
         camera.updateProjectionMatrix();
       };
 
-      // 🔥 PARTICLES & LINES SETUP
-      const count = 80;
-      const particlesGeometry = new THREE.BufferGeometry();
+      // 🔥 HACKER DIGITAL RAIN SETUP (No Glow, Real Type)
+      // Complexity here lies in numbers and deterministic behavior (falling traffic)
+      const count = 3000;
+      particlesGeometry = new THREE.BufferGeometry();
       const positions = new Float32Array(count * 3);
-      const velocities = [];
+      const speeds = new Float32Array(count); // Individual vertical speeds
 
       for (let i = 0; i < count; i++) {
-        positions[i * 3] = (Math.random() - 0.5) * 10;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
-        velocities.push({
-          x: (Math.random() - 0.5) * 0.01,
-          y: (Math.random() - 0.5) * 0.01,
-        });
+        // Spread particles across a wide X/Z plane (data streams)
+        positions[i * 3] = (Math.random() - 0.5) * 20;     // X: Spread wide
+        positions[i * 3 + 1] = Math.random() * 20 - 10;    // Y: Distributed height
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 15; // Z: Depth
+
+        // Each data packet falls at a slightly different, deterministic speed
+        speeds[i] = Math.random() * 0.05 + 0.02;
       }
 
       particlesGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const particlesMaterial = new THREE.PointsMaterial({
-        color: 0x8a2be2,
-        size: 0.05,
+      
+      // Strict points material: No Blending (prevents glow)
+      particlesMaterial = new THREE.PointsMaterial({
+        color: 0x00ff41, // Raw Matrix Green
+        size: 0.04,     // Sharp, small dots
         transparent: true,
         opacity: 0.8,
+        // No Aditive blending = No overexposure or glow.
       });
 
       const particles = new THREE.Points(particlesGeometry, particlesMaterial);
       scene.add(particles);
 
-      // 🔗 DYNAMIC LINES SETUP
-      const linesGeometry = new THREE.BufferGeometry();
-      const linesMaterial = new THREE.LineBasicMaterial({
-        color: 0x8a2be2,
-        transparent: true,
-        opacity: 0.2,
-      });
-
-      gsap.to([particlesMaterial.color, linesMaterial.color], {
-        r: 0.7, 
-        g: 0.2,
-        b: 1,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "power1.inOut"
-      });
-      const lines = new THREE.LineSegments(linesGeometry, linesMaterial);
-      scene.add(lines);
-
-      // 🎬 ANIMATION LOOP
+      // 🎬 ANIMATION LOOP (Deterministic Data Flow)
       const animate = () => {
         animationFrameId = requestAnimationFrame(animate);
 
+        // Access raw positions array
         const pos = particlesGeometry.attributes.position.array as Float32Array;
-        const linePositions = [];
 
         for (let i = 0; i < count; i++) {
           const i3 = i * 3;
-          pos[i3] += velocities[i].x;
-          pos[i3 + 1] += velocities[i].y;
+          // Apply individual falling speed (Matrix Digital Rain simulation)
+          pos[i3 + 1] -= speeds[i];
 
-          if (pos[i3] > 5 || pos[i3] < -5) velocities[i].x *= -1;
-          if (pos[i3 + 1] > 3 || pos[i3 + 1] < -3) velocities[i].y *= -1;
-
-          for (let j = i + 1; j < count; j++) {
-            const j3 = j * 3;
-            const dx = pos[i3] - pos[j3];
-            const dy = pos[i3 + 1] - pos[j3 + 1];
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 1.5) {
-              linePositions.push(pos[i3], pos[i3 + 1], pos[i3 + 2]);
-              linePositions.push(pos[j3], pos[j3 + 1], pos[j3 + 2]);
-            }
+          // Reset traffic packet to the top once it falls below the screen
+          if (pos[i3 + 1] < -10) {
+            pos[i3 + 1] = 10;
           }
         }
 
+        // Inform THREE that positions need GPU update
         particlesGeometry.attributes.position.needsUpdate = true;
-        linesGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(linePositions), 3));
         
+        // Slow structure rotation adds isometric depth
+        particles.rotation.y += 0.001;
+
         renderer.render(scene, camera);
       };
 
@@ -118,20 +97,25 @@ export default function Particlethree() {
       window.addEventListener("resize", updateSize);
 
     } catch (error) {
-      console.error("Could not create WebGL context:", error);
+      console.error("WebGL Hacker Background initialization failed:", error);
     }
 
+    // --- FULL MEMORY CLEANUP FUNCTION ---
+    // Memory is disposed here only if it was successfully initialized.
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", () => {});
-      if (renderer) {
-        renderer.dispose();
-        if (mountRef.current && renderer.domElement) {
-          mountRef.current.removeChild(renderer.domElement);
-        }
+      
+      if (renderer) renderer.dispose();
+      // Error Fixed: Check existence before disposal
+      if (particlesGeometry!) particlesGeometry.dispose();
+      if (particlesMaterial!) particlesMaterial.dispose();
+      
+      if (renderer && mountRef.current && renderer.domElement) {
+        mountRef.current.removeChild(renderer.domElement);
       }
     };
   }, []);
 
-  return <div className="three-bg" ref={mountRef}></div>;
+  return <div className="three-bg hacker-matrix-bg" ref={mountRef}></div>;
 }

@@ -1,16 +1,4 @@
 'use client';
-
-/* ==========================================
-   HOME.TSX - Main Home Component
-   Features:
-   - Hero section with profile image
-   - Typewriter effect for roles
-   - Hire Me button with contact popup
-   - Hand burst particle effect on button click
-   - Password-protected WhatsApp access
-   - Particle background
-   ========================================== */
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './Home.css';
 import gsap from 'gsap';
@@ -18,301 +6,231 @@ import { Typewriter } from 'react-simple-typewriter';
 import Particlethree from './particlethree';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import Image from 'next/image';
 
 function Home() {
-    /* ==========================================
-       REFS & STATE
-       ========================================== */
     const ashRef = useRef<HTMLDivElement>(null);
     const imgRef = useRef<HTMLImageElement>(null);
     const hireBtnRef = useRef<HTMLButtonElement>(null);
-    
+
     const [showOptions, setShowOptions] = useState(false);
     const [showPasswordPopup, setShowPasswordPopup] = useState(false);
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    /* ==========================================
-       PARTICLE BURST EFFECT
-       ========================================== */
-    const createParticleBurst = useCallback((e: React.MouseEvent) => {
-        const button = hireBtnRef.current;
-        if (!button) return;
-        
-        const rect = button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const particleCount = 20;
-        const particleTypes = ['✨', '⭐', '💫', '🌟', '✋', '👋', '🤚'];
-        
-        for (let i = 0; i < particleCount; i++) {
-            createSingleParticle(centerX, centerY, particleTypes, i, particleCount);
-        }
+    // State for interactive hacker typing effects
+    const [jsonCode, setJsonCode] = useState('');
+    const [terminalLines, setTerminalLines] = useState<string[]>([]);
+    const [showCursor, setShowCursor] = useState(true);
+
+    const fullJson = `{
+  "sys_user": "Shivam Paliwal",
+  "clearance": "ROOT_ACCESS",
+  "designation": [
+    "Python Developer",
+    "Full Stack Web",
+    "AI Researcher"
+  ],
+  "status": "SYSTEM_READY",
+  "location": "Nathdwara, RJ"
+}`;
+
+    useEffect(() => {
+        // Snappy animations on load
+        const tl = gsap.timeline();
+        tl.fromTo(".cyber-terminal-name", 
+            { opacity: 0, x: -50 },
+            { opacity: 1, x: 0, duration: 0.3, ease: "steps(5)" }
+        )
+        .fromTo(".hacker-role", 
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2 },
+            "+=0.2"
+        );
+
+        // Custom Hacking Sequence Simulation
+        const sequence = async () => {
+            const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+            
+            await delay(1000);
+            setTerminalLines(prev => [...prev, "root@cyber-system:~# whoami"]);
+            
+            await delay(600);
+            setTerminalLines(prev => [...prev, "Shivam Paliwal | ROOT ACCESS | ID: SP-77X"]);
+            
+            await delay(800);
+            setTerminalLines(prev => [...prev, "root@cyber-system:~# ./fetch_profile.sh --format=json"]);
+            
+            await delay(600);
+            setTerminalLines(prev => [...prev, "[*] Intercepting data traffic..."]);
+            
+            await delay(800);
+            setTerminalLines(prev => [...prev, "[+] Decryption successful. Displaying JSON Card."]);
+            
+            // Start typing JSON content
+            let i = 0;
+            const typeJson = setInterval(() => {
+                setJsonCode(fullJson.slice(0, i));
+                i++;
+                if (i > fullJson.length) clearInterval(typeJson);
+            }, 30); // Dynamic typing speed
+        };
+
+        sequence();
+
+        // Standard terminal cursor blinking effect
+        const blink = setInterval(() => setShowCursor(p => !p), 500);
+        return () => clearInterval(blink);
     }, []);
-    
-    const createSingleParticle = (x: number, y: number, types: string[], index: number, total: number) => {
-        const particle = document.createElement('div');
-        particle.className = 'hand-particle';
-        particle.innerHTML = types[Math.floor(Math.random() * types.length)];
-        
-        const angle = (index / total) * 360 + (Math.random() * 30 - 15);
-        const radian = (angle * Math.PI) / 180;
-        const distance = 80 + Math.random() * 120;
-        
-        const endX = Math.cos(radian) * distance;
-        const endY = Math.sin(radian) * distance;
-        const size = 16 + Math.random() * 20;
-        const rotation = Math.random() * 360;
-        
-        particle.style.cssText = `
-            position: fixed;
-            left: ${x}px;
-            top: ${y}px;
-            font-size: ${size}px;
-            pointer-events: none;
-            z-index: 10001;
-            opacity: 1;
-            transform: translate(-50%, -50%) rotate(0deg) scale(0);
-            transition: none;
-        `;
-        
-        document.body.appendChild(particle);
-        
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                const duration = 600 + Math.random() * 400;
-                particle.style.transition = `all ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-                particle.style.transform = `translate(calc(-50% + ${endX}px), calc(-50% + ${endY}px)) rotate(${rotation}deg) scale(1)`;
-                particle.style.opacity = '0';
-                
-                setTimeout(() => {
-                    if (particle.parentNode) {
-                        particle.parentNode.removeChild(particle);
-                    }
-                }, duration + 50);
-            });
-        });
+
+    const handleHireMeClick = () => {
+        // Simple screen glitch FX on click
+        document.body.classList.add('screen-glitch');
+        setTimeout(() => document.body.classList.remove('screen-glitch'), 200);
+        setShowOptions(true);
     };
 
-    /* ==========================================
-       POPUP HANDLERS
-       ========================================== */
-    const closePopup = () => setShowOptions(false);
-    
-    const closePasswordPopup = () => {
+    const closePopups = () => {
+        setShowOptions(false);
         setShowPasswordPopup(false);
         setPassword('');
         setPasswordError('');
     };
 
-    /* ==========================================
-       MAIN ANIMATIONS - useEffect
-       ========================================== */
-    useEffect(() => {
-        // GSAP Timeline for Hero Text
-        const tl = gsap.timeline();
-        
-        tl.fromTo(".line1", 
-            { opacity: 0, y: -20 },
-            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
-        )
-        .fromTo(".line2", 
-            { opacity: 0, scale: 0.5 },
-            { opacity: 1, scale: 1, duration: 1, ease: "elastic.out(1, 0.5)" },
-            "-=0.3"
-        )
-        .fromTo(".line3", 
-            { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 
-            "-=0.4"
-        );
-
-        // Smoke/Ash Particle Effect
-        const triggerAsh = () => {
-            if (!ashRef.current || !imgRef.current) return;
-            const particles = ashRef.current.querySelectorAll('.ash-p');
-            
-            gsap.to(imgRef.current, { 
-                opacity: 0, scale: 1.4, filter: "blur(25px)", duration: 0.6 
-            });
-
-            particles.forEach((p, i) => {
-                gsap.fromTo(p, 
-                    { opacity: 0, scale: 0.2, y: 0, x: 0 },
-                    { 
-                        opacity: 1, scale: 3, y: -120, x: (i - 2.5) * 80, duration: 1.2,
-                        onComplete: () => { 
-                            gsap.to(p, { opacity: 0, y: -300, scale: 6, duration: 2 }); 
-                        }
-                    }
-                );
-            });
-
-            gsap.to(imgRef.current, { 
-                opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.2, delay: 1.8 
-            });
-        };
-
-        triggerAsh();
-        const interval = setInterval(triggerAsh, 6000);
-        return () => clearInterval(interval);
-    }, []);
-
-    /* ==========================================
-       CLICK HANDLERS
-       ========================================== */
-    const handleHireMeClick = (e: React.MouseEvent) => {
-        createParticleBurst(e);
-        setTimeout(() => setShowOptions(true), 100);
-    };
-    
-    //const handleEmailClick = () => {
-       // window.location.href = "mailto:shivampaliwal244@gmail.com";
-    //};
-    const handleEmailClick = () => {
-    window.location.href = "mailto:shivampaliwal244@gmail.com";
-};
-
-    const handleWhatsAppClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setShowPasswordPopup(true);
-    };
-
     const handlePasswordSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        // Access password from .env file securely
         if (password?.trim() === process.env.NEXT_PUBLIC_APP_PASSWORD?.trim()) {
             window.location.href = "https://wa.me/916377396883";
         } else {
-            setPasswordError('Wrong password ❌');
+            setPasswordError('ACCESS DENIED: INVALID AUTHORIZATION KEY');
         }
     };
 
-    /* ==========================================
-       RENDER
-       ========================================== */
     return (
-        <div id="home">
+        <div id="home" className="cyber-root glassmorphism-bg">
+            <div className="scanlines"></div>
             <Particlethree />
             
             <div className="lefthome">
-                <div className="hero-title">
-                    <span className="line1">Hey, I'm</span>
-                    <span className="line2">Shivam</span>
+                <div className="system-status">
+                    <span className="blink-dot"></span> SECURE CONNECTION ESTABLISHED
                 </div>
 
-                <p className="line3">
-                    <span className="highlight">
+                <div className="hero-title">
+                    <h1 className="cyber-terminal-name" data-text="SHIVAM PALIWAL">
+                        SHIVAM PALIWAL
+                    </h1>
+                </div>
+
+                <div className="hacker-role">
+                    <span className="prompt">root@system:~#</span>
+                    <span className="highlight-cyan">
                         <Typewriter
-                            words={['Python Developer', 'Full Stack Developer', 'AI Researcher']}
+                            words={['execute_python_dev.sh', 'init_fullstack_env', 'run_ai_models.py']}
                             loop={true}
                             cursor
-                            cursorStyle="|"
-                            typeSpeed={70}
-                            deleteSpeed={40}
-                            delaySpeed={1500}
+                            cursorStyle="█"
+                            typeSpeed={50}
+                            deleteSpeed={30}
+                            delaySpeed={2000}
                         />
                     </span>
-                </p>
+                </div>
 
-                <button 
-                    ref={hireBtnRef}
-                    className="hire-btn" 
-                    onClick={handleHireMeClick}
-                >
-                    <span className="btn-text">Hire Me</span>
-                    <span className="btn-icon">🚀</span>
-                    <div className="btn-glow"></div>
-                    <div className="btn-ripple"></div>
+                <button className="cyber-btn" onClick={handleHireMeClick}>
+                    <span className="btn-text">INITIALIZE_CONTACT</span>
+                    <div className="btn-decor-top"></div>
+                    <div className="btn-decor-bottom"></div>
                 </button>
 
-                {/* CONTACT OPTIONS POPUP */}
+                {/* Cyber Hacker Modal/Popup (Framer motion style) */}
                 {showOptions && (
-                    <div className="popup-overlay" onClick={closePopup}>
-                        <div className="hire-popup" onClick={(e) => e.stopPropagation()}>
-                            <button className="close-btn" onClick={closePopup}>✕</button>
-                            <h3 className="popup-title">Get in Touch</h3>
+                    <div className="cyber-overlay" onClick={closePopups}>
+                        <div className="cyber-glass-modal" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-header">TARGET_ACQUISITION</div>
+                            <button className="cyber-close" onClick={closePopups}>[X]</button>
                             
-                            <div className="options-container">
-                                <div className="option email-option" onClick={handleEmailClick}>
-                                    <div className="option-border"></div>
-                                    <div className="icon-wrapper">
-                                        <FontAwesomeIcon icon={faGoogle} className="option-icon gmail-icon" />
-                                    </div>
-                                    <p className="option-label">Email</p>
-                                    <div className="option-shine"></div>
+                            <div className="modal-grid">
+                                <div className="cyber-card" onClick={() => window.location.href = "mailto:shivampaliwal244@gmail.com"}>
+                                    <FontAwesomeIcon icon={faGoogle} className="cyber-icon red-glow" />
+                                    <span>PROTOCOL: EMAIL</span>
                                 </div>
-                                
-                                <div className="option whatsapp-option" onClick={handleWhatsAppClick}>
-                                    <div className="option-border"></div>
-                                    <div className="icon-wrapper">
-                                        <FontAwesomeIcon icon={faWhatsapp} className="option-icon whatsapp-icon" />
-                                    </div>
-                                    <p className="option-label">WhatsApp</p>
-                                    <div className="option-shine"></div>
+                                <div className="cyber-card" onClick={(e) => { e.stopPropagation(); setShowPasswordPopup(true); }}>
+                                    <FontAwesomeIcon icon={faWhatsapp} className="cyber-icon green-glow" />
+                                    <span>PROTOCOL: SECURE_CHAT</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
 
-                {/* PASSWORD POPUP */}
                 {showPasswordPopup && (
-                    <div className="password-overlay" onClick={closePasswordPopup}>
-                        <div className="password-popup" onClick={(e) => e.stopPropagation()}>
-                            <div className="password-highlight"></div>
-                            <button className="password-close-btn" onClick={closePasswordPopup}>✕</button>
-                            <div className="password-icon">🔐</div>
-                            <h3 className="password-title">Enter Password</h3>
-                            <p className="password-subtitle">WhatsApp access is protected</p>
+                    <div className="cyber-overlay" onClick={closePopups}>
+                        <div className="cyber-glass-modal auth-modal" onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-header alert">! ENCRYPTED_CHANNEL !</div>
+                            <button className="cyber-close" onClick={closePopups}>[X]</button>
                             
-                            <form onSubmit={handlePasswordSubmit} className="password-form">
-                                <div className="input-wrapper">
+                            <div className="auth-body">
+                                <p className="auth-text">Enter decryption authorization key:</p>
+                                <form onSubmit={handlePasswordSubmit}>
                                     <input
                                         type="password"
-                                        className="password-input"
-                                        placeholder="Enter password"
+                                        className="cyber-input"
+                                        placeholder="0xHASH_KEY"
                                         value={password}
-                                        onChange={(e) => {
-                                            setPassword(e.target.value);
-                                            setPasswordError('');
-                                        }}
+                                        onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
                                         autoFocus
                                     />
-                                    <div className="input-highlight"></div>
-                                </div>
-                                
-                                {passwordError && (
-                                    <p className="password-error">{passwordError}</p>
-                                )}
-                                
-                                <button type="submit" className="password-submit-btn">
-                                    <span className="submit-text">Unlock</span>
-                                    <span className="submit-icon">→</span>
-                                </button>
-                            </form>
+                                    {passwordError && <p className="cyber-error">&gt; {passwordError}</p>}
+                                    <button type="submit" className="cyber-btn sm-btn">
+                                        [ DECRYPT ]
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
 
             <div className="righthome">
-                <div className="image-container">
-                    <div className="rotating-border"></div>
-                    <div className="glow-ring"></div>
+                {/* HUD data panels with glass FX replaced Avatar */}
+                <div className="cyber-hud-display">
                     
-                    <div className="ash-wrapper" ref={ashRef}>
-                        {[...Array(6)].map((_, i) => (
-                            <div key={i} className="ash-p"></div>
-                        ))}
+                    {/* Panel 1: JSON Code Card with typing animation */}
+                    <div className="hud-panel json-panel cyber-glass">
+                        <div className="panel-header">
+                            <span>intro.json</span>
+                            <span className="lang">JSON</span>
+                        </div>
+                        <div className="panel-body pre-wrap">
+                            {jsonCode}
+                            {jsonCode.length < fullJson.length && showCursor ? '█' : ''}
+                        </div>
                     </div>
-                    
-                    <img
-                        ref={imgRef}
-                        src="/assets/Hprofile.png"
-                        alt="Shivam"
-                        className="profile-img"
-                    />
+
+                    {/* Panel 2: macOS Style Hacker Terminal */}
+                    <div className="hud-panel terminal-panel cyber-glass">
+                        <div className="mac-header">
+                            <div className="mac-buttons">
+                                <span className="mac-btn close"></span>
+                                <span className="mac-btn min"></span>
+                                <span className="mac-btn max"></span>
+                            </div>
+                            <span className="mac-title">root@cyber-ai — zsh</span>
+                        </div>
+                        <div className="terminal-content">
+                            {terminalLines.map((line, idx) => (
+                                <p key={idx} className={line.startsWith('root@') ? 'term-cmd' : 'term-out'}>
+                                    {line}
+                                </p>
+                            ))}
+                            <p className="term-cmd">
+                                root@cyber-system:~# {showCursor ? '█' : ''}
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
