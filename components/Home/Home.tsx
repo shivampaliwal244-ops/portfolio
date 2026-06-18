@@ -9,16 +9,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 function Home() {
+    // Controls contact options popup
     const [showOptions, setShowOptions] = useState(false);
+
+    // Controls password popup for WhatsApp secure chat
     const [showPasswordPopup, setShowPasswordPopup] = useState(false);
+
+    // Stores user-entered password
     const [password, setPassword] = useState('');
+
+    // Stores password/auth error message
     const [passwordError, setPasswordError] = useState('');
 
+    // JSON typing animation state
     const [jsonCode, setJsonCode] = useState('');
+
+    // Terminal output lines
     const [terminalLines, setTerminalLines] = useState<string[]>([]);
+
+    // Cursor blinking state
     const [showCursor, setShowCursor] = useState(true);
 
-    const fullJson = useMemo(() => `{
+    // Static JSON content shown in right panel
+    const fullJson = useMemo(
+        () => `{
   "sys_user": "Shivam Paliwal",
   "clearance": "ROOT_ACCESS",
   "designation": [
@@ -29,37 +43,44 @@ function Home() {
   "status": "SYSTEM_READY",
   "network": "ENCRYPTED",
   "location": "Nathdwara, RJ"
-}`, []);
+}`,
+        []
+    );
 
     useEffect(() => {
+        // GSAP intro animation timeline
         const tl = gsap.timeline();
 
         tl.fromTo(
             '.cyber-terminal-name',
             { opacity: 0, x: -50 },
             { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
-        ).fromTo(
-            '.hacker-role',
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
-            '-=0.15'
-        ).fromTo(
-            '.system-status',
-            { opacity: 0 },
-            { opacity: 1, duration: 0.35 },
-            '-=0.2'
-        ).fromTo(
-            '.cyber-btn',
-            { opacity: 0, scale: 0.95 },
-            { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' },
-            '-=0.1'
-        );
+        )
+            .fromTo(
+                '.hacker-role',
+                { opacity: 0, y: 16 },
+                { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+                '-=0.15'
+            )
+            .fromTo(
+                '.system-status',
+                { opacity: 0 },
+                { opacity: 1, duration: 0.35 },
+                '-=0.2'
+            )
+            .fromTo(
+                '.cyber-btn',
+                { opacity: 0, scale: 0.95 },
+                { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' },
+                '-=0.1'
+            );
 
         let jsonInterval: ReturnType<typeof setInterval> | null = null;
         let mounted = true;
 
         const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+        // Sequential terminal animation
         const sequence = async () => {
             await delay(700);
             if (!mounted) return;
@@ -85,11 +106,14 @@ function Home() {
             if (!mounted) return;
             setTerminalLines((prev) => [...prev, '[+] Rendering identity payload...']);
 
+            // Typing JSON one character at a time
             let i = 0;
             jsonInterval = setInterval(() => {
                 if (!mounted) return;
+
                 setJsonCode(fullJson.slice(0, i));
                 i++;
+
                 if (i > fullJson.length && jsonInterval) {
                     clearInterval(jsonInterval);
                 }
@@ -98,6 +122,7 @@ function Home() {
 
         sequence();
 
+        // Cursor blinking interval
         const blink = setInterval(() => {
             setShowCursor((prev) => !prev);
         }, 500);
@@ -110,13 +135,16 @@ function Home() {
         };
     }, [fullJson]);
 
+    // Small glitch effect on body
     const triggerBodyGlitch = () => {
         document.body.classList.add('screen-glitch');
+
         setTimeout(() => {
             document.body.classList.remove('screen-glitch');
         }, 220);
     };
 
+    // Opens main contact options popup
     const handleHireMeClick = () => {
         triggerBodyGlitch();
         setShowOptions(true);
@@ -125,6 +153,7 @@ function Home() {
         setPasswordError('');
     };
 
+    // Closes all popups and resets auth input
     const closeAllPopups = () => {
         setShowOptions(false);
         setShowPasswordPopup(false);
@@ -132,28 +161,35 @@ function Home() {
         setPasswordError('');
     };
 
+    // Opens WhatsApp password popup
     const handleOpenSecureChat = () => {
         setShowPasswordPopup(true);
         setPassword('');
         setPasswordError('');
     };
 
+    // Opens email client
     const handleEmailClick = () => {
         window.location.href = 'mailto:shivampaliwal244@gmail.com';
     };
 
+    // Checks password and opens WhatsApp if correct
     const handlePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // Read password from environment variable
         const envPassword = process.env.NEXT_PUBLIC_APP_PASSWORD?.trim();
 
+        // If env variable is missing, show error
         if (!envPassword) {
             setPasswordError('AUTH KEY NOT CONFIGURED IN ENV');
             return;
         }
 
+        // Compare entered password with env password
         if (password.trim() === envPassword) {
-            window.open('[wa.me](https://wa.me/916377396883)', '_blank', 'noopener,noreferrer');
+            // FIX: Use direct WhatsApp URL, not markdown link
+window.open('https://wa.me/916377396883', '_blank', 'noopener,noreferrer');
             closeAllPopups();
         } else {
             setPasswordError('ACCESS DENIED: INVALID AUTHORIZATION KEY');
@@ -174,9 +210,7 @@ function Home() {
                 </div>
 
                 <div className="hero-title">
-                    <h1 className="cyber-terminal-name">
-                        SHIVAM PALIWAL
-                    </h1>
+                    <h1 className="cyber-terminal-name">SHIVAM PALIWAL</h1>
 
                     <div className="name-sub-glow">
                         AI | FULL STACK | PYTHON | CYBER INSPIRED SYSTEMS
@@ -195,7 +229,8 @@ function Home() {
                             ]}
                             loop={true}
                             cursor
-                            cursorStyle="█"
+                            // FIX: Correct cursor character
+                            cursorStyle="|"
                             typeSpeed={48}
                             deleteSpeed={28}
                             delaySpeed={1800}
@@ -225,7 +260,7 @@ function Home() {
 
                         <div className="panel-body pre-wrap">
                             {jsonCode}
-                            {jsonCode.length < fullJson.length && showCursor ? '█' : ''}
+                            {jsonCode.length < fullJson.length && showCursor ? '|' : ''}
                         </div>
                     </div>
 
@@ -249,9 +284,7 @@ function Home() {
                                 </p>
                             ))}
 
-                            <p className="term-cmd">
-                                root@cyber-system:~# {showCursor ? '█' : ''}
-                            </p>
+                            <p className="term-cmd">root@cyber-system:~# {showCursor ? '|' : ''}</p>
                         </div>
                     </div>
                 </div>
@@ -291,7 +324,10 @@ function Home() {
                                     if (e.key === 'Enter' || e.key === ' ') handleOpenSecureChat();
                                 }}
                             >
-                                <FontAwesomeIcon icon={faWhatsapp} className="cyber-icon green-glow" />
+                                <FontAwesomeIcon
+                                    icon={faWhatsapp}
+                                    className="cyber-icon green-glow"
+                                />
                                 <div className="card-text-wrap">
                                     <span>PROTOCOL: SECURE_CHAT</span>
                                     <small>Encrypted WhatsApp channel</small>
@@ -329,9 +365,7 @@ function Home() {
                                     autoFocus
                                 />
 
-                                {passwordError && (
-                                    <p className="cyber-error">&gt; {passwordError}</p>
-                                )}
+                                {passwordError && <p className="cyber-error">&gt; {passwordError}</p>}
 
                                 <button type="submit" className="cyber-btn sm-btn">
                                     [ DECRYPT ]

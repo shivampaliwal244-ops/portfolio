@@ -30,8 +30,8 @@ const projectsData = [
       "🎯 Modern UI"
     ],
     image: "/assets/projects/ai-study-planner.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+    liveLink: "[google.com](https://google.com)",
+    githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     accentColor: "#667eea",
     secondaryAccent: "#764ba2"
@@ -57,8 +57,8 @@ const projectsData = [
       "🔎 Search & Filter"
     ],
     image: "/assets/projects/fullstack-hub.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+    liveLink: "[google.com](https://google.com)",
+    githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     accentColor: "#f5576c",
     secondaryAccent: "#f093fb"
@@ -84,8 +84,8 @@ const projectsData = [
       "🚀 One-click Deploy"
     ],
     image: "/assets/projects/ai-website-builder.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+    liveLink: "[google.com](https://google.com)",
+    githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     accentColor: "#4facfe",
     secondaryAccent: "#00f2fe"
@@ -111,8 +111,8 @@ const projectsData = [
       "📱 Responsive"
     ],
     image: "/assets/projects/amazon-clone.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+    liveLink: "[google.com](https://google.com)",
+    githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
     accentColor: "#fa709a",
     secondaryAccent: "#fee140"
@@ -138,8 +138,8 @@ const projectsData = [
       "📚 API Docs"
     ],
     image: "/assets/projects/notenest-api.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+    liveLink: "[google.com](https://google.com)",
+    githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
     accentColor: "#a8edea",
     secondaryAccent: "#fed6e3"
@@ -268,10 +268,25 @@ const Projects = () => {
       </div>
 
       <div className="projects-header">
-        <span className="section-badge"><span className="badge-dot"></span><span className="badge-text">Featured Work</span></span>
-        <h2 className="section-title"><span className="title-line">My</span> <span className="gradient-text">Projects</span></h2>
-        <p className="section-subtitle">Explore my latest work showcasing modern web development, AI integration, and full-stack expertise</p>
-        <div className="header-decoration"><span className="deco-line"></span><span className="deco-diamond"></span><span className="deco-line"></span></div>
+        <span className="section-badge cyber-badge">
+          <span className="badge-dot"></span>
+          <span className="badge-text cyber-badge-text">Featured Work</span>
+        </span>
+
+        <h2 className="section-title cyber-title">
+          <span className="title-line cyber-title-line">My</span>
+          <span className="gradient-text cyber-gradient-text">Projects</span>
+        </h2>
+
+        <p className="section-subtitle cyber-subtitle">
+          Explore my latest work showcasing modern web development, AI integration, and full-stack expertise
+        </p>
+
+        <div className="header-decoration">
+          <span className="deco-line"></span>
+          <span className="deco-diamond"></span>
+          <span className="deco-line"></span>
+        </div>
       </div>
 
       <div className="slider-container" ref={sliderRef} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>

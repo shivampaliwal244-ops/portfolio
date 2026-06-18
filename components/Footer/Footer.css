@@ -1,45 +1,286 @@
-/* Transparent blur white strip footer */
-.glass-footer {
-  /* Fixed at bottom */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  
-  /* Padding for strip height */
-  padding: 15px 0;
-  
-  /* Semi-transparent white background */
-  background: rgba(255, 255, 255, 0.1);
-  
-  /* Blur effect - creates frosted glass look */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
-  
-  /* Subtle top border for definition */
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  
-  /* Center the text */
-  text-align: center;
-  
-  /* Keep above other content */
-  z-index: 100;
+/* ==============================
+   Smooth Cyber Glass Footer
+   Lightweight + Responsive
+   Red Active Symbol + Soft Blur
+   ============================== */
+
+/* Theme variables for easy customization */
+:root {
+  --footer-bg-dark: rgba(8, 12, 24, 0.52);
+  --footer-bg-light: rgba(255, 255, 255, 0.05);
+  --footer-border: rgba(255, 255, 255, 0.08);
+  --footer-highlight: rgba(255, 255, 255, 0.12);
+
+  --footer-text-main: #f5f7ff;
+  --footer-text-sub: rgba(220, 230, 245, 0.72);
+
+  --footer-red: #ff4d5a;
+  --footer-red-soft: rgba(255, 77, 90, 0.35);
+  --footer-red-glow: rgba(255, 77, 90, 0.75);
+
+  --footer-shadow-dark: rgba(0, 0, 0, 0.22);
+  --footer-shadow-soft: rgba(255, 255, 255, 0.03);
 }
 
-/* Highlighted shiny text */
-.footer-text {
-  /* Remove default margin */
+/* Main footer container */
+.glass-footer {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  padding: 16px 18px;
+  overflow: hidden;
+  isolation: isolate;
+
+  /* Smooth lightweight glass background */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 35%,
+      rgba(255, 255, 255, 0.015) 100%
+    ),
+    rgba(8, 12, 24, 0.46);
+
+  /* Softer blur for smoother rendering */
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+
+  /* Clean top border */
+  border-top: 1px solid var(--footer-border);
+
+  /* Soft premium shadow */
+  box-shadow:
+    0 -1px 0 var(--footer-shadow-soft),
+    0 -10px 30px var(--footer-shadow-dark),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Top glowing cyber line */
+.glass-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, 75%);
+  height: 1px;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 77, 90, 0.9) 50%,
+    transparent 100%
+  );
+
+  box-shadow: 0 0 10px rgba(255, 77, 90, 0.45);
+}
+
+/* Optional subtle inner glow layer */
+.glass-footer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle at top center,
+    rgba(255, 77, 90, 0.06),
+    transparent 55%
+  );
+
+  opacity: 0.9;
+}
+
+/* Footer content wrapper */
+.footer-inner {
+  position: relative;
+  z-index: 1;
+
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  text-align: center;
+}
+
+/* Active red status dot */
+.footer-status-dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+
+  /* Red cyber glowing orb */
+  background: radial-gradient(
+    circle at 35% 35%,
+    #ffd3d7 0%,
+    #ff7a84 22%,
+    #ff4d5a 52%,
+    #d61f3a 100%
+  );
+
+  box-shadow:
+    0 0 6px rgba(255, 77, 90, 0.95),
+    0 0 14px rgba(255, 77, 90, 0.48);
+
+  /* Smooth active pulse */
+  animation: footerPulse 2.6s ease-in-out infinite;
+}
+
+/* Text container */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+/* Main footer line */
+.footer-title {
   margin: 0;
-  
-  /* Font styling */
+  color: var(--footer-text-main);
+
   font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.05),
+    0 0 12px rgba(255, 77, 90, 0.08);
+}
+
+/* Secondary footer line */
+.footer-subtitle {
+  margin: 0;
+  color: var(--footer-text-sub);
+
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 1px;
-  
-  /* White text with glow effect for highlight */
-  color: #ffffff;
-  text-shadow: 
-    0 0 10px rgba(255, 255, 255, 0.8),  /* Inner glow */
-    0 0 20px rgba(255, 255, 255, 0.5),  /* Mid glow */
-    0 0 30px rgba(255, 255, 255, 0.3);  /* Outer glow */
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  text-shadow: 0 0 8px rgba(255, 77, 90, 0.05);
+}
+
+/* Smooth and lightweight pulse animation */
+@keyframes footerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+    filter: saturate(100%);
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+    filter: saturate(120%);
+  }
+}
+
+/* ==============================
+   Tablet
+   ============================== */
+@media (max-width: 768px) {
+  .glass-footer {
+    margin-top: 34px;
+    padding: 15px 14px;
+
+    backdrop-filter: blur(12px) saturate(125%);
+    -webkit-backdrop-filter: blur(12px) saturate(125%);
+  }
+
+  .footer-inner {
+    gap: 10px;
+  }
+
+  .footer-title {
+    font-size: 13px;
+    letter-spacing: 0.09em;
+  }
+
+  .footer-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .footer-status-dot {
+    width: 9px;
+    height: 9px;
+    flex-basis: 9px;
+  }
+}
+
+/* ==============================
+   Mobile
+   ============================== */
+@media (max-width: 480px) {
+  .glass-footer {
+    margin-top: 28px;
+    padding: 14px 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .glass-footer::before {
+    width: min(260px, 82%);
+  }
+
+  .footer-inner {
+    gap: 8px;
+  }
+
+  .footer-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .footer-subtitle {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-status-dot {
+    width: 8px;
+    height: 8px;
+    flex-basis: 8px;
+
+    box-shadow:
+      0 0 6px rgba(255, 77, 90, 0.85),
+      0 0 10px rgba(255, 77, 90, 0.35);
+  }
+}
+
+/* ==============================
+   Larger screens
+   Slightly more breathing room
+   ============================== */
+@media (min-width: 1200px) {
+  .glass-footer {
+    padding: 18px 20px;
+  }
+
+  .footer-title {
+    font-size: 15px;
+  }
+
+  .footer-subtitle {
+    font-size: 12px;
+  }
+}
+
+/* ==============================
+   Reduced motion accessibility
+   ============================== */
+@media (prefers-reduced-motion: reduce) {
+  .footer-status-dot {
+    animation: none;
+  }
 }

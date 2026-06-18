@@ -1,196 +1,931 @@
-/* ============================================
-   Contact.css - Premium 2-Column Glassmorphism Layout
-   ============================================ */
+/* =========================================================
+   Contact.css - Neural Gateway / Modern AI Feel
+   Optimized for smoothness, responsiveness, and light polish
+   ========================================================= */
 
 :root {
-  --gradient-start: #0a0a0f;
-  --gradient-mid: #1a1a2e;
-  --gradient-end: #16213e;
-  
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --accent-primary: #00d4ff;
-  --accent-secondary: #00ff88;
+  --ng-bg-1: #060816;
+  --ng-bg-2: #0b1124;
+  --ng-bg-3: #101a36;
+
+  --ng-surface: rgba(255, 255, 255, 0.05);
+  --ng-surface-2: rgba(255, 255, 255, 0.03);
+  --ng-border: rgba(255, 255, 255, 0.1);
+  --ng-border-strong: rgba(113, 244, 255, 0.18);
+
+  --ng-text: #f4f7ff;
+  --ng-text-soft: rgba(244, 247, 255, 0.72);
+  --ng-text-dim: rgba(244, 247, 255, 0.5);
+
+  --ng-accent: #72f3ff;
+  --ng-accent-2: #8d7dff;
+  --ng-accent-3: #85ffb7;
+
+  --ng-success: #7bffb4;
+  --ng-danger: #ff7d92;
+
+  --ng-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  --ng-shadow-soft: 0 0 30px rgba(114, 243, 255, 0.1);
+
+  --ng-radius-xl: 28px;
+  --ng-radius-lg: 18px;
+  --ng-radius-md: 14px;
+
+  --ng-blur: 18px;
+  --ng-max-width: 1180px;
 }
 
-.contact-container {
+* {
+  box-sizing: border-box;
+}
+
+.ng-contact-section {
   position: relative;
   min-height: 100vh;
+  padding: 72px 20px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
-  overflow: hidden;
   font-family: 'Inter', 'SF Pro Display', sans-serif;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at top left, rgba(114, 243, 255, 0.08), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(141, 125, 255, 0.1), transparent 35%),
+    linear-gradient(135deg, var(--ng-bg-1), var(--ng-bg-2) 45%, var(--ng-bg-3));
 }
 
-/* Backgrounds (Absolute to prevent hiding other sections) */
-.gradient-background, .particles-container, .grid-overlay {
+/* =========================================================
+   Background layers
+   ========================================================= */
+.ng-bg,
+.ng-particles {
   position: absolute;
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%;
-  z-index: -1;
+  inset: 0;
   pointer-events: none;
 }
 
-.gradient-background {
-  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+.ng-bg {
   z-index: -3;
 }
 
-.gradient-orb {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
-  animation: floatOrb 20s infinite ease-in-out;
-}
-.gradient-orb-1 { width: 500px; height: 500px; background: var(--accent-primary); top: -200px; left: -150px; }
-.gradient-orb-2 { width: 400px; height: 400px; background: var(--accent-secondary); bottom: -150px; right: -100px; animation-delay: -7s; }
-
-@keyframes floatOrb {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, -30px); }
-}
-
-.particle {
+.ng-grid {
   position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 95%);
+  opacity: 0.55;
+}
+
+.ng-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
+  will-change: transform;
+}
+
+.ng-glow-1 {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -100px;
+  background: var(--ng-accent);
+  animation: ngFloatGlow 16s ease-in-out infinite;
+}
+
+.ng-glow-2 {
+  width: 380px;
+  height: 380px;
+  bottom: -100px;
+  right: -80px;
+  background: var(--ng-accent-2);
+  animation: ngFloatGlow 18s ease-in-out infinite reverse;
+}
+
+.ng-rings {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(114, 243, 255, 0.08) 0, transparent 120px),
+    radial-gradient(circle at 50% 45%, rgba(141, 125, 255, 0.06) 0, transparent 220px);
+  opacity: 0.85;
+}
+
+@keyframes ngFloatGlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -22px, 0) scale(1.04);
+  }
+}
+
+/* =========================================================
+   Particles
+   ========================================================= */
+.ng-particles {
+  z-index: -2;
+}
+
+.ng-particle {
+  position: absolute;
+  left: var(--left);
+  bottom: -20px;
   width: var(--size);
   height: var(--size);
-  background: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  left: var(--left);
-  bottom: -10px;
-  opacity: 0;
-  animation: floatUp var(--duration) var(--delay) infinite linear;
+  background: rgba(255, 255, 255, 0.9);
+  opacity: var(--opacity);
+  box-shadow: 0 0 12px rgba(114, 243, 255, 0.25);
+  animation: ngParticleUp var(--duration) linear var(--delay) infinite;
+  will-change: transform, opacity;
 }
 
-@keyframes floatUp {
-  0% { opacity: 0; transform: translateY(0); }
-  10% { opacity: 0.5; }
-  90% { opacity: 0.2; }
-  100% { opacity: 0; transform: translateY(-100vh); }
+@keyframes ngParticleUp {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--opacity);
+  }
+  88% {
+    opacity: calc(var(--opacity) * 0.45);
+  }
+  100% {
+    transform: translate3d(0, -105vh, 0);
+    opacity: 0;
+  }
 }
 
-.grid-overlay {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* Glass Card */
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* =======================================
-   2-COLUMN LAYOUT
-   ======================================= */
-.contact-layout {
-  display: flex;
-  gap: 2rem;
+/* =========================================================
+   Shell layout
+   ========================================================= */
+.ng-shell {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--ng-max-width);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  position: relative;
   z-index: 2;
+  align-items: stretch;
 }
 
-.contact-info-col { flex: 1; display: flex; flex-direction: column; }
-.contact-form-col { flex: 1.2; display: flex; flex-direction: column; }
+.ng-shell.form-open {
+  grid-template-columns: 1fr 1.05fr;
+}
 
-/* Left Card Styling */
-.info-card {
-  padding: 3rem 2rem;
-  text-align: center;
-  height: 100%;
+.ng-panel {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.065),
+    rgba(255, 255, 255, 0.035)
+  );
+  border: 1px solid var(--ng-border);
+  border-radius: var(--ng-radius-xl);
+  backdrop-filter: blur(var(--ng-blur));
+  -webkit-backdrop-filter: blur(var(--ng-blur));
+  box-shadow: var(--ng-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.ng-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(114, 243, 255, 0.06), transparent 28%, transparent 70%, rgba(133, 255, 183, 0.04)),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 30%);
+  pointer-events: none;
+}
+
+.ng-info-panel {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 680px;
+}
+
+.ng-form-panel {
+  padding: 30px;
+  min-height: 680px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.logo-container { position: relative; width: 80px; height: 80px; margin: 0 auto 1.5rem; }
-.logo-glow { position: absolute; inset: 0; background: var(--accent-primary); filter: blur(30px); opacity: 0.5; border-radius: 50%; }
-.logo { position: relative; font-size: 3rem; font-weight: bold; color: #fff; z-index: 1; line-height: 80px; font-family: 'Georgia', serif;}
-
-.heading-line { display: block; font-size: 0.9rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
-.heading-highlight { display: block; font-size: 2rem; font-weight: bold; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; color: transparent; margin-bottom: 2rem; }
-
-.email-display { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.05); }
-.email-link { color: #fff; text-decoration: none; font-size: 1rem; transition: 0.3s; }
-.email-link:hover { color: var(--accent-primary); }
-.email-icon { color: var(--accent-primary); width: 20px; }
-.copy-btn { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; width: 20px; transition: 0.3s; }
-.copy-btn:hover { color: var(--accent-primary); }
-
-.social-label { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px; }
-.social-links { display: flex; gap: 15px; justify-content: center; margin-bottom: 2rem; }
-.social-icon { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 10px; color: #fff; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
-.social-icon:hover { background: var(--accent-primary); color: #000; transform: translateY(-3px); }
-.social-icon svg { width: 20px; }
-
-.availability-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,255,136,0.1); padding: 8px 15px; border-radius: 20px; color: var(--accent-secondary); font-size: 0.8rem; margin: 0 auto; border: 1px solid rgba(0,255,136,0.2); }
-.availability-dot { width: 8px; height: 8px; background: var(--accent-secondary); border-radius: 50%; animation: pulse 2s infinite; }
-
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-/* Right Card (Form) Styling */
-.form-card {
-  padding: 3rem 2.5rem;
-  height: 100%;
+.ng-fade-in {
+  animation: ngFadeSlide 0.55s ease forwards;
 }
 
-.form-header h2 { color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
-.form-header p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; }
+@keyframes ngFadeSlide {
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 
-.contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+/* =========================================================
+   Info panel
+   ========================================================= */
+.ng-badge-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
 
-.error-message { padding: 10px; background: rgba(255, 68, 68, 0.1); color: #ff6b6b; border: 1px solid rgba(255, 68, 68, 0.2); border-radius: 8px; font-size: 0.9rem; text-align: center; }
+.ng-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(114, 243, 255, 0.08);
+  border: 1px solid rgba(114, 243, 255, 0.15);
+  color: var(--ng-accent);
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
 
-.input-group { position: relative; width: 100%; }
-.glass-input { width: 100%; padding: 1.2rem 1rem 0.6rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; }
-.glass-textarea { resize: vertical; min-height: 120px; }
-.glass-input:focus { border-color: var(--accent-primary); background: rgba(255,255,255,0.06); }
+.ng-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(133, 255, 183, 0.08);
+  border: 1px solid rgba(133, 255, 183, 0.14);
+  color: #b4ffd0;
+  font-size: 0.84rem;
+}
 
-.floating-label { position: absolute; left: 1rem; top: 1rem; color: var(--text-secondary); font-size: 1rem; transition: 0.3s; pointer-events: none; }
-.glass-input:focus ~ .floating-label, .glass-input:not(:placeholder-shown) ~ .floating-label { top: 0.3rem; font-size: 0.75rem; color: var(--accent-primary); }
+.ng-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ng-success);
+  box-shadow: 0 0 12px var(--ng-success);
+  animation: ngPulse 2s ease-in-out infinite;
+}
 
-.input-highlight { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); transition: 0.3s; }
-.glass-input:focus ~ .input-highlight { width: 100%; }
+@keyframes ngPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.82);
+    opacity: 0.55;
+  }
+}
 
-.send-button { width: 100%; padding: 1rem; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: 10px; color: #000; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
-.send-button:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3); }
-.send-button:disabled { opacity: 0.7; cursor: not-allowed; }
+.ng-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
 
-/* Success State */
-.success-container { text-align: center; padding: 4rem 0; animation: fadeIn 0.5s ease; }
-.success-icon { width: 80px; height: 80px; background: rgba(0,255,136,0.1); border: 2px solid var(--accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; color: var(--accent-secondary); }
-.success-icon svg { width: 40px; height: 40px; }
-.success-title { color: #fff; font-size: 1.8rem; margin-bottom: 1rem; }
-.success-text { color: var(--text-secondary); font-size: 1rem; }
+.ng-brand-core {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.12), transparent 40%),
+    linear-gradient(135deg, rgba(114, 243, 255, 0.18), rgba(141, 125, 255, 0.18));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 30px rgba(114, 243, 255, 0.16),
+    0 0 60px rgba(141, 125, 255, 0.08);
+}
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.ng-core-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(114, 243, 255, 0.2);
+}
 
-/* =======================================
-   Responsive Layout
-   ======================================= */
-@media (max-width: 850px) {
-  .contact-layout { flex-direction: column; }
-  .info-card, .form-card { padding: 2rem 1.5rem; }
-  .contact-container { padding: 2rem 1rem; }
+.ring-1 {
+  inset: -10px;
+  animation: ngSpinSlow 12s linear infinite;
+}
+
+.ring-2 {
+  inset: -22px;
+  border-color: rgba(141, 125, 255, 0.18);
+  animation: ngSpinSlowReverse 16s linear infinite;
+}
+
+@keyframes ngSpinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ngSpinSlowReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.ng-core-letter {
+  position: relative;
+  z-index: 1;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 700;
+  color: white;
+  text-shadow:
+    0 0 12px rgba(114, 243, 255, 0.35),
+    0 0 24px rgba(141, 125, 255, 0.2);
+}
+
+.ng-copy {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+.ng-kicker {
+  margin: 0 0 10px;
+  color: var(--ng-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+}
+
+.ng-title {
+  margin: 0;
+  color: var(--ng-text);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.ng-title span {
+  display: block;
+  background: linear-gradient(90deg, var(--ng-accent), #d5e2ff, var(--ng-accent-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ng-description {
+  margin: 18px auto 0;
+  max-width: 650px;
+  color: var(--ng-text-soft);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.ng-contact-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--ng-radius-lg);
+  margin: 0 auto 22px;
+  width: 100%;
+  max-width: 620px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.ng-contact-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--ng-accent);
+  background: rgba(114, 243, 255, 0.08);
+  border: 1px solid rgba(114, 243, 255, 0.15);
+}
+
+.ng-email-link {
+  flex: 1;
+  min-width: 0;
+  color: var(--ng-text);
+  text-decoration: none;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ng-email-link:hover {
+  color: var(--ng-accent);
+}
+
+.ng-copy-btn {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ng-text);
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+  min-width: 78px;
+}
+
+.ng-copy-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(114, 243, 255, 0.25);
+  background: rgba(114, 243, 255, 0.08);
+}
+
+.ng-copy-btn.copied {
+  color: #061018;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-3));
+  border-color: transparent;
+}
+
+.ng-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 auto 24px;
+  width: 100%;
+  max-width: 620px;
+}
+
+.ng-meta-card {
+  padding: 16px;
+  border-radius: var(--ng-radius-lg);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--ng-text);
+}
+
+.ng-meta-label {
+  display: block;
+  color: var(--ng-text-dim);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.ng-social-wrap {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.ng-social-title {
+  margin: 0 0 14px;
+  color: var(--ng-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+}
+
+.ng-social-list {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ng-social-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--ng-text);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+}
+
+.ng-social-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.ng-social-btn:hover {
+  transform: translateY(-3px);
+  color: #071019;
+  background: linear-gradient(135deg, var(--ng-accent), var(--ng-accent-3));
+  border-color: transparent;
+}
+
+.ng-open-form-btn {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 15px 22px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: #061018;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-3));
+  box-shadow:
+    0 12px 24px rgba(114, 243, 255, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.ng-open-form-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.03);
+  box-shadow:
+    0 16px 28px rgba(114, 243, 255, 0.22),
+    0 0 24px rgba(133, 255, 183, 0.08);
+}
+
+/* =========================================================
+   Form panel
+   ========================================================= */
+.ng-form-header {
+  margin-bottom: 24px;
+}
+
+.ng-form-mini {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--ng-accent);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.ng-form-header h3 {
+  margin: 0 0 8px;
+  color: var(--ng-text);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  line-height: 1.1;
+}
+
+.ng-form-header p {
+  margin: 0;
+  color: var(--ng-text-soft);
+  line-height: 1.7;
+}
+
+.ng-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ng-alert {
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.ng-alert-error {
+  background: rgba(255, 125, 146, 0.08);
+  border: 1px solid rgba(255, 125, 146, 0.18);
+  color: #ffb2c0;
+}
+
+.ng-field {
+  position: relative;
+}
+
+.ng-input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--ng-text);
+  border-radius: 16px;
+  padding: 22px 16px 12px;
+  outline: none;
+  font-size: 1rem;
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.ng-input:focus {
+  border-color: var(--ng-border-strong);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 4px rgba(114, 243, 255, 0.07);
+}
+
+.ng-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.ng-field label {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  color: var(--ng-text-dim);
+  font-size: 0.98rem;
+  pointer-events: none;
+  transition: all 0.22s ease;
+}
+
+.ng-input:focus + label,
+.ng-input:not(:placeholder-shown) + label {
+  top: 8px;
+  font-size: 0.76rem;
+  color: var(--ng-accent);
+  letter-spacing: 0.05em;
+}
+
+.ng-line {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-3));
+  transition: width 0.22s ease;
+}
+
+.ng-input:focus ~ .ng-line {
+  width: calc(100% - 20px);
+}
+
+.ng-form-actions {
+  margin-top: 8px;
+}
+
+.ng-submit-btn {
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  border-radius: 16px;
+  padding: 15px 20px;
+  color: #061018;
+  background: linear-gradient(90deg, var(--ng-accent), var(--ng-accent-3));
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+  box-shadow: 0 14px 24px rgba(114, 243, 255, 0.18);
+}
+
+.ng-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 28px rgba(114, 243, 255, 0.24);
+}
+
+.ng-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ng-submit-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ng-submit-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #061018;
+  opacity: 0.8;
+}
+
+.ng-submit-dot.loading {
+  animation: ngBlink 1s ease-in-out infinite;
+}
+
+@keyframes ngBlink {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.65);
+    opacity: 0.35;
+  }
+}
+
+/* =========================================================
+   Success state
+   ========================================================= */
+.ng-success-box {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  animation: ngSuccessFade 0.45s ease forwards;
+}
+
+@keyframes ngSuccessFade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.ng-success-orb {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--ng-success);
+  background:
+    radial-gradient(circle at center, rgba(123, 255, 180, 0.16), rgba(123, 255, 180, 0.04));
+  border: 1px solid rgba(123, 255, 180, 0.25);
+  box-shadow: 0 0 24px rgba(123, 255, 180, 0.14);
+}
+
+.ng-success-orb svg {
+  width: 42px;
+  height: 42px;
+}
+
+.ng-success-box h3 {
+  margin: 0 0 10px;
+  color: var(--ng-text);
+  font-size: 2rem;
+}
+
+.ng-success-box p {
+  margin: 0;
+  color: var(--ng-text-soft);
+  line-height: 1.7;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 980px) {
+  .ng-shell.form-open {
+    grid-template-columns: 1fr;
+  }
+
+  .ng-fade-in {
+    animation: ngFadeSlideMobile 0.45s ease forwards;
+  }
+
+  @keyframes ngFadeSlideMobile {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .ng-info-panel,
+  .ng-form-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .ng-contact-section {
+    min-height: auto;
+    padding: 56px 14px;
+  }
+
+  .ng-info-panel,
+  .ng-form-panel {
+    padding: 22px 18px;
+    border-radius: 22px;
+  }
+
+  .ng-title {
+    font-size: 2rem;
+  }
+
+  .ng-description {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .ng-contact-chip {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ng-email-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .ng-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ng-social-btn {
+    width: 46px;
+    height: 46px;
+  }
+
+  .ng-brand-core {
+    width: 104px;
+    height: 104px;
+  }
+
+  .ng-core-letter {
+    font-size: 2.5rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .heading-highlight { font-size: 1.5rem; }
-  .form-header h2 { font-size: 1.5rem; }
-  .social-icon { width: 40px; height: 40px; }
+  .ng-badge-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ng-badge,
+  .ng-status {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ng-title {
+    font-size: 1.75rem;
+  }
+
+  .ng-form-header h3 {
+    font-size: 1.45rem;
+  }
+
+  .ng-input {
+    font-size: 0.97rem;
+  }
+
+  .ng-open-form-btn,
+  .ng-submit-btn {
+    padding: 14px 18px;
+  }
+
+  .ng-grid {
+    background-size: 44px 44px;
+  }
+}
+
+/* =========================================================
+   Reduced motion for smoother experience on low-end devices
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .ng-glow,
+  .ng-particle,
+  .ng-status-dot,
+  .ring-1,
+  .ring-2,
+  .ng-fade-in,
+  .ng-success-box {
+    animation: none !important;
+  }
+
+  .ng-open-form-btn,
+  .ng-submit-btn,
+  .ng-social-btn,
+  .ng-copy-btn,
+  .ng-input {
+    transition: none !important;
+  }
 }

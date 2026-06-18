@@ -1,257 +1,287 @@
 /* ==========================================
-   CSS CUSTOM PROPERTIES
+   ROOT VARIABLES
+   Lightweight, smooth, responsive
    ========================================== */
 :root {
-    --nav-height: 68px;
+    --nav-height: 72px;
+    --nav-height-tablet: 64px;
     --nav-height-mobile: 58px;
-    --nav-height-small: 52px;
+
+    --glass-bg: rgba(10, 14, 22, 0.48);
+    --glass-bg-strong: rgba(8, 12, 18, 0.78);
+    --glass-border: rgba(255, 255, 255, 0.10);
+
+    --text-main: rgba(255, 255, 255, 0.94);
+    --text-soft: rgba(255, 255, 255, 0.68);
+    --text-dim: rgba(255, 255, 255, 0.46);
+
     --cyan: #00e5ff;
-    --purple: #7f00ff;
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --cyan-soft: rgba(0, 229, 255, 0.50);
+    --red: #ff3b3b;
+    --red-soft: rgba(255, 59, 59, 0.45);
+
+    --shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.18);
+    --shadow-panel: -10px 0 30px rgba(0, 0, 0, 0.28);
+
+    --radius-lg: 18px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+
+    --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-fast: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ==========================================
-   NAVBAR — Water glass morphism
+   NAVBAR
+   Fixed + glass blur + smooth
    ========================================== */
 .navbar {
-    width: 100%;
-    height: var(--nav-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-    box-sizing: border-box;
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 12px;
+    left: 18px;
+    right: 18px;
     z-index: 1000;
 
-    /* Water glass effect */
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.07) 0%,
-        rgba(255, 255, 255, 0.03) 50%,
-        rgba(255, 255, 255, 0.06) 100%
-    );
-    backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
-    -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.1);
+    height: var(--nav-height);
+    padding: 0 18px;
 
-    /* Glass border — light refraction */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    box-shadow:
-        0 4px 32px rgba(0, 0, 0, 0.3),
-        0 1px 0 rgba(255, 255, 255, 0.06) inset,
-        0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
 
-    transition: background 0.4s var(--transition-smooth),
-                box-shadow 0.4s var(--transition-smooth);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.03)
+        ),
+        var(--glass-bg);
+
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+    box-shadow: var(--shadow-soft);
+    transition:
+        background 0.3s var(--ease-fast),
+        border-color 0.3s var(--ease-fast),
+        transform 0.3s var(--ease-fast),
+        box-shadow 0.3s var(--ease-fast);
 }
 
 .navbar::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.18) 30%,
-        rgba(0, 229, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.18) 70%,
+        rgba(255, 255, 255, 0.06) 35%,
+        rgba(0, 229, 255, 0.08) 50%,
+        rgba(255, 59, 59, 0.06) 65%,
         transparent 100%
     );
-    pointer-events: none;
+    opacity: 0.8;
 }
 
 .navbar:hover {
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.10) 0%,
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(255, 255, 255, 0.09) 100%
-    );
-    box-shadow:
-        0 6px 40px rgba(0, 0, 0, 0.35),
-        0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    border-color: rgba(255, 255, 255, 0.15);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.10),
+            rgba(255, 255, 255, 0.04)
+        ),
+        rgba(10, 14, 22, 0.56);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
 }
 
 /* ==========================================
-   LOGO
+   LOGO / BRAND
+   Cyber AI Security + active dot
    ========================================== */
 .logo {
     display: flex;
     align-items: center;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    z-index: 10;
-    background: none;
+    gap: 12px;
+    min-width: 0;
+    user-select: none;
 }
 
-/* ==========================================
-   PORTFOLIO — AI cyber professional
-   Clean shine only, no shadows, no 3D
-   ========================================== */
-.logo-shine {
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    font-family: 'Segoe UI', system-ui, sans-serif;
+.logo-status {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--red);
+    box-shadow:
+        0 0 0 3px rgba(255, 59, 59, 0.10),
+        0 0 8px var(--red-soft),
+        0 0 18px rgba(255, 59, 59, 0.35);
+    animation: statusPulse 1.8s ease-in-out infinite;
+}
 
-    /* Cyber gradient: white → cyan → electric blue → white */
+.logo-text-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    min-width: 0;
+}
+
+.logo-kicker {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    color: rgba(255, 80, 80, 0.9);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.logo-shine {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    color: transparent;
     background: linear-gradient(
-        100deg,
-        #e8f4ff 0%,
-        #00e5ff 28%,
-        #38bdf8 50%,
-        #00e5ff 72%,
-        #e8f4ff 100%
+        90deg,
+        #f5fbff 0%,
+        #9be8ff 25%,
+        #ffffff 50%,
+        #ff8a8a 75%,
+        #f5fbff 100%
     );
     background-size: 220% auto;
-    color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    /* Shimmer only */
-    animation: cyberShimmer 5s linear infinite;
-
-    cursor: default;
-    user-select: none;
+    text-shadow: none;
+    animation: cyberTextFlow 6s linear infinite;
     will-change: background-position;
-    transition: letter-spacing 0.35s ease;
 }
 
-.logo-shine:hover {
-    letter-spacing: 7px;
-}
-
-@keyframes cyberShimmer {
-    0%   { background-position: 0% center; }
-    100% { background-position: 220% center; }
+.logo-sub {
+    margin-top: 5px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
 /* ==========================================
-   HAMBURGER — Water glass, grey tinted
+   HAMBURGER
+   Small glass button + smooth
    ========================================== */
 .hamburger {
     appearance: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin-left: auto;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
-    position: relative;
-    z-index: 10000;
-    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
 
-    width: 44px;
-    height: 44px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
 
-    /* Water glass grey */
-    background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.10) 0%,
-        rgba(180, 180, 200, 0.06) 50%,
-        rgba(255, 255, 255, 0.08) 100%
-    );
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
 
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow:
-        0 2px 12px rgba(0, 0, 0, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    position: relative;
+    z-index: 1002;
 
-    transition: background 0.3s ease,
-                border-color 0.3s ease,
-                box-shadow 0.3s ease,
-                transform 0.2s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+    transition:
+        transform 0.22s var(--ease-fast),
+        background 0.25s var(--ease-fast),
+        border-color 0.25s var(--ease-fast),
+        box-shadow 0.25s var(--ease-fast);
 }
 
 .hamburger:hover {
-    background: linear-gradient(
-        145deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(0, 229, 255, 0.06) 50%,
-        rgba(255, 255, 255, 0.12) 100%
-    );
-    border-color: rgba(255, 255, 255, 0.22);
-    box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.25),
-        0 0 12px rgba(0, 229, 255, 0.1),
-        0 1px 0 rgba(255, 255, 255, 0.15) inset;
-    transform: scale(1.04);
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .hamburger:active {
     transform: scale(0.96);
 }
 
-/* Active state — subtle cyan tint */
-.hamburger.active {
-    background: linear-gradient(
-        145deg,
-        rgba(0, 229, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.05) 100%
-    );
-    border-color: rgba(0, 229, 255, 0.2);
-    box-shadow:
-        0 2px 16px rgba(0, 0, 0, 0.25),
-        0 0 10px rgba(0, 229, 255, 0.08),
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
-}
-
 .hamburger:focus-visible {
-    outline: 2px solid rgba(0, 229, 255, 0.6);
+    outline: 2px solid rgba(0, 229, 255, 0.55);
     outline-offset: 3px;
 }
 
-/* ==========================================
-   HAMBURGER LINES — smooth X
-   ========================================== */
+.hamburger.active {
+    border-color: rgba(255, 59, 59, 0.22);
+    background: rgba(255, 59, 59, 0.08);
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.20),
+        0 0 16px rgba(255, 59, 59, 0.12);
+}
+
 .hamburger-box {
     position: relative;
-    width: 22px;
-    height: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    pointer-events: none;
+    width: 20px;
+    height: 14px;
 }
 
 .hamburger-line {
-    display: block;
+    position: absolute;
+    left: 0;
     width: 100%;
     height: 2px;
-    background: rgba(255, 255, 255, 0.82);
-    border-radius: 2px;
-    transition: transform  0.36s cubic-bezier(0.23, 1, 0.32, 1),
-                opacity    0.24s ease,
-                background 0.3s ease;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
     transform-origin: center;
+    transition:
+        transform 0.32s var(--ease-smooth),
+        opacity 0.2s ease,
+        background 0.25s ease;
+}
+
+.hamburger-line--top {
+    top: 0;
+}
+
+.hamburger-line--middle {
+    top: 6px;
+}
+
+.hamburger-line--bottom {
+    top: 12px;
 }
 
 .hamburger.active .hamburger-line--top {
-    transform: translateY(6.5px) rotate(45deg);
-    background: rgba(0, 229, 255, 0.9);
+    transform: translateY(6px) rotate(45deg);
+    background: rgba(255, 90, 90, 0.95);
 }
+
 .hamburger.active .hamburger-line--middle {
     opacity: 0;
     transform: scaleX(0);
 }
+
 .hamburger.active .hamburger-line--bottom {
-    transform: translateY(-6.5px) rotate(-45deg);
-    background: rgba(0, 229, 255, 0.9);
+    transform: translateY(-6px) rotate(-45deg);
+    background: rgba(255, 90, 90, 0.95);
 }
 
 /* ==========================================
@@ -260,96 +290,135 @@
 .menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 9998;
+    z-index: 998;
+
+    background: rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.35s var(--transition-smooth);
+
+    transition:
+        opacity 0.28s var(--ease-fast),
+        visibility 0.28s var(--ease-fast);
 }
 
 .menu-overlay.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
 }
 
 /* ==========================================
-   SIDEBAR MENU — water glass
+   MOBILE MENU PANEL
    ========================================== */
 .mobile-menu {
     position: fixed;
-    top: 0; right: 0;
-    width: 300px;
-    height: 100vh;
-    height: 100dvh;
+    top: 12px;
+    right: 18px;
+    bottom: 12px;
+    z-index: 999;
 
-    /* Water glass sidebar */
-    background: linear-gradient(
-        160deg,
-        rgba(10, 14, 24, 0.82) 0%,
-        rgba(8, 10, 20, 0.78) 100%
-    );
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4);
+    width: min(320px, calc(100vw - 36px));
+    padding: 92px 24px 28px;
 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    z-index: 9999;
 
-    transform: translateX(100%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(16, 20, 28, 0.82),
+            rgba(8, 10, 18, 0.88)
+        );
+    backdrop-filter: blur(18px) saturate(135%);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+
+    box-shadow: var(--shadow-panel);
+
+    transform: translateX(108%);
+    opacity: 0;
     visibility: hidden;
-    transition: transform 0.38s var(--transition-smooth),
-                visibility 0.38s var(--transition-smooth);
-    will-change: transform;
+    pointer-events: none;
+
+    transition:
+        transform 0.34s var(--ease-smooth),
+        opacity 0.28s var(--ease-fast),
+        visibility 0.28s var(--ease-fast);
+
+    will-change: transform, opacity;
 }
 
 .mobile-menu.active {
     transform: translateX(0);
+    opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 /* ==========================================
    MENU LINKS
    ========================================== */
 .mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 26px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    gap: 18px;
 }
 
 .mobile-menu-list li {
     opacity: 0;
-    transform: translateX(22px);
-    transition: opacity 0.32s var(--transition-bounce),
-                transform 0.32s var(--transition-bounce);
+    transform: translateX(18px);
+    transition:
+        transform 0.28s var(--ease-smooth),
+        opacity 0.24s ease;
 }
 
-.mobile-menu.active .mobile-menu-list li:nth-child(1) { transition-delay: 0.07s; opacity: 1; transform: translateX(0); }
-.mobile-menu.active .mobile-menu-list li:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateX(0); }
-.mobile-menu.active .mobile-menu-list li:nth-child(3) { transition-delay: 0.17s; opacity: 1; transform: translateX(0); }
-.mobile-menu.active .mobile-menu-list li:nth-child(4) { transition-delay: 0.22s; opacity: 1; transform: translateX(0); }
+.mobile-menu.active .mobile-menu-list li {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-menu.active .mobile-menu-list li:nth-child(1) {
+    transition-delay: 0.04s;
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(2) {
+    transition-delay: 0.08s;
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(3) {
+    transition-delay: 0.12s;
+}
+.mobile-menu.active .mobile-menu-list li:nth-child(4) {
+    transition-delay: 0.16s;
+}
 
 .mobile-menu-list a {
-    font-size: 20px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.78);
-    text-decoration: none;
-    padding: 8px 18px;
-    display: block;
-    cursor: pointer;
     position: relative;
-    letter-spacing: 0.5px;
-    transition: color 0.25s ease;
+    display: inline-block;
+    padding: 10px 16px;
+
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    color: var(--text-soft);
+
+    transition:
+        color 0.22s ease,
+        transform 0.22s ease;
+    cursor: pointer;
 }
 
 .mobile-menu-list a::after {
@@ -358,174 +427,300 @@
     left: 50%;
     bottom: 2px;
     width: 0;
-    height: 1.5px;
-    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    height: 2px;
+    border-radius: 999px;
     transform: translateX(-50%);
-    border-radius: 2px;
-    transition: width 0.28s var(--transition-bounce);
+    background: linear-gradient(90deg, var(--cyan), var(--red));
+    transition: width 0.26s var(--ease-smooth);
 }
 
-.mobile-menu-list a:hover { color: rgba(0, 229, 255, 0.95); }
-.mobile-menu-list a:hover::after { width: 70%; }
-.mobile-menu-list a:active { opacity: 0.65; }
+.mobile-menu-list a:hover {
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+.mobile-menu-list a:hover::after {
+    width: 72%;
+}
 
 /* ==========================================
    QR SECTION
    ========================================== */
 .menu-qr {
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 28px;
+
     opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.38s var(--transition-bounce),
-                transform 0.38s var(--transition-bounce);
+    transform: translateY(10px);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s var(--ease-smooth);
 }
 
 .mobile-menu.active .menu-qr {
-    transition-delay: 0.28s;
     opacity: 1;
     transform: translateY(0);
+    transition-delay: 0.2s;
 }
 
 .menu-qr p {
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 16px;
-    letter-spacing: 0.6px;
-    text-align: center;
+    margin: 0 0 14px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
 }
 
 .qr-wrapper {
     position: relative;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    display: inline-block;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 10px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Scanner corner brackets */
 .scanner-corners {
     position: absolute;
     inset: 0;
-    border-radius: 10px;
+    border-radius: 14px;
     pointer-events: none;
-    z-index: 2;
     background:
-        linear-gradient(to right,  var(--cyan) 2px, transparent 2px) 0    0    / 16px 16px no-repeat,
-        linear-gradient(to bottom, var(--cyan) 2px, transparent 2px) 0    0    / 16px 16px no-repeat,
-        linear-gradient(to left,   var(--cyan) 2px, transparent 2px) 100% 0    / 16px 16px no-repeat,
-        linear-gradient(to bottom, var(--cyan) 2px, transparent 2px) 100% 0    / 16px 16px no-repeat,
-        linear-gradient(to right,  var(--cyan) 2px, transparent 2px) 0    100% / 16px 16px no-repeat,
-        linear-gradient(to top,    var(--cyan) 2px, transparent 2px) 0    100% / 16px 16px no-repeat,
-        linear-gradient(to left,   var(--cyan) 2px, transparent 2px) 100% 100% / 16px 16px no-repeat,
-        linear-gradient(to top,    var(--cyan) 2px, transparent 2px) 100% 100% / 16px 16px no-repeat;
+        linear-gradient(to right, var(--cyan) 2px, transparent 2px) 0 0 / 14px 14px no-repeat,
+        linear-gradient(to bottom, var(--cyan) 2px, transparent 2px) 0 0 / 14px 14px no-repeat,
+        linear-gradient(to left, var(--red) 2px, transparent 2px) 100% 0 / 14px 14px no-repeat,
+        linear-gradient(to bottom, var(--red) 2px, transparent 2px) 100% 0 / 14px 14px no-repeat,
+        linear-gradient(to right, var(--cyan) 2px, transparent 2px) 0 100% / 14px 14px no-repeat,
+        linear-gradient(to top, var(--cyan) 2px, transparent 2px) 0 100% / 14px 14px no-repeat,
+        linear-gradient(to left, var(--red) 2px, transparent 2px) 100% 100% / 14px 14px no-repeat,
+        linear-gradient(to top, var(--red) 2px, transparent 2px) 100% 100% / 14px 14px no-repeat;
 }
 
 .qr-image {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 6px;
     display: block;
-    opacity: 0.9;
+    width: 124px;
+    height: 124px;
+    object-fit: cover;
+    border-radius: 8px;
+    opacity: 0.92;
 }
 
-/* Laser scan line */
 .scan-line {
     position: absolute;
-    left: 12px;
-    right: 12px;
+    left: 10px;
+    right: 10px;
+    top: 10px;
     height: 2px;
+    border-radius: 999px;
     background: linear-gradient(
         90deg,
         transparent,
-        rgba(0, 229, 255, 0.7),
-        #ffffff,
-        rgba(0, 229, 255, 0.7),
+        rgba(255, 255, 255, 0.95),
+        rgba(255, 59, 59, 0.85),
         transparent
     );
-    box-shadow: 0 0 8px rgba(0, 229, 255, 1), 0 0 16px rgba(0, 229, 255, 0.4);
-    border-radius: 2px;
-    z-index: 3;
-    animation: scanReal 2.4s ease-in-out infinite;
-    will-change: top;
-}
-
-@keyframes scanReal {
-    0%, 100% { top: 12px;  opacity: 0; }
-    8%        { opacity: 1; }
-    92%       { opacity: 1; }
-    50%       { top: calc(100% - 14px); }
+    box-shadow: 0 0 10px rgba(255, 59, 59, 0.28);
+    animation: scanLine 2.6s ease-in-out infinite;
 }
 
 /* ==========================================
-   RESPONSIVE — TABLET (768–1023px)
+   ANIMATIONS
+   Lightweight only
    ========================================== */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .navbar { padding: 0 28px; }
-    .logo-shine { font-size: 17px; letter-spacing: 4px; }
-    .mobile-menu { width: 280px; }
+@keyframes cyberTextFlow {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 220% center;
+    }
+}
+
+@keyframes statusPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+@keyframes scanLine {
+    0%,
+    100% {
+        top: 10px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    50% {
+        top: calc(100% - 12px);
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
 }
 
 /* ==========================================
-   RESPONSIVE — MOBILE (max 768px)
+   TABLET
+   ========================================== */
+@media screen and (max-width: 1024px) {
+    .navbar {
+        top: 10px;
+        left: 14px;
+        right: 14px;
+        height: var(--nav-height-tablet);
+        padding: 0 14px;
+    }
+
+    .logo-shine {
+        font-size: 15px;
+        letter-spacing: 2.2px;
+    }
+
+    .logo-sub {
+        font-size: 8px;
+        letter-spacing: 1.6px;
+    }
+
+    .mobile-menu {
+        right: 14px;
+        top: 10px;
+        bottom: 10px;
+    }
+}
+
+/* ==========================================
+   MOBILE
    ========================================== */
 @media screen and (max-width: 768px) {
     .navbar {
-        padding: 0 16px;
+        top: 8px;
+        left: 10px;
+        right: 10px;
         height: var(--nav-height-mobile);
-    }
-    .logo-shine {
-        font-size: 15px;
-        letter-spacing: 3px;
-    }
-    .hamburger {
-        width: 40px;
-        height: 40px;
-    }
-    .mobile-menu {
-        width: 100%;
-        border-left: none;
-        background: linear-gradient(
-            160deg,
-            rgba(6, 8, 16, 0.94) 0%,
-            rgba(4, 6, 14, 0.92) 100%
-        );
-    }
-    .mobile-menu-list a { font-size: 22px; }
-    .qr-image { width: 120px; height: 120px; }
-}
-
-/* ==========================================
-   RESPONSIVE — SMALL MOBILE (max 480px)
-   ========================================== */
-@media screen and (max-width: 480px) {
-    .navbar {
         padding: 0 12px;
-        height: var(--nav-height-small);
+        border-radius: 16px;
     }
+
+    .logo {
+        gap: 10px;
+        max-width: calc(100% - 54px);
+    }
+
+    .logo-status {
+        width: 8px;
+        height: 8px;
+    }
+
+    .logo-kicker {
+        font-size: 8px;
+        letter-spacing: 1.8px;
+        margin-bottom: 4px;
+    }
+
     .logo-shine {
-        font-size: 13px;
-        letter-spacing: 2.5px;
+        font-size: 12px;
+        letter-spacing: 1.5px;
     }
+
+    .logo-sub {
+        margin-top: 4px;
+        font-size: 7px;
+        letter-spacing: 1.1px;
+    }
+
     .hamburger {
         width: 38px;
         height: 38px;
-        border-radius: 8px;
+        border-radius: 10px;
     }
-    .hamburger-box { width: 20px; height: 13px; }
-    .hamburger-line { height: 2px; }
-    .hamburger.active .hamburger-line--top    { transform: translateY(5.5px) rotate(45deg); }
-    .hamburger.active .hamburger-line--bottom { transform: translateY(-5.5px) rotate(-45deg); }
-    .mobile-menu-list { gap: 20px; }
-    .mobile-menu-list a { font-size: 20px; }
-    .qr-image { width: 110px; height: 110px; }
-    .menu-qr p { font-size: 11px; }
-    .scanner-corners {
-        background-size: 13px 13px;
+
+    .hamburger-box {
+        width: 18px;
+        height: 13px;
+    }
+
+    .hamburger-line--middle {
+        top: 5.5px;
+    }
+
+    .hamburger-line--bottom {
+        top: 11px;
+    }
+
+    .hamburger.active .hamburger-line--top {
+        transform: translateY(5.5px) rotate(45deg);
+    }
+
+    .hamburger.active .hamburger-line--bottom {
+        transform: translateY(-5.5px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+        top: 8px;
+        right: 10px;
+        bottom: 8px;
+        width: calc(100vw - 20px);
+        padding: 84px 20px 24px;
+        border-radius: 20px;
+    }
+
+    .mobile-menu-list {
+        gap: 14px;
+    }
+
+    .mobile-menu-list a {
+        font-size: 18px;
+        padding: 8px 14px;
+    }
+
+    .qr-image {
+        width: 108px;
+        height: 108px;
+    }
+}
+
+/* ==========================================
+   SMALL MOBILE
+   ========================================== */
+@media screen and (max-width: 480px) {
+    .logo-shine {
+        font-size: 11px;
+        letter-spacing: 1.1px;
+    }
+
+    .logo-sub {
+        display: none;
+    }
+
+    .mobile-menu-list a {
+        font-size: 17px;
+    }
+
+    .menu-qr p {
+        font-size: 10px;
+    }
+
+    .qr-image {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+/* ==========================================
+   DESKTOP UX
+   Keep only hamburger style if you want same design
+   ========================================== */
+@media screen and (min-width: 1025px) {
+    .mobile-menu {
+        width: 320px;
     }
 }
 
@@ -533,14 +728,11 @@
    REDUCED MOTION
    ========================================== */
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation: none !important;
-        transition-duration: 0.1s !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
-    .mobile-menu {
-        transform: none !important;
-        opacity: 0;
-        transition: opacity 0.1s ease, visibility 0.1s ease !important;
-    }
-    .mobile-menu.active { opacity: 1; }
 }
