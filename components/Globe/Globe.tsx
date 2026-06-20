@@ -1,26 +1,11 @@
 'use client';
 
-// Globe.tsx
-// ======================================================
-// PREMIUM 3D AI / SECURITY GLOBE
-// - Glassmorphism UI
-// - Hacker / cyber glow styling
-// - Smooth hover halos
-// - Mobile + desktop responsive
-// - Performance-minded Three.js setup
-// - Category filtering actually affects globe dots
-// ======================================================
-
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import * as THREE from 'three';
 // @ts-ignore
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './Globe.css';
 
-/**
- * Skill dataset
- * You can keep extending this safely.
- */
 const skills = [
   { name: 'React', icon: '/logos/react.svg', color: '#61DAFB', category: 'frontend' },
   { name: 'Next.js', icon: '/logos/nextjs.svg', color: '#ffffff', category: 'frontend' },
@@ -65,17 +50,11 @@ export default function Globe() {
   });
   const [streamBars, setStreamBars] = useState<number[]>([]);
 
-  /**
-   * Filtered skills for UI counts and actual globe rendering logic
-   */
   const filteredSkills = useMemo(() => {
     if (activeCategory === 'all') return skills;
     return skills.filter((s) => s.category === activeCategory);
   }, [activeCategory]);
 
-  /**
-   * Lightweight UI timers
-   */
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -123,23 +102,12 @@ export default function Globe() {
     };
   }, []);
 
-  /**
-   * Main Three.js effect
-   * Rebuilds when:
-   * - mobile state changes
-   * - category changes
-   *
-   * For this use-case that's okay and keeps code simple/clean.
-   */
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
 
     let disposed = false;
 
-    // -----------------------------
-    // Scene / Camera / Renderer
-    // -----------------------------
     const scene = new THREE.Scene();
 
     const width = container.clientWidth || 500;
@@ -157,36 +125,28 @@ export default function Globe() {
     });
 
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.8));
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-    container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
+    container.appendChild(renderer.domElement);
 
-    // -----------------------------
-    // Controls
-    // -----------------------------
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.045;
+    controls.dampingFactor = 0.05;
     controls.enableZoom = false;
     controls.enablePan = false;
-    controls.rotateSpeed = 0.75;
+    controls.rotateSpeed = isMobile ? 0.6 : 0.75;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.55;
+    controls.autoRotateSpeed = isMobile ? 0.45 : 0.55;
     controls.minPolarAngle = Math.PI * 0.24;
     controls.maxPolarAngle = Math.PI * 0.76;
 
-    // -----------------------------
-    // Globe Core
-    // -----------------------------
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
     const globeGeo = new THREE.SphereGeometry(1, 64, 64);
 
-    // Matte dark cyber base
     const globeMat = new THREE.MeshPhongMaterial({
       color: 0x040912,
       emissive: 0x07111f,
@@ -199,20 +159,16 @@ export default function Globe() {
     const globe = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globe);
 
-    // Inner subtle core glow
     const innerGlowMat = new THREE.MeshBasicMaterial({
       color: 0x00cfff,
       transparent: true,
       opacity: 0.035,
       blending: THREE.AdditiveBlending,
     });
-    const innerGlow = new THREE.Mesh(
-      new THREE.SphereGeometry(0.94, 32, 32),
-      innerGlowMat
-    );
+
+    const innerGlow = new THREE.Mesh(new THREE.SphereGeometry(0.94, 32, 32), innerGlowMat);
     globeGroup.add(innerGlow);
 
-    // Main holographic wireframe
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0x40c4ff,
       wireframe: true,
@@ -221,13 +177,10 @@ export default function Globe() {
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
-    const wireSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(1.003, 28, 28),
-      wireMat
-    );
+
+    const wireSphere = new THREE.Mesh(new THREE.SphereGeometry(1.003, 28, 28), wireMat);
     globeGroup.add(wireSphere);
 
-    // Secondary outer wire shell for AI/cyber feel
     const outerWireMat = new THREE.MeshBasicMaterial({
       color: 0x8a5cff,
       wireframe: true,
@@ -236,13 +189,10 @@ export default function Globe() {
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
-    const outerWireSphere = new THREE.Mesh(
-      new THREE.SphereGeometry(1.08, 24, 24),
-      outerWireMat
-    );
+
+    const outerWireSphere = new THREE.Mesh(new THREE.SphereGeometry(1.08, 24, 24), outerWireMat);
     globeGroup.add(outerWireSphere);
 
-    // Atmosphere shell
     const atmosphereMat = new THREE.MeshBasicMaterial({
       color: 0x55c7ff,
       transparent: true,
@@ -251,15 +201,10 @@ export default function Globe() {
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
-    const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(1.17, 32, 32),
-      atmosphereMat
-    );
+
+    const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(1.17, 32, 32), atmosphereMat);
     globeGroup.add(atmosphere);
 
-    // -----------------------------
-    // Lights
-    // -----------------------------
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
     scene.add(ambientLight);
 
@@ -275,25 +220,16 @@ export default function Globe() {
     pointLight.position.set(0, 0, 3);
     scene.add(pointLight);
 
-    // -----------------------------
-    // Stars
-    // -----------------------------
     const starGeometry = new THREE.BufferGeometry();
-    const starPositions: number[] = [];
+    const starPositions = new Float32Array((isMobile ? 700 : 1400) * 3);
 
-    const starCount = isMobile ? 700 : 1400;
-    for (let i = 0; i < starCount; i++) {
-      starPositions.push(
-        (Math.random() - 0.5) * 80,
-        (Math.random() - 0.5) * 80,
-        (Math.random() - 0.5) * 80
-      );
+    for (let i = 0; i < starPositions.length; i += 3) {
+      starPositions[i] = (Math.random() - 0.5) * 80;
+      starPositions[i + 1] = (Math.random() - 0.5) * 80;
+      starPositions[i + 2] = (Math.random() - 0.5) * 80;
     }
 
-    starGeometry.setAttribute(
-      'position',
-      new THREE.Float32BufferAttribute(starPositions, 3)
-    );
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
 
     const stars = new THREE.Points(
       starGeometry,
@@ -308,9 +244,6 @@ export default function Globe() {
     );
     scene.add(stars);
 
-    // -----------------------------
-    // Orbit rings for "AI / Hacker" look
-    // -----------------------------
     const orbitRings: THREE.LineLoop[] = [];
     const ringConfigs = [
       { radius: 1.32, color: 0x00d9ff, tiltX: 1.1, tiltY: 0.15, opacity: 0.16 },
@@ -319,18 +252,19 @@ export default function Globe() {
     ];
 
     ringConfigs.forEach((cfg) => {
-      const ringGeo = new THREE.BufferGeometry();
-      const points: number[] = [];
-      const segments = 180;
+      const geo = new THREE.BufferGeometry();
+      const points = new Float32Array(180 * 3);
 
-      for (let i = 0; i < segments; i++) {
-        const angle = (i / segments) * Math.PI * 2;
-        points.push(Math.cos(angle) * cfg.radius, Math.sin(angle) * cfg.radius, 0);
+      for (let i = 0; i < 180; i++) {
+        const angle = (i / 180) * Math.PI * 2;
+        points[i * 3] = Math.cos(angle) * cfg.radius;
+        points[i * 3 + 1] = Math.sin(angle) * cfg.radius;
+        points[i * 3 + 2] = 0;
       }
 
-      ringGeo.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
+      geo.setAttribute('position', new THREE.BufferAttribute(points, 3));
 
-      const ringMat = new THREE.LineBasicMaterial({
+      const mat = new THREE.LineBasicMaterial({
         color: cfg.color,
         transparent: true,
         opacity: cfg.opacity,
@@ -338,23 +272,23 @@ export default function Globe() {
         depthWrite: false,
       });
 
-      const ring = new THREE.LineLoop(ringGeo, ringMat);
+      const ring = new THREE.LineLoop(geo, mat);
       ring.rotation.x = cfg.tiltX;
       ring.rotation.y = cfg.tiltY;
       scene.add(ring);
       orbitRings.push(ring);
     });
 
-    // -----------------------------
-    // Skill nodes
-    // -----------------------------
     const skillMeshes: SkillMeshRecord[] = [];
-    const dotGeo = new THREE.SphereGeometry(isMobile ? 0.038 : 0.043, 14, 14);
-    const haloGeo = new THREE.SphereGeometry(isMobile ? 0.09 : 0.1, 14, 14);
-    const ringGeo = new THREE.RingGeometry(0.065, 0.085, 32);
+    const raycastTargets: THREE.Object3D[] = [];
+    const meshToIndex = new Map<THREE.Object3D, number>();
+
+    const dotGeo = new THREE.SphereGeometry(isMobile ? 0.05 : 0.043, 14, 14);
+    const haloGeo = new THREE.SphereGeometry(isMobile ? 0.11 : 0.1, 14, 14);
+    const nodeRingGeo = new THREE.RingGeometry(0.065, 0.085, 32);
+    const centerVec = new THREE.Vector3(0, 0, 0);
 
     filteredSkills.forEach((sk, i) => {
-      // Fibonacci-like sphere distribution
       const phi = Math.acos(-1 + (2 * (i + 0.5)) / filteredSkills.length);
       const theta = Math.sqrt(filteredSkills.length * Math.PI) * phi;
 
@@ -363,23 +297,22 @@ export default function Globe() {
         Math.cos(phi),
         Math.sin(phi) * Math.sin(theta)
       );
-      const safeColor = new THREE.Color((sk.color as string) === '#000000' ? '#888888' : (sk.color as string));
-      // Dot
+
+      const safeColor = new THREE.Color((sk.color as string) === '#000000' ? '#888888' : sk.color);
       const dotMat = new THREE.MeshBasicMaterial({
         color: safeColor,
         transparent: true,
-        opacity: 0.95,
+        opacity: 0.98,
       });
 
       const dot = new THREE.Mesh(dotGeo, dotMat);
       dot.position.copy(pos);
       globe.add(dot);
 
-      // Glow halo
       const haloMat = new THREE.MeshBasicMaterial({
         color: safeColor,
         transparent: true,
-        opacity: 0,
+        opacity: isMobile ? 0.08 : 0,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
       });
@@ -388,7 +321,6 @@ export default function Globe() {
       halo.position.copy(pos);
       globe.add(halo);
 
-      // Thin ring around node for cyber UI look
       const ringMat = new THREE.MeshBasicMaterial({
         color: safeColor,
         transparent: true,
@@ -398,20 +330,34 @@ export default function Globe() {
         depthWrite: false,
       });
 
-      const ring = new THREE.Mesh(ringGeo, ringMat);
+      const ring = new THREE.Mesh(nodeRingGeo, ringMat);
       ring.position.copy(pos.clone().multiplyScalar(1.02));
-      ring.lookAt(new THREE.Vector3(0, 0, 0));
+      ring.lookAt(centerVec);
       globe.add(ring);
 
+      const index = skillMeshes.length;
       skillMeshes.push({ mesh: dot, halo, ring, skill: sk, pos });
+      raycastTargets.push(dot);
+      meshToIndex.set(dot, index);
     });
 
-    // -----------------------------
-    // Raycasting / Interaction
-    // -----------------------------
     const raycaster = new THREE.Raycaster();
+    raycaster.params.Points = { threshold: 0.1 };
     const mouse = new THREE.Vector2(-99, -99);
+
     let hoveredIdx = -1;
+    let lockedIdx = -1;
+    let tooltipSkillName = '';
+    let isPointerDown = false;
+    let pointerMoved = false;
+    let pointerDownX = 0;
+    let pointerDownY = 0;
+
+    const tempVec = new THREE.Vector3();
+    const scaleVec1 = new THREE.Vector3();
+    const scaleVec2 = new THREE.Vector3();
+    const scaleVec3 = new THREE.Vector3();
+    const clock = new THREE.Clock();
 
     const updateMouse = (clientX: number, clientY: number) => {
       const rect = container.getBoundingClientRect();
@@ -419,44 +365,11 @@ export default function Globe() {
       mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
     };
 
-    const onMouseMove = (e: MouseEvent) => {
-      updateMouse(e.clientX, e.clientY);
+    const projectMeshToScreen = (mesh: THREE.Mesh) => {
+      tempVec.copy(mesh.position).project(camera);
+      return tempVec;
     };
 
-    const onTouchMove = (e: TouchEvent) => {
-      if (!e.touches[0]) return;
-      updateMouse(e.touches[0].clientX, e.touches[0].clientY);
-    };
-
-    const onLeave = () => {
-      mouse.set(-99, -99);
-      hoveredIdx = -1;
-      hideTip();
-      controls.autoRotate = true;
-    };
-
-    container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('touchmove', onTouchMove, { passive: true });
-    container.addEventListener('mouseleave', onLeave);
-
-    // -----------------------------
-    // Resize handling
-    // -----------------------------
-    const resizeObserver = new ResizeObserver(() => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      if (!w || !h) return;
-
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
-
-    resizeObserver.observe(container);
-
-    // -----------------------------
-    // Tooltip helpers
-    // -----------------------------
     const showTip = (sk: Skill, screenPos: THREE.Vector3) => {
       const tip = tooltipRef.current;
       if (!tip) return;
@@ -477,15 +390,18 @@ export default function Globe() {
       tip.style.borderColor = sk.color;
       tip.style.boxShadow = `0 12px 40px rgba(0,0,0,0.45), 0 0 22px ${sk.color}55, inset 0 0 18px ${sk.color}14`;
 
-      tip.innerHTML = `
-        <div class="tooltip-icon" style="border-color:${sk.color}; background: radial-gradient(circle, ${sk.color}30 0%, rgba(255,255,255,0.03) 70%, transparent 100%);">
-          <img src="${sk.icon}" alt="${sk.name}" style="filter: drop-shadow(0 0 8px ${sk.color});" />
-        </div>
-        <div class="tooltip-copy">
-          <span class="tooltip-name" style="text-shadow: 0 0 8px ${sk.color}66;">${sk.name}</span>
-          <span class="tooltip-meta">${sk.category}</span>
-        </div>
-      `;
+      if (tooltipSkillName !== sk.name) {
+        tip.innerHTML = `
+          <div class="tooltip-icon" style="border-color:${sk.color}; background: radial-gradient(circle, ${sk.color}30 0%, rgba(255,255,255,0.03) 70%, transparent 100%);">
+            <img src="${sk.icon}" alt="${sk.name}" style="filter: drop-shadow(0 0 8px ${sk.color});" />
+          </div>
+          <div class="tooltip-copy">
+            <span class="tooltip-name" style="text-shadow: 0 0 8px ${sk.color}66;">${sk.name}</span>
+            <span class="tooltip-meta">${sk.category}</span>
+          </div>
+        `;
+        tooltipSkillName = sk.name;
+      }
 
       tip.classList.add('visible');
     };
@@ -494,13 +410,109 @@ export default function Globe() {
       const tip = tooltipRef.current;
       if (!tip) return;
       tip.classList.remove('visible');
+      tooltipSkillName = '';
     };
 
-    // -----------------------------
-    // Animation loop
-    // -----------------------------
-    const tempVec = new THREE.Vector3();
-    const clock = new THREE.Clock();
+    const setHoveredSkill = (idx: number, lock = false) => {
+      if (idx < 0 || !skillMeshes[idx]) return;
+      hoveredIdx = idx;
+      if (lock) lockedIdx = idx;
+
+      const { skill, mesh } = skillMeshes[idx];
+      showTip(skill, projectMeshToScreen(mesh));
+      controls.autoRotate = false;
+    };
+
+    const clearHoveredSkill = (force = false) => {
+      if (lockedIdx !== -1 && !force) return;
+      hoveredIdx = -1;
+      hideTip();
+      controls.autoRotate = true;
+    };
+
+    const pickSkill = (clientX: number, clientY: number, lock = false) => {
+      updateMouse(clientX, clientY);
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(raycastTargets, false);
+
+      if (hits.length > 0) {
+        const idx = meshToIndex.get(hits[0].object) ?? -1;
+        if (idx !== -1) {
+          setHoveredSkill(idx, lock);
+          return idx;
+        }
+      }
+
+      if (lock) {
+        lockedIdx = -1;
+        clearHoveredSkill(true);
+      }
+
+      return -1;
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (isPointerDown) {
+        const dx = Math.abs(e.clientX - pointerDownX);
+        const dy = Math.abs(e.clientY - pointerDownY);
+        if (dx > 6 || dy > 6) pointerMoved = true;
+      }
+
+      if (lockedIdx !== -1 && e.pointerType !== 'mouse') return;
+
+      updateMouse(e.clientX, e.clientY);
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      isPointerDown = true;
+      pointerMoved = false;
+      pointerDownX = e.clientX;
+      pointerDownY = e.clientY;
+
+      // Instant feedback on touch/mobile and click
+      pickSkill(e.clientX, e.clientY, e.pointerType !== 'mouse');
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      isPointerDown = false;
+
+      const isTap = !pointerMoved;
+      if (isTap) {
+        const idx = pickSkill(e.clientX, e.clientY, e.pointerType !== 'mouse');
+        if (idx === -1 && e.pointerType !== 'mouse') {
+          lockedIdx = -1;
+          clearHoveredSkill(true);
+        }
+      }
+    };
+
+    const onPointerLeave = () => {
+      mouse.set(-99, -99);
+
+      if (lockedIdx === -1) {
+        hoveredIdx = -1;
+        hideTip();
+        controls.autoRotate = true;
+      }
+    };
+
+    container.addEventListener('pointermove', onPointerMove, { passive: true });
+    container.addEventListener('pointerdown', onPointerDown, { passive: true });
+    container.addEventListener('pointerup', onPointerUp, { passive: true });
+    container.addEventListener('pointerleave', onPointerLeave);
+
+    const resizeObserver = new ResizeObserver(() => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (!w || !h) return;
+
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 1.8));
+    });
+
+    resizeObserver.observe(container);
 
     const animate = () => {
       if (disposed) return;
@@ -510,7 +522,6 @@ export default function Globe() {
 
       controls.update();
 
-      // Ambient scene motion
       stars.rotation.y += isMobile ? 0.00008 : 0.00012;
       stars.rotation.x += 0.00003;
 
@@ -522,64 +533,61 @@ export default function Globe() {
         ring.rotation.z += 0.001 * (idx + 1) * 0.25;
       });
 
-      // Raycast on visible skill meshes
-      raycaster.setFromCamera(mouse, camera);
-      const hitTargets = skillMeshes.map((s) => s.mesh);
-      const hits = raycaster.intersectObjects(hitTargets, false);
+      if (lockedIdx === -1) {
+        raycaster.setFromCamera(mouse, camera);
+        const hits = raycaster.intersectObjects(raycastTargets, false);
 
-      if (hits.length > 0) {
-        const idx = skillMeshes.findIndex((s) => s.mesh === hits[0].object);
-
-        if (idx !== hoveredIdx && idx !== -1) {
-          hoveredIdx = idx;
-          const { skill, mesh } = skillMeshes[idx];
-
-          tempVec.copy(mesh.position).project(camera);
-          showTip(skill, tempVec);
-
-          controls.autoRotate = false;
+        if (hits.length > 0) {
+          const idx = meshToIndex.get(hits[0].object) ?? -1;
+          if (idx !== -1) {
+            if (idx !== hoveredIdx) {
+              hoveredIdx = idx;
+              const { skill, mesh } = skillMeshes[idx];
+              showTip(skill, projectMeshToScreen(mesh));
+              controls.autoRotate = false;
+            } else {
+              const { skill, mesh } = skillMeshes[idx];
+              showTip(skill, projectMeshToScreen(mesh));
+            }
+          }
+        } else if (hoveredIdx !== -1) {
+          hoveredIdx = -1;
+          hideTip();
+          controls.autoRotate = true;
         }
-      } else if (hoveredIdx !== -1) {
-        hideTip();
-        controls.autoRotate = true;
-        hoveredIdx = -1;
+      } else {
+        const locked = skillMeshes[lockedIdx];
+        if (locked) {
+          showTip(locked.skill, projectMeshToScreen(locked.mesh));
+        }
       }
 
-      // Smooth per-node animation
-      skillMeshes.forEach(({ mesh, halo, ring }, i) => {
-        const hovered = i === hoveredIdx;
+      for (let i = 0; i < skillMeshes.length; i++) {
+        const { mesh, halo, ring } = skillMeshes[i];
+        const active = i === hoveredIdx || i === lockedIdx;
         const pulse = 0.5 + Math.sin(elapsed * 2.2 + i * 0.55) * 0.5;
 
-        const targetScale = hovered ? 1.42 : 1.0 + pulse * 0.035;
-        const targetHaloScale = hovered ? 1.95 : 1.0 + pulse * 0.08;
-        const targetHaloOpacity = hovered ? 0.82 : 0.08 + pulse * 0.06;
-        const targetRingOpacity = hovered ? 0.85 : 0.14 + pulse * 0.08;
+        const targetScale = active ? (isMobile ? 1.55 : 1.42) : 1.0 + pulse * 0.035;
+        const targetHaloScale = active ? (isMobile ? 2.15 : 1.95) : 1.0 + pulse * 0.08;
+        const targetHaloOpacity = active ? 0.9 : 0.08 + pulse * 0.06;
+        const targetRingOpacity = active ? 0.9 : 0.14 + pulse * 0.08;
 
-        mesh.scale.lerp(
-          new THREE.Vector3(targetScale, targetScale, targetScale),
-          hovered ? 0.16 : 0.08
-        );
+        scaleVec1.set(targetScale, targetScale, targetScale);
+        scaleVec2.set(targetHaloScale, targetHaloScale, targetHaloScale);
 
-        halo.scale.lerp(
-          new THREE.Vector3(targetHaloScale, targetHaloScale, targetHaloScale),
-          hovered ? 0.16 : 0.08
-        );
+        const ringScale = active ? 1.28 : 1.0 + pulse * 0.04;
+        scaleVec3.set(ringScale, ringScale, ringScale);
 
-        ring.scale.lerp(
-          new THREE.Vector3(
-            hovered ? 1.25 : 1.0 + pulse * 0.04,
-            hovered ? 1.25 : 1.0 + pulse * 0.04,
-            hovered ? 1.25 : 1.0 + pulse * 0.04
-          ),
-          0.12
-        );
+        mesh.scale.lerp(scaleVec1, active ? 0.24 : 0.08);
+        halo.scale.lerp(scaleVec2, active ? 0.22 : 0.08);
+        ring.scale.lerp(scaleVec3, 0.14);
 
         const haloMat = halo.material as THREE.MeshBasicMaterial;
-        haloMat.opacity += (targetHaloOpacity - haloMat.opacity) * 0.12;
+        haloMat.opacity += (targetHaloOpacity - haloMat.opacity) * (active ? 0.24 : 0.12);
 
         const ringMat = ring.material as THREE.MeshBasicMaterial;
-        ringMat.opacity += (targetRingOpacity - ringMat.opacity) * 0.12;
-      });
+        ringMat.opacity += (targetRingOpacity - ringMat.opacity) * (active ? 0.22 : 0.12);
+      }
 
       renderer.render(scene, camera);
     };
@@ -590,12 +598,8 @@ export default function Globe() {
       setIsVisible(true);
     }, 100);
 
-    // -----------------------------
-    // Cleanup
-    // -----------------------------
     return () => {
       disposed = true;
-
       cancelAnimationFrame(animIdRef.current);
 
       if (visibilityTimeoutRef.current) {
@@ -604,24 +608,27 @@ export default function Globe() {
 
       resizeObserver.disconnect();
 
-      container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('touchmove', onTouchMove);
-      container.removeEventListener('mouseleave', onLeave);
+      container.removeEventListener('pointermove', onPointerMove);
+      container.removeEventListener('pointerdown', onPointerDown);
+      container.removeEventListener('pointerup', onPointerUp);
+      container.removeEventListener('pointerleave', onPointerLeave);
 
       controls.dispose();
 
-      // Dispose geometries/materials
       scene.traverse((obj) => {
-        const mesh = obj as THREE.Mesh;
+        const mesh = obj as THREE.Mesh & {
+          geometry?: THREE.BufferGeometry;
+          material?: THREE.Material | THREE.Material[];
+        };
+
         if (mesh.geometry) {
           mesh.geometry.dispose();
         }
 
-        const material = mesh.material;
-        if (Array.isArray(material)) {
-          material.forEach((m) => m.dispose());
-        } else if (material) {
-          material.dispose();
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((m) => m.dispose());
+        } else if (mesh.material) {
+          mesh.material.dispose();
         }
       });
 
@@ -637,7 +644,6 @@ export default function Globe() {
 
   return (
     <div className={`globe-wrapper ${isVisible ? 'visible' : ''}`}>
-      {/* LEFT PANEL */}
       <div className="side-panel left-panel">
         <div className="panel-content">
           <div className="panel-clock">
@@ -678,33 +684,26 @@ export default function Globe() {
         </div>
       </div>
 
-      {/* GLOBE */}
       <div className="globe-container">
-        {/* Background decorative layers */}
         <div className="globe-bg-gradient" />
         <div className="globe-grid-pattern" />
         <div className="globe-scanlines" />
         <div className="globe-noise" />
 
-        {/* Three.js mount */}
         <div ref={mountRef} className="globe-canvas" />
 
-        {/* Tooltip */}
         <div ref={tooltipRef} className="skill-tooltip" />
 
-        {/* Frame decoration */}
         <div className="corner-decoration top-left" />
         <div className="corner-decoration top-right" />
         <div className="corner-decoration bottom-left" />
         <div className="corner-decoration bottom-right" />
 
-        {/* Mobile badge */}
         <div className="mobile-skill-badge glass-card">
           <span className="badge-count">{filteredCount}</span>
           <span className="badge-label">Skills</span>
         </div>
 
-        {/* Overlay controls / hint */}
         <div className="globe-overlay">
           <div className="drag-instruction glass-chip">
             <div className="drag-icon">
@@ -717,14 +716,12 @@ export default function Globe() {
           </div>
         </div>
 
-        {/* Top HUD */}
         <div className="top-hud">
           <div className="hud-pill glass-chip">AI DEFENSE MATRIX</div>
           <div className="hud-pill glass-chip">SECURE NODE MAP</div>
         </div>
       </div>
 
-      {/* RIGHT PANEL */}
       <div className="side-panel right-panel">
         <div className="panel-content">
           <div className="skill-count">
@@ -758,6 +755,7 @@ export default function Globe() {
                 className={`category-btn ${activeCategory === cat.id ? 'active' : ''}`}
                 onClick={() => setActiveCategory(cat.id as 'all' | 'frontend' | 'backend')}
                 aria-pressed={activeCategory === cat.id}
+                type="button"
               >
                 <span className="cat-name">{cat.label}</span>
                 <span className="cat-count">{cat.count}</span>
