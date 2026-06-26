@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from '@/components/Nav-bar/Nav';
 import Footer from '@/components/Footer/Footer';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,11 @@ export default function RootLayout({
         {children}
         <Footer />
         <SpeedInsights />
+        <Script
+  src="http://localhost:5173/assistant.js"
+  data-user-id="6a3ea3bdd25603316e0a2a92"
+  strategy="afterInteractive"
+/>
       </body>
     </html>
   );
