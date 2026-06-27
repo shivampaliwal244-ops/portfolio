@@ -36,8 +36,9 @@ export default function RootLayout({
         {children}
         <Footer />
         <SpeedInsights />
+
         <Script
-  src="http://localhost:5173/assistant.js"
+  src="https://ai-voice-assistant-y7a8.onrender.com/assistant.js"
   data-user-id="6a3ea3bdd25603316e0a2a92"
   strategy="afterInteractive"
 />
