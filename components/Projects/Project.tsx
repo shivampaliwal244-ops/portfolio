@@ -66,32 +66,66 @@ const projectsData = [
   accentColor: "#7c3aed",
   secondaryAccent: "#22c55e"
 },
-  {
-    id: 2,
-    name: "Full Stack Developer Hub",
-    description: "A modern full-stack web application built using React.js that showcases developer tools, project management features, and real-time data handling.",
-    techStack: {
-      frontend: ["React.js", "Tailwind CSS", "GSAP"],
-      backend: ["Node.js", "Express.js"],
-      database: ["MongoDB"],
-      auth: ["JWT"]
-    },
-    features: [
-      "🔐 User Authentication",
-      "📁 Project Dashboard",
-      "📊 Real-time Data",
-      "🎨 Glass Effect UI",
-      "⚡ Smooth Animations",
-      "🌍 3D Elements",
-      "📱 Responsive Design",
-      "🔎 Search & Filter"
+{
+  id: 2,
+  name: "🚀 Next.js 3D Portfolio Website",
+
+  description:
+    "A modern, interactive personal portfolio built with Next.js 16, React 19, and TypeScript, featuring a futuristic cyber/hacker-inspired UI with immersive 3D visuals, glassmorphism, and smooth animations. Showcases technical skills, projects, certifications, and professional achievements through an interactive 3D skills globe, animated particle backgrounds, and immersive project and certificate carousels. Integrates Firebase Firestore for contact form data management and EmailJS for email notifications, delivering a responsive, engaging, and feature-rich full-stack web experience. Enhanced with GSAP, Framer Motion, and Vercel Speed Insights for fluid interactions and performance monitoring.",
+
+  techStack: {
+    frontend: [
+      "Next.js 16.2.9",
+      "React 19.2.4",
+      "TypeScript 5",
+      "Tailwind CSS 4",
+      "Three.js 0.184.0",
+      "@react-three/fiber 9.6.1",
+      "@react-three/drei 10.7.7",
+      "Swiper",
+      "GSAP",
+      "Framer Motion"
     ],
-    image: "/assets/projects/fullstack-hub.png",
-    liveLink: "[google.com](https://google.com)",
-    githubLink: "[github.com](https://github.com)",
-    gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    accentColor: "#f5576c",
-    secondaryAccent: "#f093fb"
+
+    backend: [
+      "Firebase 12.14.0",
+      "Firebase Firestore",
+      "EmailJS 4.4.1"
+    ],
+
+    ai: [],
+
+    state: [
+      "React Hooks",
+      "React Context"
+    ]
+  },
+
+  features: [
+    "🌐 Interactive 3D Skills Globe with Raycasting",
+    "✨ Immersive Three.js Particle Background",
+    "🎨 Futuristic Cyber/Hacker UI with Glassmorphism",
+    "📜 Dynamic Certificate Carousel with Coverflow Effect",
+    "🎠 Interactive 3D Project Carousel with Auto-Play",
+    "👆 Touch Gestures for Seamless Mobile Navigation",
+    "⌨️ Terminal-Inspired Typing Animations",
+    "📬 Firebase Firestore-Powered Contact Form",
+    "📧 Automated Email Notifications via EmailJS",
+    "📱 Fully Responsive, Mobile-First Design",
+    "🎬 Smooth GSAP and Framer Motion Animations",
+    "⌨️ Keyboard Navigation and Accessibility Support",
+    "⚡ Vercel Speed Insights for Performance Monitoring",
+    "💎 Modern UI with Smooth Transitions and Micro-Interactions"
+  ],
+
+  image: "/assets/projects/portfolio.png",
+
+  liveLink: "",
+  githubLink: "",
+
+  gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  accentColor: "#667eea",
+  secondaryAccent: "#764ba2"
   },
   {
     id: 3,
@@ -113,7 +147,7 @@ const projectsData = [
       "🎨 Drag & Drop",
       "🚀 One-click Deploy"
     ],
-    image: "/assets/projects/ai-website-builder.png",
+    image: "/assets/projects/ai-website-builders.png",
     liveLink: "[google.com](https://google.com)",
     githubLink: "[github.com](https://github.com)",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
