@@ -10,32 +10,62 @@ import './Project.css';
 // ============================================
 const projectsData = [
   {
-    id: 1,
-    name: "AI Study Planner App",
-    description: "A smart AI-powered study planning application built using Flutter and Firebase. This app helps students organize their daily study schedule, track progress, and receive intelligent suggestions based on their learning patterns.",
-    techStack: {
-      frontend: ["Flutter"],
-      backend: ["Firebase"],
-      ai: ["Gemini API", "OpenAI API"],
-      state: ["Provider", "Riverpod"]
-    },
-    features: [
-      "🔐 User Authentication",
-      "📅 AI Study Schedule Generator",
-      "✅ Task Management",
-      "📊 Progress Tracking",
-      "🤖 Smart AI Suggestions",
-      "🔔 Push Notifications",
-      "☁️ Cloud Sync",
-      "🎯 Modern UI"
+  id: 1,
+  name: "Shifra AI",
+  description: "Shifra AI is a full-stack SaaS platform that enables website owners to build, customize, and deploy intelligent voice assistants on any website using a simple script tag. Powered by Google Gemini, it combines voice recognition, natural-sounding speech synthesis, contextual AI conversations, and voice-controlled website navigation. With customizable themes, secure authentication, subscription billing, and resilient API handling, Shifra AI makes it easy to integrate interactive AI voice experiences into web applications.",
+  techStack: {
+    frontend: [
+      "React 19",
+      "Vite",
+      "Tailwind CSS",
+      "React Router DOM",
+      "Axios",
+      "Firebase",
+      "React Hot Toast",
+      "React Icons"
     ],
-    image: "/assets/projects/ai-study-planner.png",
-    liveLink: "[google.com](https://google.com)",
-    githubLink: "[github.com](https://github.com)",
-    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    accentColor: "#667eea",
-    secondaryAccent: "#764ba2"
+    backend: [
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Mongoose",
+      "JWT Authentication",
+      "Cookie Parser",
+      "CORS",
+      "Razorpay"
+    ],
+    ai: [
+      "Google Gemini 2.5 Flash",
+      "Web Speech API",
+      "Speech Recognition",
+      "Speech Synthesis"
+    ],
+    state: [
+      "React Hooks",
+      "JWT Cookies"
+    ]
   },
+  features: [
+    "🔐 Google OAuth Authentication with Firebase",
+    "🎙️ Real-Time Voice Recognition",
+    "🧠 Intelligent AI Responses Powered by Google Gemini",
+    "🗣️ Natural Text-to-Speech with Voice Selection",
+    "🛠️ Custom AI Assistant Builder with Business Context",
+    "🌐 One-Script Website Integration",
+    "🎨 Multiple UI Themes: Dark, Light, Glass & Neon",
+    "🧭 Voice-Controlled Website Navigation",
+    "💳 Subscription Billing with Razorpay",
+    "📊 Usage Tracking and Message Rate Limiting",
+    "⚡ Circuit Breaker Pattern for API Resilience",
+    "🛡️ Robust Error Handling and Retry Logic"
+  ],
+  image: "/assets/projects/shifra-ai.png",
+  liveLink: "https://ai-voice-assistant-y7a8.onrender.com",
+  githubLink: "",
+  gradient: "linear-gradient(135deg, #7c3aed 0%, #22c55e 100%)",
+  accentColor: "#7c3aed",
+  secondaryAccent: "#22c55e"
+},
   {
     id: 2,
     name: "Full Stack Developer Hub",
