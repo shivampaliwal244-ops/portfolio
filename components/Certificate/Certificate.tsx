@@ -94,6 +94,33 @@ const certificates: CertificateType[] = [
     date: 'Oct 2025',
     category: 'Tools & Development',
     color: '#a8ab2ce0'
+  },
+  {
+    id: 6,
+    title: 'Machine Learning & Algorithms',
+    issuer: 'Cambridge International Qualifications, UK',
+    images: ['/assets/certificates/cert6.png'],
+    date: 'June 2026',
+    category: 'AI & Machine Learning',
+    color: '#240c82a4'
+  },
+  {
+    id: 7,
+    title: 'AWS AI Practitioner-FSP Certification',
+    issuer: 'NASSCOM',
+    images: ['/assets/certificates/cert7.png'],
+    date: 'July 2026',
+    category: 'Artificial Intelligence',
+    color: '#be1212f3'
+  },
+  {
+    id: 8,
+    title: 'Build GenAI LLM Apps',
+    issuer: 'Parul University',
+    images: ['/assets/certificates/cert4.png'],
+    date: 'March 2026',
+    category: 'Generative AI',
+    color: '#69a125da'
   }
 ];
 
