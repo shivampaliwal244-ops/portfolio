@@ -39,6 +39,14 @@ export interface Project {
   gradient: string;
   accentColor: string;
   secondaryAccent: string;
+  category?: string;
+  problemStatement?: string;
+  purpose?: string;
+  implementation?: string;
+  architecture?: string;
+  workflow?: string;
+  challenges?: string;
+  setupInstructions?: string;
 }
 
 export interface AboutMeText {

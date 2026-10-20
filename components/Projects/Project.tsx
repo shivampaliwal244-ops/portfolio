@@ -1,9 +1,10 @@
 'use client';
 
 // Project.tsx - Optimized Version
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Project } from '../../types';
 import './Project.css';
+import ProjectDetails from './ProjectDetails';
 
 // ============================================
 // PROJECT DATA CONFIGURATION
@@ -148,8 +149,8 @@ const projectsData = [
       "🚀 One-click Deploy"
     ],
     image: "/assets/projects/ai-website-builders.png",
-    liveLink: "[google.com](https://google.com)",
-    githubLink: "[github.com](https://github.com)",
+    liveLink: "https://google.com",
+    githubLink: "https://github.com",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     accentColor: "#4facfe",
     secondaryAccent: "#00f2fe"
@@ -175,8 +176,8 @@ const projectsData = [
       "📱 Responsive"
     ],
     image: "/assets/projects/amazon-clone.png",
-    liveLink: "[google.com](https://google.com)",
-    githubLink: "[github.com](https://github.com)",
+    liveLink: "https://google.com",
+    githubLink: "https://github.com",
     gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
     accentColor: "#fa709a",
     secondaryAccent: "#fee140"
@@ -202,8 +203,8 @@ const projectsData = [
       "📚 API Docs"
     ],
     image: "/assets/projects/notenest-api.png",
-    liveLink: "[google.com](https://google.com)",
-    githubLink: "[github.com](https://github.com)",
+    liveLink: "https://google.com",
+    githubLink: "https://github.com",
     gradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
     accentColor: "#a8edea",
     secondaryAccent: "#fed6e3"
@@ -212,36 +213,30 @@ const projectsData = [
 
 const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(2);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
+
   // FIX: Hydration-free particle states
-  const [backgroundParticles, setBackgroundParticles] = useState<any[]>([]);
-  const [popupParticles, setPopupParticles] = useState<any[]>([]);
-  
-  const sliderRef = useRef(null);
+  const [backgroundParticles, setBackgroundParticles] = useState<Array<{key: number; delay: string; x: string; duration: string; size: string}>>([]);
+  const particlesInitialized = useRef(false);
+
+  const sliderRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
 
   // FIX: Generate particles ONLY on the client
   useEffect(() => {
-    setBackgroundParticles([...Array(10)].map((_, i) => ({
-      key: i,
-      delay: `${Math.random() * 10}s`,
-      x: `${Math.random() * 100}%`,
-      duration: `${Math.random() * 20 + 15}s`,
-      size: `${Math.random() * 3 + 1}px`
-    })));
-
-    setPopupParticles([...Array(15)].map((_, i) => ({
-      key: i,
-      delay: `${Math.random() * 5}s`,
-      x: `${Math.random() * 100}%`,
-      y: `${Math.random() * 100}%`,
-      size: `${Math.random() * 4 + 2}px`,
-      duration: `${Math.random() * 4 + 3}s`
-    })));
+    if (!particlesInitialized.current) {
+      setBackgroundParticles([...Array(10)].map((_, i) => ({
+        key: i,
+        delay: `${Math.random() * 10}s`,
+        x: `${Math.random() * 100}%`,
+        duration: `${Math.random() * 20 + 15}s`,
+        size: `${Math.random() * 3 + 1}px`
+      })));
+      particlesInitialized.current = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -267,6 +262,18 @@ const Projects = () => {
     setTimeout(() => setIsTransitioning(false), 500);
   }, [isTransitioning]);
 
+  const openPopup = (project: Project) => {
+    setSelectedProject(project);
+    setIsPopupOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+    document.body.style.overflow = 'auto';
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isPopupOpen) {
@@ -281,42 +288,30 @@ const Projects = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeIndex, isPopupOpen, navigateSlider]);
 
-  const openPopup = useCallback((project: any) => {
-    setSelectedProject(project);
-    setIsPopupOpen(true);
-    document.body.style.overflow = 'hidden';
-  }, []);
-
-  const closePopup = useCallback(() => {
-    setIsPopupOpen(false);
-    setTimeout(() => setSelectedProject(null), 300);
-    document.body.style.overflow = 'auto';
-  }, []);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].pageX;
-  }, []);
+  };
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     const endX = e.changedTouches[0].pageX;
     const diff = touchStartX.current - endX;
     if (Math.abs(diff) > 50) {
       navigateSlider(diff > 0 ? 'next' : 'prev');
     }
-  }, [navigateSlider]);
+  };
 
-  const getCardStyle = useCallback((index: number) => {
+  const getCardStyle = (index: number) => {
     const diff = index - activeIndex;
     const absDiv = Math.abs(diff);
     let translateX = diff * 280;
-    let scale = absDiv === 0 ? 1.1 : Math.max(0.7, 1 - absDiv * 0.15);
-    let opacity = Math.max(0.3, 1 - absDiv * 0.3);
-    let zIndex = 10 - absDiv;
+    const scale = absDiv === 0 ? 1.1 : Math.max(0.7, 1 - absDiv * 0.15);
+    const opacity = Math.max(0.3, 1 - absDiv * 0.3);
+    const zIndex = 10 - absDiv;
     let rotateY = diff * -15;
-    if (diff > 2) { translateX = (diff - projectsData.length) * 280; rotateY = (diff - projectsData.length) * -15; } 
+    if (diff > 2) { translateX = (diff - projectsData.length) * 280; rotateY = (diff - projectsData.length) * -15; }
     else if (diff < -2) { translateX = (diff + projectsData.length) * 280; rotateY = (diff + projectsData.length) * -15; }
     return { transform: `translateX(${translateX}px) rotateY(${rotateY}deg) scale(${scale})`, opacity, zIndex };
-  }, [activeIndex]);
+  };
 
   return (
     <section className="projects-section" id="projects">
@@ -326,7 +321,7 @@ const Projects = () => {
         <div className="bg-grid"></div>
         <div className="bg-particles">
           {backgroundParticles.map((p) => (
-            <span key={p.key} className="bg-particle" style={{ '--delay': p.delay, '--x': p.x, '--duration': p.duration, '--size': p.size } as any} />
+            <span key={p.key} className="bg-particle" style={{ '--delay': p.delay, '--x': p.x, '--duration': p.duration, '--size': p.size } as React.CSSProperties} />
           ))}
         </div>
       </div>
@@ -359,11 +354,12 @@ const Projects = () => {
             const isActive = index === activeIndex;
             const cardStyle = getCardStyle(index);
             return (
-              <div key={project.id} className={`project-card ${isActive ? 'active' : ''}`} style={{ ...cardStyle, '--accent-color': project.accentColor, '--secondary-accent': project.secondaryAccent, '--card-gradient': project.gradient } as any} onClick={() => isActive && openPopup(project)}>
+              <div key={project.id} className={`project-card ${isActive ? 'active' : ''}`} style={{ ...cardStyle, '--accent-color': project.accentColor, '--secondary-accent': project.secondaryAccent, '--card-gradient': project.gradient } as React.CSSProperties} onClick={() => isActive && openPopup(project)}>
                 <div className="card-glass">
                   {isActive && <div className="neon-border"></div>}
                   <div className="card-image-wrapper">
-                    <div className="card-image-gradient" style={{ background: project.gradient }} />
+                    <div className="card-image-gradient" style={{ background: project.gradient } as React.CSSProperties} />
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={project.image} alt={project.name} className="card-image" loading="lazy" />
                     {isActive && (
                       <div className="image-overlay"><span className="view-project-btn"><span>View Details</span></span></div>
@@ -385,30 +381,13 @@ const Projects = () => {
 
       <div className="slider-pagination">
         {projectsData.map((project, index) => (
-          <button key={index} className={`pagination-dot ${index === activeIndex ? 'active' : ''}`} onClick={() => !isTransitioning && setActiveIndex(index)} style={{ '--dot-color': project.accentColor } as any}><span className="dot-inner"></span></button>
+          <button key={index} className={`pagination-dot ${index === activeIndex ? 'active' : ''}`} onClick={() => !isTransitioning && setActiveIndex(index)} style={{ '--dot-color': project.accentColor } as React.CSSProperties}><span className="dot-inner"></span></button>
         ))}
-        <div className="pagination-progress"><div className="progress-fill" style={{ width: `${((activeIndex + 1) / projectsData.length) * 100}%`, background: projectsData[activeIndex].gradient }} /></div>
+        <div className="pagination-progress"><div className="progress-fill" style={{ width: `${((activeIndex + 1) / projectsData.length) * 100}%`, background: projectsData[activeIndex].gradient } as React.CSSProperties} /></div>
       </div>
 
       {isPopupOpen && selectedProject && (
-        <div className="popup-overlay" onClick={closePopup}>
-          <div className="popup-container" onClick={(e) => e.stopPropagation()} style={{ '--popup-accent': selectedProject.accentColor, '--popup-gradient': selectedProject.gradient } as any}>
-            <div className="popup-border-glow"></div>
-            <div className="magic-dust">
-              {popupParticles.map((p) => <span key={p.key} className="dust-particle" style={{ '--delay': p.delay, '--x': p.x, '--y': p.y, '--size': p.size, '--duration': p.duration, '--color': selectedProject.accentColor } as any} />)}
-            </div>
-            <button className="popup-close" onClick={closePopup}>×</button>
-            <div className="popup-content">
-              <div className="popup-header"><h2 className="popup-title">{selectedProject.name}</h2></div>
-              <img src={selectedProject.image} alt={selectedProject.name} className="popup-image" />
-              <p className="popup-description">{selectedProject.description}</p>
-              <div className="popup-actions">
-                <a href={selectedProject.liveLink} target="_blank" className="action-btn live-btn">Live Demo</a>
-                <a href={selectedProject.githubLink} target="_blank" className="action-btn github-btn">View Code</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ProjectDetails project={selectedProject} onClose={closePopup} />
       )}
     </section>
   );

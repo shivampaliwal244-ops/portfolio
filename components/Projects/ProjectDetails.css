@@ -1,0 +1,429 @@
+/* ProjectDetails.css - Comprehensive Project Details Modal Styles */
+/* =========================================================
+   Cyber/Hacker Aesthetic for Project Details Modal
+   - Glassmorphism
+   - Neon accents
+   - Smooth animations
+   - Responsive design
+   ========================================================= */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (from Project.css)
+   ============================================ */
+:root {
+  /* Base Theme */
+  --bg-dark: #030507;
+  --bg-deep: #05080c;
+  --bg-panel: rgba(7, 12, 16, 0.72);
+  --bg-panel-2: rgba(10, 18, 24, 0.88);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(0, 255, 170, 0.14);
+
+  /* Text */
+  --text-primary: #eafff7;
+  --text-secondary: rgba(214, 255, 241, 0.78);
+  --text-muted: rgba(170, 255, 223, 0.48);
+
+  /* Cyber Accents */
+  --accent-green: #00ff9c;
+  --accent-cyan: #00e5ff;
+  --accent-purple: #7a5cff;
+  --accent-pink: #ff3cac;
+  --accent-danger: #ff4d6d;
+
+  /* Lines / Glow */
+  --line-soft: rgba(0, 255, 156, 0.08);
+  --line-mid: rgba(0, 255, 156, 0.16);
+  --glow-green: 0 0 12px rgba(0, 255, 156, 0.30);
+  --glow-cyan: 0 0 18px rgba(0, 229, 255, 0.22);
+
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Spacing */
+  --section-padding: 100px;
+  --card-border-radius: 24px;
+  --popup-border-radius: 28px;
+}
+
+/* ============================================
+   PROJECT CATEGORY BADGE
+   ============================================ */
+.project-category {
+  display: inline-block;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(0, 255, 156, 0.12), rgba(0, 229, 255, 0.08));
+  border: 1px solid rgba(0, 255, 156, 0.18);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-color) 20%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================================
+   HEADER CONTENT
+   ============================================ */
+.header-content {
+  width: 100%;
+}
+
+/* ============================================
+   POPUP SECTIONS
+   ============================================ */
+.popup-section {
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.popup-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.section-heading {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 12px rgba(0, 255, 156, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup-text {
+  color: var(--text-secondary);
+  line-height: 1.85;
+  font-size: 0.98rem;
+  padding: 16px;
+  background: rgba(0, 255, 156, 0.02);
+  border: 1px solid rgba(0, 255, 156, 0.06);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================================
+   TECH STACK GRID
+   ============================================ */
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.tech-category {
+  background: rgba(7, 15, 18, 0.6);
+  border: 1px solid rgba(0, 255, 156, 0.08);
+  border-radius: 16px;
+  padding: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.tech-category:hover {
+  border-color: rgba(0, 255, 156, 0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tech-category-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tech-category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, rgba(0, 255, 156, 0.12), rgba(0, 229, 255, 0.08));
+  border-radius: 8px;
+  color: var(--accent-green);
+  font-size: 0.9rem;
+}
+
+.tech-category-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: rgba(0, 255, 156, 0.05);
+  border: 1px solid rgba(0, 255, 156, 0.12);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.tech-badge:hover {
+  background: rgba(0, 255, 156, 0.12);
+  color: var(--text-primary);
+  border-color: var(--badge-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--badge-accent) 15%, transparent);
+}
+
+/* ============================================
+   FEATURES GRID
+   ============================================ */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.feature-card {
+  padding: 14px 18px;
+  background: rgba(7, 15, 18, 0.5);
+  border: 1px solid rgba(0, 255, 156, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--card-accent);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover {
+  border-color: rgba(0, 255, 156, 0.16);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ============================================
+   SETUP INSTRUCTIONS
+   ============================================ */
+.setup-instructions {
+  padding: 18px;
+  background: rgba(0, 255, 156, 0.02);
+  border: 1px solid rgba(0, 255, 156, 0.08);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.setup-instructions .popup-text {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* ============================================
+   ACTION BUTTONS (Updated for icons)
+   ============================================ */
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.action-btn svg {
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .tech-stack-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .popup-section {
+    margin-bottom: 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .project-category {
+    padding: 6px 14px;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+
+  .section-heading {
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
+
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .tech-category {
+    padding: 14px;
+  }
+
+  .tech-badges {
+    gap: 6px;
+  }
+
+  .tech-badge {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .feature-card {
+    padding: 12px 14px;
+  }
+
+  .feature-text {
+    font-size: 0.85rem;
+  }
+
+  .popup-text {
+    font-size: 0.95rem;
+    padding: 14px;
+  }
+
+  .popup-section {
+    margin-bottom: 24px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .project-category {
+    padding: 5px 12px;
+    font-size: 0.65rem;
+    letter-spacing: 1.2px;
+  }
+
+  .section-heading {
+    font-size: 0.95rem;
+  }
+
+  .tech-category {
+    padding: 12px;
+  }
+
+  .tech-category-header {
+    gap: 8px;
+  }
+
+  .tech-category-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .tech-category-title {
+    font-size: 0.88rem;
+  }
+
+  .tech-badge {
+    font-size: 0.68rem;
+    padding: 4px 8px;
+  }
+
+  .feature-card {
+    padding: 10px 12px;
+  }
+
+  .feature-text {
+    font-size: 0.82rem;
+  }
+
+  .popup-text {
+    font-size: 0.92rem;
+    padding: 12px;
+    line-height: 1.75;
+  }
+
+  .action-btn {
+    font-size: 0.9rem;
+    padding: 14px 18px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tech-category,
+  .tech-badge,
+  .feature-card {
+    transition: none;
+  }
+
+  .tech-category:hover,
+  .tech-badge:hover,
+  .feature-card:hover {
+    transform: none;
+  }
+}
