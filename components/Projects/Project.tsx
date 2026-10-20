@@ -62,18 +62,14 @@ const projectsData = [
   ],
   image: "/assets/projects/shifra-ai.png",
   liveLink: "https://ai-voice-assistant-y7a8.onrender.com",
-  githubLink: "",
-  gradient: "linear-gradient(135deg, #7c3aed 0%, #22c55e 100%)",
+githubLink: "https://github.com/shivampaliwal244-ops/AI_Voice_Assistant",  gradient: "linear-gradient(135deg, #7c3aed 0%, #22c55e 100%)",
   accentColor: "#7c3aed",
   secondaryAccent: "#22c55e"
 },
 {
   id: 2,
   name: "🚀 Next.js 3D Portfolio Website",
-
-  description:
-    "A modern, interactive personal portfolio built with Next.js 16, React 19, and TypeScript, featuring a futuristic cyber/hacker-inspired UI with immersive 3D visuals, glassmorphism, and smooth animations. Showcases technical skills, projects, certifications, and professional achievements through an interactive 3D skills globe, animated particle backgrounds, and immersive project and certificate carousels. Integrates Firebase Firestore for contact form data management and EmailJS for email notifications, delivering a responsive, engaging, and feature-rich full-stack web experience. Enhanced with GSAP, Framer Motion, and Vercel Speed Insights for fluid interactions and performance monitoring.",
-
+  description: "A modern, interactive personal portfolio built with Next.js 16, React 19, and TypeScript, featuring a futuristic cyber/hacker-inspired UI with immersive 3D visuals, glassmorphism, and smooth animations. Showcases technical skills, projects, certifications, and professional achievements through an interactive 3D skills globe, animated particle backgrounds, and immersive project and certificate carousels. Integrates Firebase Firestore for contact form data management and EmailJS for email notifications, delivering a responsive, engaging, and feature-rich full-stack web experience. Enhanced with GSAP, Framer Motion, and Vercel Speed Insights for fluid interactions and performance monitoring.",
   techStack: {
     frontend: [
       "Next.js 16.2.9",
@@ -83,25 +79,30 @@ const projectsData = [
       "Three.js 0.184.0",
       "@react-three/fiber 9.6.1",
       "@react-three/drei 10.7.7",
-      "Swiper",
-      "GSAP",
-      "Framer Motion"
+      "Swiper 12.2.0",
+      "GSAP 3.15.0",
+      "Framer Motion 12.40.0",
+      "react-icons 5.6.0",
+      "react-router-dom 7.17.0",
+      "react-scroll 1.9.3",
+      "react-simple-typewriter 5.0.1",
+      "@gsap/react 2.1.2",
+      "@tsparticles/react 4.1.3",
+      "@tsparticles/slim 4.1.3",
+      "vanilla-tilt 1.8.1",
+      "@fortawesome/react-fontawesome 3.3.1"
     ],
-
     backend: [
       "Firebase 12.14.0",
       "Firebase Firestore",
       "EmailJS 4.4.1"
     ],
-
     ai: [],
-
     state: [
       "React Hooks",
       "React Context"
     ]
   },
-
   features: [
     "🌐 Interactive 3D Skills Globe with Raycasting",
     "✨ Immersive Three.js Particle Background",
@@ -118,16 +119,12 @@ const projectsData = [
     "⚡ Vercel Speed Insights for Performance Monitoring",
     "💎 Modern UI with Smooth Transitions and Micro-Interactions"
   ],
-
-  image: "/assets/projects/portfolio.png",
-
-  liveLink: "",
-  githubLink: "",
-
-  gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    image: "/assets/projects/ai-website-builders.png",
+liveLink: "https://shivam-ai-web-developer-ten-tawny.vercel.app/",
+githubLink: "https://github.com/shivampaliwal244-ops/portfolio",  gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   accentColor: "#667eea",
   secondaryAccent: "#764ba2"
-  },
+},
   {
     id: 3,
     name: "AI Website Builder SaaS",
@@ -149,8 +146,7 @@ const projectsData = [
       "🚀 One-click Deploy"
     ],
     image: "/assets/projects/ai-website-builders.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
+liveLink: "https://shivam-ai-web-developer-ten-tawny.vercel.app/",    githubLink: "https://github.com/shivampaliwal244-ops/portfolio",
     gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     accentColor: "#4facfe",
     secondaryAccent: "#00f2fe"
