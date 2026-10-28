@@ -19,6 +19,18 @@ const skills = [
   { name: 'AI-ML', icon: '/logos/AI-ML.svg', color: '#ff2bd6', category: 'backend' },
   { name: 'Firebase', icon: '/logos/firebase.svg', color: '#FFCA28', category: 'backend' },
   { name: 'MongoDB', icon: '/logos/mongodb.svg', color: '#47A248', category: 'backend' },
+  { name: 'Python', icon: '/logos/python.svg', color: '#3776AB', category: 'backend' },
+  { name: 'Tailwind CSS', icon: '/logos/tailwindcss.svg', color: '#06B6D4', category: 'frontend' },
+  { name: 'Express.js', icon: '/logos/express.svg', color: '#ffffff', category: 'backend' },
+  { name: 'Git', icon: '/logos/git.svg', color: '#F05032', category: 'tools' },
+  { name: 'GitHub', icon: '/logos/github.svg', color: '#ffffff', category: 'tools' },
+  { name: 'TensorFlow', icon: '/logos/tensorflow.svg', color: '#FF6F00', category: 'ai-ml' },
+  { name: 'PyTorch', icon: '/logos/pytorch.svg', color: '#EE4C2C', category: 'ai-ml' },
+  { name: 'OpenCV', icon: '/logos/opencv.svg', color: '#5C3EE8', category: 'ai-ml' },
+  { name: 'Scikit-learn', icon: '/logos/scikit-learn.svg', color: '#F7931E', category: 'ai-ml' },
+  { name: 'Hugging Face', icon: '/logos/huggingface.svg', color: '#FFD21E', category: 'ai-ml' },
+  { name: 'Docker', icon: '/logos/docker.svg', color: '#2496ED', category: 'tools' },
+  { name: 'Vercel', icon: '/logos/vercel.svg', color: '#ffffff', category: 'tools' },
 ] as const;
 
 type Skill = (typeof skills)[number];

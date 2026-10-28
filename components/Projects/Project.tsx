@@ -125,86 +125,64 @@ githubLink: "https://github.com/shivampaliwal244-ops/portfolio",  gradient: "lin
   accentColor: "#667eea",
   secondaryAccent: "#764ba2"
 },
-  {
-    id: 3,
-    name: "AI Website Builder SaaS",
-    description: "An AI-powered website builder platform that allows users to generate fully responsive websites using simple prompts with subscription-based access.",
-    techStack: {
-      frontend: ["React.js", "Tailwind CSS"],
-      backend: ["Node.js", "Express.js"],
-      database: ["MongoDB"],
-      ai: ["OpenAI API"]
-    },
-    features: [
-      "🤖 Prompt → Website",
-      "🎨 Auto Layout",
-      "📝 Content Generation",
-      "💳 Stripe Payments",
-      "🔐 JWT Auth",
-      "📁 User Dashboard",
-      "🎨 Drag & Drop",
-      "🚀 One-click Deploy"
+  
+{
+  id: 3,
+  name: "EstateIQ — Real Estate Intelligence Platform",
+  description:
+    "An AI-powered real estate analytics platform that predicts property prices using machine learning and provides interactive tools for property comparison, what-if analysis, prediction explanations, and model monitoring. Features Firebase-powered email/password authentication and Google OAuth sign-in, with a responsive Streamlit interface deployed on Streamlit Community Cloud.",
+
+  techStack: {
+    frontend: ["Streamlit", "Custom CSS"],
+    backend: ["Python", "Streamlit"],
+    database: ["Firebase Authentication", "SQLite"],
+    ai: [
+      "Machine Learning",
+      "Property Price Prediction",
+      "Model Explainability",
+      "Model Monitoring"
     ],
-    image: "/assets/projects/ai-website-builders.png",
-liveLink: "https://shivam-ai-web-developer-ten-tawny.vercel.app/",    githubLink: "https://github.com/shivampaliwal244-ops/portfolio",
-    gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    accentColor: "#4facfe",
-    secondaryAccent: "#00f2fe"
+    tools: [
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "Git",
+      "GitHub"
+    ],
+    authentication: [
+      "Firebase Authentication",
+      "Google OAuth",
+      "Email/Password Authentication"
+    ]
   },
-  {
-    id: 4,
-    name: "Amazon Clone E-commerce",
-    description: "A full-stack e-commerce web application inspired by Amazon, built using the MERN stack with secure payments and order management.",
-    techStack: {
-      frontend: ["React.js", "Redux Toolkit"],
-      backend: ["Node.js", "Express.js"],
-      database: ["MongoDB"],
-      payment: ["Stripe"]
-    },
-    features: [
-      "🔍 Product Search",
-      "🛍️ Cart & Wishlist",
-      "🧾 Order Tracking",
-      "💳 Stripe Checkout",
-      "🧑‍💻 Admin Panel",
-      "⭐ Reviews",
-      "📊 Analytics",
-      "📱 Responsive"
-    ],
-    image: "/assets/projects/amazon-clone.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
-    gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-    accentColor: "#fa709a",
-    secondaryAccent: "#fee140"
-  },
-  {
-    id: 5,
-    name: "NoteNest API",
-    description: "NoteNest API is a RESTful backend application built using Node.js and Express that allows users to create, manage, update, and delete notes efficiently.",
-    techStack: {
-      backend: ["Node.js", "Express.js"],
-      database: ["MongoDB"],
-      orm: ["Mongoose"],
-      tools: ["Postman"]
-    },
-    features: [
-      "📝 Create Notes",
-      "📖 Fetch All Notes",
-      "✏️ Update Notes",
-      "🗑️ Delete Notes",
-      "⚡ RESTful API",
-      "🧩 Clean Structure",
-      "🔄 JSON Handling",
-      "📚 API Docs"
-    ],
-    image: "/assets/projects/notenest-api.png",
-    liveLink: "https://google.com",
-    githubLink: "https://github.com",
-    gradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-    accentColor: "#a8edea",
-    secondaryAccent: "#fed6e3"
-  }
+
+  features: [
+    "🏡 ML-Powered Property Price Prediction",
+    "📊 Interactive Real Estate Dashboard",
+    "⚖️ Compare Multiple Properties",
+    "🎛️ What-If Price Simulator",
+    "🔍 Explainable Predictions",
+    "📈 Model Performance Analytics",
+    "🩺 Model Monitoring",
+    "🔐 Firebase Email/Password Authentication",
+    "🌐 Google Sign-In",
+    "📝 Prediction History",
+    "🤖 Model & Data Assistant",
+    "☁️ Streamlit Cloud Deployment",
+    "📱 Responsive User Interface"
+  ],
+
+  image: "/assets/projects/estateiq.png",
+
+  liveLink: "https://estateiq-property-ai.streamlit.app/",
+
+  githubLink: "https://github.com/shivampaliwal244-ops/estateiq",
+
+  gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  accentColor: "#667eea",
+  secondaryAccent: "#764ba2"
+}
+
 ];
 
 const Projects = () => {
@@ -350,7 +328,19 @@ const Projects = () => {
             const isActive = index === activeIndex;
             const cardStyle = getCardStyle(index);
             return (
-              <div key={project.id} className={`project-card ${isActive ? 'active' : ''}`} style={{ ...cardStyle, '--accent-color': project.accentColor, '--secondary-accent': project.secondaryAccent, '--card-gradient': project.gradient } as React.CSSProperties} onClick={() => isActive && openPopup(project)}>
+              
+<div
+  key={`${project.id}-${index}`}
+  className={`project-card ${isActive ? 'active' : ''}`}
+  style={{
+    ...cardStyle,
+    '--accent-color': project.accentColor,
+    '--secondary-accent': project.secondaryAccent,
+    '--card-gradient': project.gradient,
+  } as React.CSSProperties}
+  onClick={() => isActive && openPopup(project)}
+>
+
                 <div className="card-glass">
                   {isActive && <div className="neon-border"></div>}
                   <div className="card-image-wrapper">
