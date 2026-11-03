@@ -181,8 +181,85 @@ githubLink: "https://github.com/shivampaliwal244-ops/portfolio",  gradient: "lin
   gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   accentColor: "#667eea",
   secondaryAccent: "#764ba2"
-}
+},
 
+{
+  id: 3,
+  name: "YouTube Clone — Video Streaming Platform",
+
+  description:
+    "A full-stack YouTube-inspired video streaming platform that integrates the YouTube Data API v3 to fetch real-time video content, search results, and category-based recommendations. Built with React and Vite on the frontend and Node.js with Express on the backend. Features video playback through the official YouTube IFrame Player, dynamic search, category browsing, related video suggestions, JWT-based authentication, and MongoDB-powered user data and comments. Deployed on Render.",
+
+  techStack: {
+    frontend: [
+      "React.js",
+      "Vite",
+      "JavaScript",
+      "CSS3",
+      "Responsive UI"
+    ],
+
+    backend: [
+      "Node.js",
+      "Express.js",
+      "REST API"
+    ],
+
+    database: [
+      "MongoDB Atlas",
+      "Mongoose"
+    ],
+
+    api: [
+      "YouTube Data API v3",
+      "YouTube IFrame Player API"
+    ],
+
+    authentication: [
+      "JWT Authentication",
+      "Protected Routes",
+      "Role-Based Ownership Validation"
+    ],
+
+    tools: [
+      "Axios / Fetch API",
+      "Git",
+      "GitHub",
+      "VS Code",
+      "Postman",
+      "Render"
+    ]
+  },
+
+  features: [
+    "🎬 Real-Time YouTube Video Feed",
+    "🔍 Dynamic Video Search",
+    "📂 Category-Based Video Browsing",
+    "▶️ YouTube Video Playback Integration",
+    "🎯 Related & Suggested Videos",
+    "📄 API-Based Video Pagination",
+    "🔐 JWT-Based User Authentication",
+    "💬 Add, Edit & Delete Comments",
+    "🛡️ Protected Comment Operations",
+    "📚 MongoDB-Powered Video Library",
+    "👍 Like & Dislike UI Interactions",
+    "📺 Subscription UI",
+    "🌙 YouTube-Inspired Dark Theme",
+    "📱 Responsive User Interface",
+    "⚡ Loading, Empty & Error States",
+    "☁️ Frontend & Backend Deployment on Render"
+  ],
+
+  image: "/assets/projects/youtube-clone.png",
+
+  liveLink: "https://youtube-clone-fronted.onrender.com/",
+
+  githubLink: "https://github.com/shivampaliwal244-ops/youtube_clone",
+
+  gradient: "linear-gradient(135deg, #91ff00 0%, #21a30d98 100%)",
+  accentColor: "#00f7ff",
+  secondaryAccent: "#65710bcf"
+}
 ];
 
 const Projects = () => {
