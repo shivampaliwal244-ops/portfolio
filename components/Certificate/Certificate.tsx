@@ -121,7 +121,16 @@ const certificates: CertificateType[] = [
     date: 'March 2026',
     category: 'Generative AI',
     color: '#69a125da'
-  }
+  },
+  {
+  id: 9,
+  title: 'Introduction to Internet of Things',
+  issuer: 'NPTEL IIT Kharagpur',
+  images: ['/assets/certificates/nptel-iot.png'],
+  date: '2026',
+  category: 'Internet of Things',
+  color: '#dc2626'
+}
 ];
 
 // ============================================================
