@@ -126,7 +126,7 @@ const certificates: CertificateType[] = [
   id: 9,
   title: 'Introduction to Internet of Things',
   issuer: 'NPTEL IIT Kharagpur',
-  images: ['/assets/certificates/nptel-iot.png'],
+  images: ['/assets/certificates/cert9.png'],
   date: '2026',
   category: 'Internet of Things',
   color: '#dc2626'
